@@ -1,1 +1,9 @@
 //reset
+* {
+	all: unset;
+	display: revert;
+	box-sizing: border-box;
+}
+[default-styles] {
+	all: revert;
+}
