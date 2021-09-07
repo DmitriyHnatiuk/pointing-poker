@@ -1,0 +1,51 @@
+@import '/src/assets/styles/_variables';
+
+.header {
+	position: relative;
+
+	height: 100px;
+}
+
+.line_one,
+.line_two,
+.logo {
+	font-size: 0;
+}
+
+.line_one {
+	height: 50px;
+	background-color: #2b3a67;
+}
+
+.line_two {
+	height: 20px;
+	background-color: #66999b;
+}
+
+.logo {
+	position: relative;
+	left: 10%;
+	bottom: 55px;
+
+	width: 80px;
+	height: 80px;
+
+	transition: all 0.5s;
+}
+
+.chat {
+	position: relative;
+	left: 80%;
+	bottom: 120px;
+
+	width: 19px;
+	height: 13px;
+
+	transition: all 0.5s;
+}
+
+.logo:hover,
+.chat:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+}

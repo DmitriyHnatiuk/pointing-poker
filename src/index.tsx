@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from 'redux/store';
 
 import 'assets/styles/global/reset.scss';
+import 'assets/styles/global/global.scss';
 
 import App from 'components/App';
 
