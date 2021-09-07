@@ -1,27 +1,22 @@
+@import '/src/assets/styles/variables';
+
 .btn {
 	width: 189px;
 	height: 47px;
-
-	background-color: #2b3a67;
-
-	border: 1px solid #2b3a67;
-
+	background-color: $Deep-Koamaru;
+	border: 1px solid $Deep-Koamaru;
 	font-size: 24px;
 	line-height: 30px;
-
-	color: white;
+	color: $white-color;
 	text-align: center;
 	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-	cursor: pointer;
-
 	transition: all 1s;
 }
 
 .btn:hover {
-	background-color: #ffffff;
-	border: 1px solid #2b3a67;
-	color: #2b3a67;
+	background-color: $white-color;
+	border: 1px solid $Deep-Koamaru;
+	color: $Deep-Koamaru;
 }
 
 .btn:active {

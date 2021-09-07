@@ -1,8 +1,7 @@
-@import '/src/assets/styles/_variables';
+@import '/src/assets/styles/variables';
 
 .header {
 	position: relative;
-
 	height: 100px;
 }
 
@@ -14,33 +13,29 @@
 
 .line_one {
 	height: 50px;
-	background-color: #2b3a67;
+	background-color: $Deep-Koamaru;
 }
 
 .line_two {
 	height: 20px;
-	background-color: #66999b;
+	background-color: $Desaturated-Cyan;
 }
 
 .logo {
 	position: relative;
 	left: 10%;
 	bottom: 55px;
-
 	width: 80px;
 	height: 80px;
-
 	transition: all 0.5s;
 }
 
 .chat {
 	position: relative;
 	left: 80%;
-	bottom: 120px;
-
+	bottom: 85px;
 	width: 19px;
 	height: 13px;
-
 	transition: all 0.5s;
 }
 
