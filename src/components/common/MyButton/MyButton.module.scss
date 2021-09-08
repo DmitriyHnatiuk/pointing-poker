@@ -1,0 +1,24 @@
+@import '/src/assets/styles/variables';
+
+.btn {
+	width: 189px;
+	height: 47px;
+	background-color: $Deep-Koamaru;
+	border: 1px solid $Deep-Koamaru;
+	font-size: 24px;
+	line-height: 30px;
+	color: $white-color;
+	text-align: center;
+	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	transition: all 1s;
+}
+
+.btn:hover {
+	background-color: $white-color;
+	border: 1px solid $Deep-Koamaru;
+	color: $Deep-Koamaru;
+}
+
+.btn:active {
+	transform: scale(1.1);
+}

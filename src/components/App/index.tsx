@@ -1,10 +1,15 @@
 import React from 'react';
-import styles from './index.module.scss';
 
-const App = (): JSX.Element => (
-	<div id="content" className={styles.title}>
-		Lets start our small project
-	</div>
+import Header from 'components/common/Header/Header';
+import Main from 'components/common/Main/Main';
+import Footer from 'components/common/Footer/Footer';
+
+const App: React.FC = (): JSX.Element => (
+	<>
+		<Header />
+		<Main />
+		<Footer />
+	</>
 );
 
 export default App;
