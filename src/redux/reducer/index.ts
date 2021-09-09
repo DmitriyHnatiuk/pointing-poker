@@ -1,3 +1,6 @@
+import { actionCreationArguments } from 'interfaces/commonComponents';
+
+export const SET_DATA = 'SET_DATA';
 export const SET_NAME = 'SET_NAME';
 export const SET_ROOM = 'SET_ROOM';
 export const SET_ADMIN = 'SET_ADMIN';
@@ -19,21 +22,21 @@ const initialStore: {
 };
 
 type StateType = typeof initialStore;
-type ActionType = AC1Type | AC2Type | AC3Type;
+
+type ActionType = AC1Type;
 
 const reducer = (
 	state: StateType = initialStore,
 	action: ActionType
 ): StateType => {
 	switch (action.type) {
-		case SET_NAME: {
-			return { ...state, userName: action.payload };
-		}
-		case SET_ROOM: {
-			return { ...state, room: action.payload };
-		}
-		case SET_ADMIN: {
-			return { ...state, room: action.payload };
+		case SET_DATA: {
+			return {
+				...state,
+				userName: action.payload.name,
+				room: action.payload.room,
+				isAdmin: action.payload.admin
+			};
 		}
 
 		default:
@@ -41,17 +44,9 @@ const reducer = (
 	}
 };
 
-export const setNameActionCreation = (value: string) =>
-	({ type: SET_NAME, payload: value } as const);
+export const setDataActionCreation = (value: actionCreationArguments) =>
+	({ type: SET_DATA, payload: value } as const);
 
-export const setRoomActionCreation = (value: string) =>
-	({ type: SET_ROOM, payload: value } as const);
-
-export const setAdminActionCreation = (value: string) =>
-	({ type: SET_ADMIN, payload: value } as const);
-
-type AC1Type = ReturnType<typeof setNameActionCreation>;
-type AC2Type = ReturnType<typeof setRoomActionCreation>;
-type AC3Type = ReturnType<typeof setAdminActionCreation>;
+type AC1Type = ReturnType<typeof setDataActionCreation>;
 
 export default reducer;
