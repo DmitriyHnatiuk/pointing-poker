@@ -1,0 +1,39 @@
+.section {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.section h3 {
+	padding: 20px;
+	font-size: 32px;
+	text-align: center;
+}
+
+.scram {
+	padding: 10px;
+}
+
+.scram span {
+	display: block;
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+.exit {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.team {
+	margin-top: 50px;
+}
+
+.members {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.members > div {
+	margin: 10px;
+}

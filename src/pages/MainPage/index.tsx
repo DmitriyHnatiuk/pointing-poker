@@ -5,7 +5,7 @@ import MyInput from 'components/common/MyInput/MyInput';
 
 import pokerPlanningImage from 'assets/images/MainPage/poker-planning.jpg';
 
-import styles from './MainPage.module.scss';
+import styles from './index.module.scss';
 
 const MainPage: React.FC = (): JSX.Element => {
 	return (
