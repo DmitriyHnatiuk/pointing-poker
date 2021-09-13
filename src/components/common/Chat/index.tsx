@@ -2,7 +2,7 @@ import React from 'react';
 
 import style from './index.module.scss';
 
-export const Chat = () => {
+const Chat: React.FC = (): JSX.Element => {
 	function setDate() {
 		const d = new Date();
 		if (d.getMinutes()) {
