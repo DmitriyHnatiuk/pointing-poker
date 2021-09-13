@@ -1,1 +1,214 @@
 @import "/src/assets/styles/variables";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Chat
+  --------------------*/
+.chat {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 80vh;
+  max-height: 500px;
+  z-index: 2;
+  overflow: hidden;
+  box-shadow: 0 5px 30px $Dark-Electric-Blue;
+  background: $Desaturated-Cyan;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+/* Chat Title
+  --------------------*/
+.chatTitle {
+  flex: 0 1 45px;
+  position: relative;
+  z-index: 2;
+  background: $Deep-Koamaru;
+  color: $white-color;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 10px 10px 10px 50px;
+}
+
+.chatTitle h1,
+.chatTitle h2 {
+  font-weight: normal;
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.chatTitle h2 {
+  color: $white-color;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+
+.chatTitle .avatar {
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  left: 9px;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: 2px solid $Desaturated-Cyan;
+}
+
+.chatTitle .avatar img {
+  width: 100%;
+  height: auto;
+}
+
+/* Messages
+  --------------------*/
+.messages {
+  flex: 1 1 auto;
+  color: $light-salmon-pink;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.messagesContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 101%;
+  width: 100%;
+}
+
+.message {
+  clear: both;
+  float: left;
+  padding: 6px 10px 7px;
+  border-radius: 10px 10px 10px 0;
+  background: $Dark-Electric-Blue;
+  margin: 8px 0;
+  font-size: 11px;
+  line-height: 1.4;
+  margin-left: 35px;
+  position: relative;
+  text-shadow: 0 1px 1px $Deep-Koamaru;
+}
+.message:hover {
+  transform: scale(1.4);
+  max-width: 80%;
+  padding: 30px;
+  z-index: 5;
+}
+
+.timestamp {
+  position: absolute;
+  bottom: -15px;
+  font-size: 10px;
+  color: $Sage;
+}
+
+.avatar {
+  position: absolute;
+  z-index: 1;
+  bottom: -15px;
+  left: -35px;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: 2px solid $Dark-Electric-Blue;
+}
+
+.avatar img {
+  width: 100%;
+  height: auto;
+}
+
+.message.personal {
+  float: right;
+  color: $white-color;
+  text-align: right;
+  background: $Light-Sea-Green;
+  border-radius: 10px 10px 0 10px;
+}
+
+.message.personal {
+  left: auto;
+  right: 0;
+
+  border-right: none;
+  border-left: 1px solid transparent;
+  border-top: 2px solid $Deep-Koamaru;
+  bottom: -4px;
+}
+.personal:hover {
+  transform: scale(1.4);
+  max-width: 80%;
+  right: 40px;
+  z-index: 5;
+}
+
+.message:last-child {
+  margin-bottom: 30px;
+}
+
+/* Message Box
+  --------------------*/
+.box {
+  flex: 0 1 40px;
+  width: 100%;
+  background: $Deep-Koamaru;
+  padding: 10px;
+  position: relative;
+}
+
+.box .input {
+  background: none;
+  border: none;
+  outline: none;
+  resize: none;
+  color: $white-color;
+  font-size: 11px;
+  height: 17px;
+  margin: 0;
+  margin-left: 10px;
+  padding-right: 20px;
+  width: 265px;
+}
+.box .input:focus {
+  transform: scale(1.2);
+  margin-left: 30px;
+}
+
+.box .submit {
+  position: absolute;
+  z-index: 1;
+  top: 9px;
+  right: 10px;
+  color: $white-color;
+  border: none;
+  background: $Desaturated-Cyan;
+  font-size: 10px;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 10px;
+  outline: none;
+  transition: background 0.2s ease;
+}
+
+.box .submit:hover {
+  background: $Light-Sea-Green;
+}
