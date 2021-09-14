@@ -3,3 +3,9 @@ export interface IGitHubItems {
 	href: string;
 	name: string;
 }
+
+export interface actionCreationArguments {
+	name: string;
+	room: string;
+	admin: boolean;
+}

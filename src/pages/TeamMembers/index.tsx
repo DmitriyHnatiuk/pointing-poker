@@ -25,7 +25,7 @@ const TeamMembers: React.FC = () => {
         <PlayerCard user={admin!} />
 			</div>
       <div className={styles.exit}>
-        <MyButton>Exit</MyButton>
+        <MyButton value='Exit' />
       </div>
       <div className={styles.team}>
         <h3>Members:</h3>

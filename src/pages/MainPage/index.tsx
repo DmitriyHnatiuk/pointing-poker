@@ -18,14 +18,14 @@ const MainPage: React.FC = (): JSX.Element => {
 					<div className={styles.start}>
 						<h3>Start your planning:</h3>
 						<span>Create session:</span>
-						<MyButton>Start new game</MyButton>
+						<MyButton value='Start new game' />
 					</div>
 					<div className={styles.or}>
 						<h3>OR:</h3>
 						<span>Connect to lobby:</span>
 						<form>
 							<MyInput />
-							<MyButton>Connect</MyButton>
+							<MyButton value='Connect' />
 						</form>
 					</div>
 				</section>
