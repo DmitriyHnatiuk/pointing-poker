@@ -1,4 +1,4 @@
-import { IUser } from 'redux/reducer/userReducer/types';
+import { IUser } from 'redux/reducer/membersReducer/types';
 import {
 	UsersAction,
 	IUsersState,

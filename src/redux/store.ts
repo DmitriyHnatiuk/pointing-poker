@@ -5,7 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import reducer from 'redux/reducer';
-import membersReducer from 'redux/reducer/userReducer';
+import membersReducer from 'redux/reducer/membersReducer';
 
 const rootReducer = combineReducers({
 	reducer,

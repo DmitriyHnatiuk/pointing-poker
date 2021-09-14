@@ -10,6 +10,7 @@ import Chat from 'components/common/Chat';
 import MainPage from 'pages/MainPage';
 import Error404 from 'pages/Error404';
 import AdminLobby from 'pages/AdminLobby';
+import TeamMembers from 'pages/TeamMembers';
 
 const Routers: React.FC = (): JSX.Element => {
 	const name = useSelector<{ userName: string }>((state) => state.userName);
@@ -26,6 +27,7 @@ const Routers: React.FC = (): JSX.Element => {
 					{/* {isLogin && <Route exact path="/lobby" component={UserLobby} />} */}
 					{isAdmin && <Route path="/admin" component={AdminLobby} />}
 					<Route exact path="/chat" component={Chat} />
+					<Route exact path="/members" component={TeamMembers} />
 					<Route path="*" component={Error404} />
 				</Switch>
 			</Main>

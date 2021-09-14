@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import PlayerCard from "components/common/PlayerCard/PlayerCard";
 import MyButton from "components/common/MyButton/MyButton";
 
-import { IUsersState, RolesUsersEnum } from "redux/reducer/userReducer/types";
+import { IUser, IUsersState, RolesUsersEnum } from "redux/reducer/membersReducer/types";
+import { getMembers } from "redux/reducer/selectors";
 
 import { useTypedSelector } from "hooks/useTypedSelector";
 
 import styles from './index.module.scss';
 
 const TeamMembers: React.FC = () => {
-  const { members } = useTypedSelector<IUsersState>(state => state.membersReducer);
+  const { members } = useTypedSelector<IUsersState>(getMembers);
 
-  const admin = members.find((member) => member.role === RolesUsersEnum.ADMIN);
-  const users = members.filter((member) => member.role === RolesUsersEnum.REGULAR);
+  const admin = useMemo<IUser | undefined>(() => {
+    return members.find((member) => member.role === RolesUsersEnum.ADMIN)
+  }, [members]);
+
+  const users = useMemo<IUser[]>(() => {
+    return members.filter((member) => member.role === RolesUsersEnum.REGULAR)
+  }, [members]);
   
   return (
 		<section className={styles.section}>
