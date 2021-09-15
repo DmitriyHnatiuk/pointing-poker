@@ -21,6 +21,7 @@
 	"plugins": ["react", "@typescript-eslint", "prettier"],
 	"ignorePatterns": ["dist/", "node_modules/"],
 	"rules": {
+		"prettier/prettier": ["off", { "singleQuote": true }],
 		"max-len": [1, 100, 2, { "ignoreComments": true }],
 		"no-use-before-define": "off",
 		"@typescript-eslint/no-use-before-define": ["error"],

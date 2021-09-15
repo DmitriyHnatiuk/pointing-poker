@@ -1,0 +1,28 @@
+@import "assets/styles/_variables.scss";
+
+.adminLobbyMenu {
+  margin-top: 10px;
+}
+
+.settings {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.settings > span:not(.pen) {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 45px;
+}
+
+.settings h3 {
+  font-family: Ruda;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 30px;
+  color: #000000;
+}
