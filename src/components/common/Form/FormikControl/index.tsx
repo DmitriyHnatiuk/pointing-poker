@@ -13,6 +13,7 @@ import {
 
 const FormikControl: React.FC<InterfaceFormikControl> = (props) => {
 	const { control, data, ...rest } = props;
+
 	switch (control) {
 		case TypeInputFormikControl.input:
 			return <InputFormik {...rest} />;
