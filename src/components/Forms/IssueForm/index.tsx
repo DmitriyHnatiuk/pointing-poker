@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 
 import FormikControl from 'components/common/Form/FormikControl';
-
 import {
 	InterfaceOptions,
 	TypeInputFormikControl
