@@ -15,8 +15,9 @@ import TeamMembers from 'pages/TeamMembers';
 const Routers: React.FC = (): JSX.Element => {
 	const name = useSelector<{ userName: string }>((state) => state.userName);
 	const room = useSelector<{ room: string }>((state) => state.room);
-	const isAdmin = useSelector<{ isAdmin: string }>((state) => state.isAdmin);
+	// const isAdmin = useSelector<{ isAdmin: string }>((state) => state.isAdmin);
 	const isLogin = name && room;
+	const isAdmin = true;
 
 	return (
 		<>

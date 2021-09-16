@@ -1,8 +1,8 @@
 import React from 'react';
 
+import Members from 'components/common/Members';
 import GameStatus from './GameStatus';
 import Issues from './Issues';
-import Members from './Members';
 import AdminMenu from './AdminMenu';
 
 import styles from './styles.module.scss';

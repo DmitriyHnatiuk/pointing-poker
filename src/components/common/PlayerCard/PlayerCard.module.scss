@@ -25,9 +25,21 @@
 	flex-direction: row;
 }
 
-.avatar img {
+.avatar img,
+.avatar div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 55px;
 	height: 55px;
+	border: 1px solid $Deep-Koamaru;
+	border-radius: 50%;
+}
+
+.avatar div {
+	font-size: 24px;
+	color: $Deep-Koamaru;
+	background-color: $Medium-Aquamarine;
 }
 
 .player {
