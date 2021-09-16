@@ -1,14 +1,15 @@
 import React from 'react';
-import {
-	InterfaceFormikControl,
-	InterfaceOptions,
-	TypeInputFormikControl
-} from 'interfaces/commonForm';
 
 import InputFormik from 'components/common/Form/FormikInput';
 import SelectFormik from 'components/common/Form/FormikSelect';
 import ImagesFormik from 'components/common/Form/ImagesFormik';
 import FormikSwitch from 'components/common/Form/FormikSwitch';
+
+import {
+	InterfaceFormikControl,
+	InterfaceOptions,
+	TypeInputFormikControl
+} from 'interfaces/commonForm';
 
 const FormikControl: React.FC<InterfaceFormikControl> = (props) => {
 	const { control, data, ...rest } = props;

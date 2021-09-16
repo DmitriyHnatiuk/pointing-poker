@@ -1,7 +1,7 @@
 import { FormikHelpers } from 'formik/dist/types';
 import { FieldIssues, FieldRegistry } from '../interfaces/commonForm';
 
-export const submitFormRegistration = (
+export const useSubmitFormRegistration = (
 	values: FieldRegistry,
 	actions: FormikHelpers<FieldRegistry>
 ): void => {
@@ -11,7 +11,7 @@ export const submitFormRegistration = (
 	}, 1000);
 };
 
-export const submitFormIssues = (
+export const useSubmitFormIssues = (
 	values: FieldIssues,
 	actions: FormikHelpers<FieldIssues>
 ): void => {

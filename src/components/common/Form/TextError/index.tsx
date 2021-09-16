@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { ComponentType } from 'react';
+
 import styles from './index.module.scss';
 
-const TextError = ({ ...props }): JSX.Element => {
-	return <div className={styles.formError}>{props.value.children}</div>;
+const TextError: string | ComponentType | undefined = (props) => {
+	const { children } = props;
+
+	return <div className={styles.formError}>{children}</div>;
 };
 
 export default TextError;

@@ -1,13 +1,16 @@
 import React from 'react';
 import { ErrorMessage, Field, useField } from 'formik';
-import { InterfaceFormikInput } from 'interfaces/commonForm';
+
 import TextError from 'components/common/Form/TextError';
+
+import { InterfaceFormikInput } from 'interfaces/commonForm';
 
 import styles from './index.module.scss';
 
 const FormikSwitch: React.FC<InterfaceFormikInput> = ({ label, ...props }) => {
 	const [field, meta] = useField(props);
 	const value = field.checked;
+
 	return (
 		<div className={styles.formControl}>
 			<label className={styles.label} htmlFor="name">
@@ -21,9 +24,9 @@ const FormikSwitch: React.FC<InterfaceFormikInput> = ({ label, ...props }) => {
 				{...props}
 				checked={value}
 			/>
-			{meta.touched && meta.error ? (
+			{meta.touched && meta.error && (
 				<ErrorMessage name={field.name} component={TextError} {...meta} />
-			) : null}
+			)}
 		</div>
 	);
 };

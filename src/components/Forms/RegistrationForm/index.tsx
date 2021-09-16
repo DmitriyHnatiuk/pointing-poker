@@ -1,18 +1,19 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 
-import { TypeInputFormikControl } from 'interfaces/commonForm';
 import FormikControl from 'components/common/Form/FormikControl';
 
 import { initialValuesRegistration } from 'utils/initialValuesForms';
-import { submitFormRegistration } from 'utils/submitForms';
+import { TypeInputFormikControl } from 'interfaces/commonForm';
+import { useSubmitFormRegistration } from '../../../hooks/submitForms';
+
 import styles from './index.module.scss';
 
 const FormRegistration: React.FC = () => {
 	return (
 		<Formik
 			initialValues={initialValuesRegistration}
-			onSubmit={submitFormRegistration}>
+			onSubmit={useSubmitFormRegistration}>
 			{() => (
 				<Form className={styles.form}>
 					<h1 className={styles.title}>Connect to lobby</h1>
