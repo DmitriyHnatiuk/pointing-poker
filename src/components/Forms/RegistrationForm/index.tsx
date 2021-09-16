@@ -2,10 +2,9 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 
 import FormikControl from 'components/common/Form/FormikControl';
-
 import { initialValuesRegistration } from 'utils/initialValuesForms';
 import { TypeInputFormikControl } from 'interfaces/commonForm';
-import { useSubmitFormRegistration } from '../../../hooks/submitForms';
+import { useSubmitFormRegistration } from 'hooks/submitForms';
 
 import styles from './index.module.scss';
 

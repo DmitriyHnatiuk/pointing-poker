@@ -9,6 +9,14 @@ const ImagesFormik: React.FC<InterfaceImagesFormik> = ({ label, ...props }) => {
 	const [field] = useField(props);
 	const { setFieldValue } = useFormikContext();
 	const { name } = props;
+
+	const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files;
+		if (file) {
+			setFieldValue(`${name}`, file[0], false);
+		}
+	};
+
 	field.value = undefined;
 
 	return (
@@ -20,12 +28,7 @@ const ImagesFormik: React.FC<InterfaceImagesFormik> = ({ label, ...props }) => {
 				{...field}
 				{...props}
 				accept="image/png, image/jpeg"
-				onChange={(e: ChangeEvent<HTMLInputElement>) => {
-					const file = e.target.files;
-					if (file) {
-						setFieldValue(`${name}`, file[0], false);
-					}
-				}}
+				onChange={changeImage}
 			/>
 		</div>
 	);

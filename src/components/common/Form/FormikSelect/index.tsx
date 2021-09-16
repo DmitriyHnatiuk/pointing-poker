@@ -2,7 +2,6 @@ import React from 'react';
 import { ErrorMessage, Field, useField } from 'formik';
 
 import TextError from 'components/common/Form/TextError';
-
 import { InterfaceFormikSelect } from 'interfaces/commonForm';
 
 import styles from './index.module.scss';
@@ -13,6 +12,8 @@ const SelectFormik: React.FC<InterfaceFormikSelect> = ({
 	...props
 }) => {
 	const [field, meta] = useField(props);
+
+	const isError = meta.touched && meta.error;
 
 	return (
 		<div className={styles.formControl}>
@@ -27,11 +28,11 @@ const SelectFormik: React.FC<InterfaceFormikSelect> = ({
 				{...props}>
 				{options.map(({ key, value }) => (
 					<option key={value} value={value}>
-						{key[0].toUpperCase() + key.slice(1)}
+						{key}
 					</option>
 				))}
 			</Field>
-			{meta.touched && meta.error && (
+			{isError && (
 				<ErrorMessage name={field.name} component={TextError} {...meta} />
 			)}
 		</div>

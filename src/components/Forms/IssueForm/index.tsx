@@ -13,9 +13,9 @@ import { useSubmitFormIssues } from 'hooks/submitForms';
 import styles from './index.module.scss';
 
 const optionsPriority: InterfaceOptions[] = [
-	{ key: 'low', value: 'low' },
-	{ key: 'middle', value: 'middle' },
-	{ key: 'Height', value: 'Height' }
+	{ key: 'Low', value: 'low' },
+	{ key: 'Middle', value: 'middle' },
+	{ key: 'Height', value: 'height' }
 ];
 
 const IssueForm: React.FC = () => {
