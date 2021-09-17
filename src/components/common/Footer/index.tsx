@@ -2,7 +2,7 @@ import React from 'react';
 
 import { RSS_HREF, GitHubItems } from 'constants/commonComponents';
 
-import styles from './Footer.module.scss';
+import styles from './index.module.scss';
 
 const Footer: React.FC = (): JSX.Element => {
 	return (

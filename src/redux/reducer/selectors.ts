@@ -1,5 +1,7 @@
 import { RootState } from 'redux/store';
-import { IUsersState } from './membersReducer/types';
+import { Game } from './gameSettingReducer/types';
+import { User } from './userReducer/types';
 
-export const getMembers = (state: RootState): IUsersState =>
-	state.membersReducer;
+export const getMembers = (state: RootState): User => state.userReducer;
+
+export const getGame = (state: RootState): Game => state.gameSettings;

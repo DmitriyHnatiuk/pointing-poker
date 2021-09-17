@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 
-import { RootState } from 'redux/store';
+import { useTypedSelector } from 'hooks/useTypedSelector';
+import { User } from 'redux/reducer/userReducer/types';
+import { getMembers } from 'redux/reducer/selectors';
 
 import { btn } from 'constants/commonComponents';
-import MyButton from 'components/common/MyButton/MyButton';
-import MyInput from 'components/common/MyInput/MyInput';
+import MyButton from 'components/common/MyButton';
+import MyInput from 'components/common/MyInput';
 import FormRegistration from 'components/Forms/RegistrationForm';
 
 import pokerPlanningImage from 'assets/images/MainPage/poker-planning.jpg';
@@ -20,7 +22,7 @@ const MainPage: React.FC = (): JSX.Element => {
 	const [form, setForm] = useState(false);
 	const dispatch = useDispatch();
 
-	const room = useSelector((state: RootState) => state.userReducer.roomNumber);
+	const { roomNumber } = useTypedSelector<User>(getMembers);
 
 	const connectToRoom = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		const obj = { roomNumber: event.target.value };
@@ -34,7 +36,7 @@ const MainPage: React.FC = (): JSX.Element => {
 	};
 
 	const setUser = () => {
-		if (room) {
+		if (roomNumber) {
 			setForm(true);
 		}
 		return null;
@@ -56,7 +58,7 @@ const MainPage: React.FC = (): JSX.Element => {
 						<h3>OR:</h3>
 						<span>Connect to lobby:</span>
 						<form>
-							<MyInput value={room} onchange={connectToRoom} />
+							<MyInput value={roomNumber} onchange={connectToRoom} />
 							<MyButton value={CONNECT} onclick={setUser} />
 						</form>
 					</div>

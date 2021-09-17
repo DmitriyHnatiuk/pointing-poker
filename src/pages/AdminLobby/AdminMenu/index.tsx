@@ -32,7 +32,6 @@ const AdminMenu: React.FC = (): JSX.Element => {
 				</span>
 				<span>
 					<h3>Round time:</h3>
-					{/* Timer */} {/* soon to be implemented and applied */}
 				</span>
 				<ul className={styles.cardsWrapper}>
 					<h2>Add card values:</h2>

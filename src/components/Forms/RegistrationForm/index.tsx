@@ -1,17 +1,22 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-
 import { Form, Formik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'redux/store';
+
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { useTypedSelector } from 'hooks/useTypedSelector';
+import { User } from 'redux/reducer/userReducer/types';
+import { getMembers } from 'redux/reducer/selectors';
 
 import { setUserDataActionCreation } from 'redux/reducer/userReducer';
-import { ways } from 'constants/constRouter';
-import { btn } from 'constants/commonComponents';
-import MyButton from 'components/common/MyButton/MyButton';
-import FormikControl from 'components/common/Form/FormikControl';
 import { initialValuesRegistration } from 'utils/initialValuesForms';
 import { TypeInputFormikControl, FieldRegistry } from 'interfaces/commonForm';
+
+import { ways } from 'constants/constRouter';
+import { btn } from 'constants/commonComponents';
+
+import MyButton from 'components/common/MyButton';
+import FormikControl from 'components/common/Form/FormikControl';
 
 import styles from './index.module.scss';
 
@@ -24,8 +29,8 @@ const FormRegistration: React.FC<{ setForm: (arg: boolean) => void }> = ({
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const isAdmin = useSelector((state: RootState) => state.userReducer.isAdmin);
-	const avatar = useSelector((state: RootState) => state.userReducer.avatar);
+	const { isAdmin } = useTypedSelector<User>(getMembers);
+	const { avatar } = useTypedSelector<User>(getMembers);
 
 	const toLobby = () => {
 		const path = isAdmin ? ADMIN : USER;
@@ -36,8 +41,7 @@ const FormRegistration: React.FC<{ setForm: (arg: boolean) => void }> = ({
 	const toHome = () => setForm(false);
 
 	const useSubmitFormRegistration = (values: FieldRegistry): void => {
-		const obj = { ...values };
-		dispatch(setUserDataActionCreation(obj));
+		dispatch(setUserDataActionCreation(values));
 		toLobby();
 	};
 

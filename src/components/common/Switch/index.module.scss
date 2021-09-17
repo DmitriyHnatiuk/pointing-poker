@@ -15,27 +15,25 @@
 }
 
 .slider {
+  min-width: 26px;
   position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
+  background-color: $BackgroundGray;
   transition: 0.4s;
 }
 
 .slider:before {
   content: "";
   position: absolute;
-
   height: 12px;
   width: 10px;
   left: 2px;
   bottom: 2px;
-  background-color: white;
-  -webkit-transition: 0.4s;
+  background-color: $white-color;
   transition: 0.4s;
 }
 
@@ -43,15 +41,10 @@ input:checked + .slider {
   background-color: $Medium-Aquamarine;
 }
 
-input:focus {
-  box-shadow: 0 0 1px #2196f3;
-}
-
 input:checked + .slider:before {
-  transform: translateX(16px);
+  transform: translateX(12px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
