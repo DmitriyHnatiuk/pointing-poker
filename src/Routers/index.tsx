@@ -2,33 +2,36 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { RootState } from 'redux/store';
+import { ways } from 'constants/constRouter';
+
 import Header from 'components/common/Header/Header';
 import Main from 'components/common/Main';
 import Footer from 'components/common/Footer/Footer';
-import Chat from 'components/common/Chat';
-
 import MainPage from 'pages/MainPage';
 import Error404 from 'pages/Error404';
 import AdminLobby from 'pages/AdminLobby';
 import TeamMembers from 'pages/TeamMembers';
 
+const { HOME, ADMIN, USER, ERROR } = ways;
+
 const Routers: React.FC = (): JSX.Element => {
-	const name = useSelector<{ userName: string }>((state) => state.userName);
-	const room = useSelector<{ room: string }>((state) => state.room);
-	const isAdmin = useSelector<{ isAdmin: string }>((state) => state.isAdmin);
-	const isLogin = name && room;
+	const isAdmin = useSelector<RootState>((state) => state.userReducer.isAdmin);
+	const roomNumber = useSelector<RootState>(
+		(state) => state.userReducer.roomNumber
+	);
 
 	return (
 		<>
 			<Header />
 			<Main>
 				<Switch>
-					<Route exact path="/" component={MainPage} />
-					{/* {isLogin && <Route exact path="/lobby" component={UserLobby} />} */}
-					{isAdmin && <Route path="/admin" component={AdminLobby} />}
-					<Route exact path="/chat" component={Chat} />
-					<Route exact path="/members" component={TeamMembers} />
-					<Route path="*" component={Error404} />
+					<Route exact path={HOME} component={MainPage} />
+					{isAdmin && <Route path={ADMIN} component={AdminLobby} />}
+					{!isAdmin && roomNumber && (
+						<Route exact path={USER} component={TeamMembers} />
+					)}
+					<Route path={ERROR} component={Error404} />
 				</Switch>
 			</Main>
 			<Footer />

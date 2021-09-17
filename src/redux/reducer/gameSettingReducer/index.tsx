@@ -33,9 +33,7 @@ const reducer = (
 		case SET_DATA: {
 			return {
 				...state,
-				userName: action.payload.name,
-				room: action.payload.room,
-				isAdmin: action.payload.admin
+			...action.payload
 			};
 		}
 
