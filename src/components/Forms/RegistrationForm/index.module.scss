@@ -1,7 +1,10 @@
+@import "assets/styles/_variables.scss";
+
 .form {
 	width: 50%;
 	min-height: 500px;
-	margin: 50px auto;
+	margin: auto;
+	top: 15%;
 	padding: 60px;
 	position: relative;
 	display: flex;
@@ -9,12 +12,35 @@
 	flex-wrap: wrap;
 	justify-content: flex-start;
 	align-items: flex-start;
-	border: 3px solid #3162ac;
+	box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
+	background-color: $white-color;
+}
+.formContent {
+	display: flex;
+	align-items: flex-start;
 }
 
 .title {
 	font-family: Roboto, sans-serif;
-	font-size: 64px;
+	font-size: 38px;
 	font-weight: 700;
 	margin-bottom: 30px;
+}
+
+.cancel {
+	background: $white-color;
+	color: $Deep-Koamaru;
+}
+
+.cancel:hover {
+	background-color: $Deep-Koamaru;
+	color: $white-color;
+}
+
+.buttons {
+	padding-top: 20px;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 }

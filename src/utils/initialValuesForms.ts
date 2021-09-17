@@ -3,9 +3,9 @@ import { FieldIssues, FieldRegistry } from '../interfaces/commonForm';
 export const initialValuesRegistration: FieldRegistry = {
 	firstName: '',
 	lastName: '',
-	jobPosition: '',
+	position: '',
 	observer: false,
-	image: ''
+	avatar: ''
 };
 
 export const initialIssues: FieldIssues = {
