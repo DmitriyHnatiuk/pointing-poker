@@ -1,36 +1,45 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { Form, Formik } from 'formik';
 
+import { Form, Formik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
+
+import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 import { ways } from 'constants/constRouter';
 import { btn } from 'constants/commonComponents';
 import MyButton from 'components/common/MyButton/MyButton';
 import FormikControl from 'components/common/Form/FormikControl';
 import { initialValuesRegistration } from 'utils/initialValuesForms';
-import { TypeInputFormikControl } from 'interfaces/commonForm';
-import { useSubmitFormRegistration } from 'hooks/submitForms';
+import { TypeInputFormikControl, FieldRegistry } from 'interfaces/commonForm';
 
 import styles from './index.module.scss';
 
-const { ADMIN, USER, HOME } = ways;
-const { CONFIRM, CANCEL, OBSERVER } = btn;
+const { ADMIN, USER } = ways;
+const { CONFIRM, CANCEL } = btn;
 
 const FormRegistration: React.FC<{ setForm: (arg: boolean) => void }> = ({
 	setForm
 }) => {
+	const history = useHistory();
+	const dispatch = useDispatch();
+
 	const isAdmin = useSelector((state: RootState) => state.userReducer.isAdmin);
 	const avatar = useSelector((state: RootState) => state.userReducer.avatar);
-	const history = useHistory();
 
-	const toAdmin = () => {
+	const toLobby = () => {
 		const path = isAdmin ? ADMIN : USER;
 
 		return history.push(path);
 	};
 
 	const toHome = () => setForm(false);
+
+	const useSubmitFormRegistration = (values: FieldRegistry): void => {
+		const obj = { ...values };
+		dispatch(setUserDataActionCreation(obj));
+		toLobby();
+	};
 
 	return (
 		<Formik
@@ -70,7 +79,7 @@ const FormRegistration: React.FC<{ setForm: (arg: boolean) => void }> = ({
 						/>
 					</div>
 					<div className={styles.buttons}>
-						<MyButton value={CONFIRM} onclick={toAdmin} type="submit" />
+						<MyButton value={CONFIRM} type="submit" />
 						<MyButton value={CANCEL} onclick={toHome} style={styles.cancel} />
 					</div>
 				</Form>
