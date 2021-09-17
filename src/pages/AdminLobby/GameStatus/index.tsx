@@ -49,7 +49,7 @@ const GameStatus: React.FC = (): JSX.Element => {
 					/>
 					<input className={styles.buttonCopy} type="submit" value="Copy" />
 				</label>
-				<div className={styles.buttonGame}>
+				<div className={styles.buttons}>
 					<MyButton onclick={set} value={START_GAME} />
 					<MyButton
 						onclick={toHome}
