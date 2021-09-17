@@ -48,6 +48,15 @@ const AdminLobby: React.FC = (): JSX.Element => {
 		console.log(ms, obj);
 	});
 
+	socket.on('event://your room data', (rooms) => {
+		if (!rooms) {
+			return history.push('/');
+		}
+		const obj = { users: rooms.users };
+
+		return dispatch(setUserDataActionCreation(obj));
+	});
+
 	socket.on('event://error', (err) => {
 		console.log(err);
 		history.push('/');
