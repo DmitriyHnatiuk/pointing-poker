@@ -15,9 +15,7 @@ const Members: React.FC = (): JSX.Element => {
 
 	const renderMembers = () =>
 		isUsers.length > 0 ? (
-			isUsers.map((user) => {
-				return <PlayerCard user={user} key={user.id} />;
-			})
+			isUsers.map((user) => <PlayerCard user={user} key={user.id} />)
 		) : (
 			<h4>Waiting for team members...</h4>
 		);

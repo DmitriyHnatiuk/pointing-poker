@@ -27,6 +27,7 @@ const GameStatus: React.FC = (): JSX.Element => {
 	const history = useHistory();
 	const toHome = () => history.push(HOME);
 
+	const copyLink = () => navigator.clipboard.writeText(roomNumber);
 	const changeLink = (event: React.ChangeEvent<HTMLInputElement>) =>
 		console.log(event.target.value); // #
 
@@ -47,7 +48,12 @@ const GameStatus: React.FC = (): JSX.Element => {
 						value={roomNumber}
 						onChange={changeLink}
 					/>
-					<input className={styles.buttonCopy} type="submit" value="Copy" />
+					<MyButton
+						style={styles.buttonCopy}
+						type="button"
+						value="Copy"
+						onclick={copyLink}
+					/>
 				</label>
 				<div className={styles.buttons}>
 					<MyButton onclick={set} value={START_GAME} />
