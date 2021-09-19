@@ -1,51 +1,107 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from 'react';
+import { io } from 'socket.io-client';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useTypedSelector } from 'hooks/useTypedSelector';
 
-import PlayerCard from "components/common/PlayerCard/PlayerCard";
-import MyButton from "components/common/MyButton/MyButton";
+import { getMembers } from 'redux/reducer/selectors';
+import { Profile, User } from 'redux/reducer/userReducer/types';
+import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 
-import { IUser, IUsersState, RolesUsersEnum } from "redux/reducer/membersReducer/types";
-import { getMembers } from "redux/reducer/selectors";
+import { URL } from 'constants/API';
+import { ways } from 'constants/constRouter';
 
-import { useTypedSelector } from "hooks/useTypedSelector";
+import PlayerCard from 'components/common/PlayerCard';
+import MyButton from 'components/common/MyButton';
 
 import styles from './index.module.scss';
 
+const { HOME } = ways;
+const socket = io(URL, { autoConnect: false });
+
 const TeamMembers: React.FC = () => {
-  const { members } = useTypedSelector<IUsersState>(getMembers);
+	const history = useHistory();
+	const dispatch = useDispatch();
+	const userData = useTypedSelector<User>(getMembers);
 
-  const admin = useMemo<IUser | undefined>(() => {
-    return members.find((member) => member.role === RolesUsersEnum.ADMIN)
-  }, [members]);
+	useEffect(() => {
+		socket.connect();
+		socket.emit(
+			'event://connect to room',
+			userData,
+			(res: { status: string }) => {
+				const response = res.status
+					? console.log('done')
+					: console.log('error');
+				return response;
+			}
+		);
+	}, []);
 
-  const users = useMemo<IUser[]>(() => {
-    return members.filter((member) => member.role === RolesUsersEnum.REGULAR)
-  }, [members]);
-  
-  return (
+	// test
+	socket.on('event://your room members', (members: Profile) => {
+		if (!members) {
+			return history.push(HOME);
+		}
+		const obj = { users: members.users };
+
+		return dispatch(setUserDataActionCreation(obj));
+	});
+
+	socket.on('event://your room data', (rooms) => {
+		if (!rooms) {
+			return history.push(HOME);
+		}
+		const obj = { users: rooms.users };
+
+		return dispatch(setUserDataActionCreation(obj));
+	});
+
+	socket.on('event://message', (ms, obj) => {
+		console.log(ms, obj);
+	});
+
+	socket.on('event://error', (err) => {
+		console.log(err);
+		history.push(HOME);
+	});
+
+	const { users } = useTypedSelector<User>(getMembers);
+
+	const admin = useMemo(() => {
+		return users.find((user) => user.isAdmin === true);
+	}, [users]);
+
+	const isUsers = useMemo(() => {
+		return users.filter((user) => user.isAdmin === false);
+	}, [users]);
+
+	const setExit = () => {
+		return history.push(HOME);
+	};
+
+	return (
 		<section className={styles.section}>
-      <h3>
-        Spring planning:
-      </h3>
+			<h3>Spring planning:</h3>
 			<div className={styles.scram}>
 				<span>Scram master:</span>
-        <PlayerCard user={admin!} />
+				{admin && <PlayerCard user={admin} />}
 			</div>
-      <div className={styles.exit}>
-        <MyButton value='Exit' />
-      </div>
-      <div className={styles.team}>
-        <h3>Members:</h3>
-        <div className={styles.members}>
-          { users.length !== 0 
-            ? users.map(user => {
-              return <PlayerCard user={user} key={user.id} />
-              })
-            : <h4>Waiting for team members...</h4>
-          }
-        </div>
-      </div>
+			<div className={styles.exit}>
+				<MyButton value="Exit" onclick={setExit} />
+			</div>
+			<div className={styles.team}>
+				<h3>Members:</h3>
+				<div className={styles.members}>
+					{isUsers.length !== 0 ? (
+						isUsers.map((user) => <PlayerCard user={user} key={user.id} />)
+					) : (
+						<h4>Waiting for team members...</h4>
+					)}
+				</div>
+			</div>
 		</section>
-  )
-}
+	);
+};
 
 export default TeamMembers;

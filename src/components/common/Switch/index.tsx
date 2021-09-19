@@ -2,14 +2,16 @@ import React from 'react';
 
 import styles from './index.module.scss';
 
-const Switch: React.FC = (): JSX.Element => {
+const Switch: React.FC<{
+	id?: string;
+	value?: boolean;
+	setValue?: () => void;
+}> = ({ id, value, setValue }): JSX.Element => {
 	return (
-		<>
-			<label htmlFor="link" className={styles.switch}>
-				<input type="checkbox" />
-				<span className={`${styles.slider} ${styles.round}`} />
-			</label>
-		</>
+		<label htmlFor={id} className={styles.switch}>
+			<input id={id} type="checkbox" checked={value} onChange={setValue} />
+			<span className={`${styles.slider} ${styles.round}`} />
+		</label>
 	);
 };
 

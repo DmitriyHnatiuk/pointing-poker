@@ -4,15 +4,17 @@ import style from './index.module.scss';
 
 const Chat: React.FC = (): JSX.Element => {
 	function setDate() {
-		const d = new Date();
-		if (d.getMinutes()) {
-			const min = d.getMinutes();
+		const date = new Date();
+		const min = date.getMinutes();
+		const hours = date.getHours();
+		if (min) {
 			return (
 				<div className={style.timestamp}>
-					{d.getHours()}:{min}
+					{hours}:{min}
 				</div>
 			);
 		}
+
 		return null;
 	}
 
@@ -21,7 +23,6 @@ const Chat: React.FC = (): JSX.Element => {
 			<div className={style.chatTitle}>
 				<h1>Alberico</h1>
 				<h2>Admin</h2>
-
 				<figure className={style.avatar}>
 					<img src="#" alt="avatar" />
 				</figure>

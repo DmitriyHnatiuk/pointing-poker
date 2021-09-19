@@ -35,9 +35,9 @@ export interface InterfaceOptions {
 export interface FieldRegistry {
 	firstName: string;
 	lastName: string;
-	jobPosition: string;
+	position: string;
 	observer: boolean;
-	image: string | File;
+	avatar: string;
 }
 
 export interface FieldIssues {

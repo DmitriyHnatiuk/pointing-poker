@@ -1,11 +1,20 @@
+import { Users } from 'redux/reducer/userReducer/types';
+
 export interface IGitHubItems {
 	id: number;
 	href: string;
 	name: string;
 }
-
 export interface actionCreationArguments {
-	name: string;
-	room: string;
-	admin: boolean;
+	firstName?: string;
+	lastName?: string;
+	position?: string;
+	avatar?: string;
+	observer?: boolean;
+	isAdmin?: boolean;
+	selectedCard?: string;
+	roomNumber?: string;
+	karma?: number;
+	users?: Users[];
+	id?: string;
 }
