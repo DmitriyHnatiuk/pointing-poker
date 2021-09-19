@@ -1,20 +1,22 @@
 import React, { useEffect, useMemo } from 'react';
 import { io } from 'socket.io-client';
-
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
 import { useTypedSelector } from 'hooks/useTypedSelector';
+
 import { getMembers } from 'redux/reducer/selectors';
 import { Profile, User } from 'redux/reducer/userReducer/types';
 import { setUserDataActionCreation } from 'redux/reducer/userReducer';
+
 import { URL } from 'constants/API';
+import { ways } from 'constants/constRouter';
 
 import PlayerCard from 'components/common/PlayerCard';
 import MyButton from 'components/common/MyButton';
 
 import styles from './index.module.scss';
 
+const { HOME } = ways;
 const socket = io(URL, { autoConnect: false });
 
 const TeamMembers: React.FC = () => {
@@ -39,7 +41,7 @@ const TeamMembers: React.FC = () => {
 	// test
 	socket.on('event://your room members', (members: Profile) => {
 		if (!members) {
-			return history.push('/');
+			return history.push(HOME);
 		}
 		const obj = { users: members.users };
 
@@ -48,7 +50,7 @@ const TeamMembers: React.FC = () => {
 
 	socket.on('event://your room data', (rooms) => {
 		if (!rooms) {
-			return history.push('/');
+			return history.push(HOME);
 		}
 		const obj = { users: rooms.users };
 
@@ -61,7 +63,7 @@ const TeamMembers: React.FC = () => {
 
 	socket.on('event://error', (err) => {
 		console.log(err);
-		history.push('/');
+		history.push(HOME);
 	});
 
 	const { users } = useTypedSelector<User>(getMembers);
@@ -75,17 +77,7 @@ const TeamMembers: React.FC = () => {
 	}, [users]);
 
 	const setExit = () => {
-		return history.push('/');
-	};
-
-	const renderMembers = () => {
-		return isUsers.length !== 0 ? (
-			isUsers.map((user) => {
-				return <PlayerCard user={user} key={user.id} />;
-			})
-		) : (
-			<h4>Waiting for team members...</h4>
-		);
+		return history.push(HOME);
 	};
 
 	return (
@@ -100,7 +92,13 @@ const TeamMembers: React.FC = () => {
 			</div>
 			<div className={styles.team}>
 				<h3>Members:</h3>
-				<div className={styles.members}>{renderMembers()}</div>
+				<div className={styles.members}>
+					{isUsers.length !== 0 ? (
+						isUsers.map((user) => <PlayerCard user={user} key={user.id} />)
+					) : (
+						<h4>Waiting for team members...</h4>
+					)}
+				</div>
 			</div>
 		</section>
 	);

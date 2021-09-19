@@ -1,18 +1,13 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { User } from 'redux/reducer/userReducer/types';
 import { getMembers } from 'redux/reducer/selectors';
+import { useSubmitFormRegistration } from 'hooks/submitForms';
+import { TypeInputFormikControl } from 'interfaces/commonForm';
 
-import { setUserDataActionCreation } from 'redux/reducer/userReducer';
+import { User } from 'redux/reducer/userReducer/types';
 import { initialValuesRegistration } from 'utils/initialValuesForms';
-import { TypeInputFormikControl, FieldRegistry } from 'interfaces/commonForm';
-
-import { ways } from 'constants/constRouter';
 import { btn } from 'constants/commonComponents';
 
 import MyButton from 'components/common/MyButton';
@@ -20,35 +15,17 @@ import FormikControl from 'components/common/Form/FormikControl';
 
 import styles from './index.module.scss';
 
-const { ADMIN, USER } = ways;
 const { CONFIRM, CANCEL } = btn;
 
 const FormRegistration: React.FC<{ setForm: (arg: boolean) => void }> = ({
 	setForm
 }) => {
-	const history = useHistory();
-	const dispatch = useDispatch();
-
-	const { isAdmin } = useTypedSelector<User>(getMembers);
 	const { avatar } = useTypedSelector<User>(getMembers);
-
-	const toLobby = () => {
-		const path = isAdmin ? ADMIN : USER;
-
-		return history.push(path);
-	};
-
 	const toHome = () => setForm(false);
-
-	const useSubmitFormRegistration = (values: FieldRegistry): void => {
-		dispatch(setUserDataActionCreation(values));
-		toLobby();
-	};
+	const submit = useSubmitFormRegistration();
 
 	return (
-		<Formik
-			initialValues={initialValuesRegistration}
-			onSubmit={useSubmitFormRegistration}>
+		<Formik initialValues={initialValuesRegistration} onSubmit={submit}>
 			{() => (
 				<Form className={styles.form}>
 					<div className={styles.formContent}>

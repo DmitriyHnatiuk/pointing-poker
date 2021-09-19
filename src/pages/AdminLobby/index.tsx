@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { io } from 'socket.io-client';
-
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
 import { useTypedSelector } from 'hooks/useTypedSelector';
+
 import { getMembers } from 'redux/reducer/selectors';
 import { User } from 'redux/reducer/userReducer/types';
 import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 
+import { ways } from 'constants/constRouter';
 import { URL } from 'constants/API';
 
 import GameStatus from './GameStatus';
@@ -19,6 +19,7 @@ import AdminMenu from './AdminMenu';
 import styles from './index.module.scss';
 
 const socket = io(URL, { autoConnect: false });
+const { HOME } = ways;
 
 const AdminLobby: React.FC = (): JSX.Element => {
 	const history = useHistory();
@@ -34,6 +35,7 @@ const AdminLobby: React.FC = (): JSX.Element => {
 				const response = res.status
 					? console.log('done')
 					: console.log('error');
+
 				return response;
 			}
 		);
@@ -41,6 +43,7 @@ const AdminLobby: React.FC = (): JSX.Element => {
 
 	socket.on('event://your room name', (roomName) => {
 		const obj = { roomNumber: roomName };
+
 		return dispatch(setUserDataActionCreation(obj));
 	});
 
@@ -50,7 +53,7 @@ const AdminLobby: React.FC = (): JSX.Element => {
 
 	socket.on('event://your room data', (rooms) => {
 		if (!rooms) {
-			return history.push('/');
+			return history.push(HOME);
 		}
 		const obj = { users: rooms.users };
 
@@ -59,7 +62,7 @@ const AdminLobby: React.FC = (): JSX.Element => {
 
 	socket.on('event://error', (err) => {
 		console.log(err);
-		history.push('/');
+		history.push(HOME);
 	});
 
 	return (
