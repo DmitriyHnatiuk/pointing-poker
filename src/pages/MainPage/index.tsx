@@ -21,12 +21,7 @@ import styles from './index.module.scss';
 
 const MainPage: React.FC = (): JSX.Element => {
 	const [openModal, setOpenModal] = useState(false);
-	const [form, setForm] = useState(false);
 	const dispatch = useDispatch();
-
-	const openModals = () => {
-		setOpenModal(true);
-	};
 
 	const { roomNumber } = useTypedSelector<User>(getMembers);
 
@@ -36,14 +31,14 @@ const MainPage: React.FC = (): JSX.Element => {
 	};
 
 	const setAdmin = () => {
-		const obj = { isAdmin: true };
-		dispatch(setUserDataActionCreation(obj));
-		return setForm(true);
+		setOpenModal(true);
+		dispatch(setUserDataActionCreation({ isAdmin: true }));
 	};
 
 	const setUser = () => {
 		if (roomNumber) {
-			setForm(true);
+			setOpenModal(true);
+			dispatch(setUserDataActionCreation({ isAdmin: false }));
 		}
 		return null;
 	};
@@ -58,7 +53,7 @@ const MainPage: React.FC = (): JSX.Element => {
 					<div className={styles.start}>
 						<h3>Start your planning:</h3>
 						<span>Create session:</span>
-						<MyButton onclick={openModals} value={btnValue.START} />
+						<MyButton onclick={setAdmin} value={btnValue.START} />
 					</div>
 					<div className={styles.or}>
 						<h3>OR:</h3>
