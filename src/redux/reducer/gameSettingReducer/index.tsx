@@ -33,7 +33,7 @@ const reducer = (
 		case SET_DATA: {
 			return {
 				...state,
-			...action.payload
+				...action.payload
 			};
 		}
 

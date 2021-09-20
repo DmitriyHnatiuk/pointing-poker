@@ -1,57 +1,57 @@
-@import "assets/styles/_variables.scss";
+@import 'assets/styles/_variables.scss';
 
 .form {
-  width: 50%;
-  min-height: 500px;
-  max-width: 800px;
-  margin: auto;
-  top: 50px;
-  padding: 60px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: $white-color;
+	width: 50%;
+	min-height: 500px;
+	max-width: 800px;
+	margin: auto;
+	top: 50px;
+	padding: 60px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
+	background-color: $white-color;
 }
 
 .formHeader {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-bottom: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-bottom: 20px;
 }
 
 .observer {
-  margin-top: 20px;
-  margin-bottom: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .title {
-  font-family: Roboto, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 64px;
-  line-height: 75px;
-  margin-right: 15px;
+	font-family: Roboto, sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 64px;
+	line-height: 75px;
+	margin-right: 15px;
 }
 
 .cancel {
-  background: $white-color;
-  color: $Deep-Koamaru;
+	background: $white-color;
+	color: $Deep-Koamaru;
 }
 
 .cancel:hover {
-  background-color: $Deep-Koamaru;
-  color: $white-color;
+	background-color: $Deep-Koamaru;
+	color: $white-color;
 }
 
 .buttons {
-  padding-top: 20px;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+	padding-top: 20px;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 }
