@@ -1,0 +1,77 @@
+@import '/src/assets/styles/variables';
+
+.card {
+	width: 100px;
+	height: 150px;
+	margin: 5px;
+	border: 1px solid $Deep-Koamaru;
+	border-radius: 5px;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	transition: all 0.5s;
+}
+
+.card:hover {
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+	padding: 10px;
+}
+.top,
+.bottom {
+	font-size: 16px;
+}
+
+.top {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.top img {
+	width: 16px;
+	height: 16px;
+	transition: all 0.5s;
+}
+
+.top img:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+}
+
+.top img:active {
+	transform: scale(1.2);
+}
+
+.top input {
+	width: 100%;
+	padding: 0;
+	font-size: 16px;
+	border: none;
+}
+
+.top input:focus {
+	color: $Sage;
+	background-color: $white-color;
+}
+
+.top input:disabled {
+	color: $TextDark;
+	background-color: $white-color;
+}
+
+.type {
+	font-size: 48px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.bottom {
+	display: flex;
+	justify-content: flex-start;
+	transform: rotate(180deg);
+}

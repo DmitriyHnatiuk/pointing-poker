@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import PlayerCard from 'components/common/PlayerCard/PlayerCard';
 import MyButton from 'components/common/MyButton/MyButton';
-import Members from 'components/common/Members';
+import Members from 'components/Members';
 
 import {
 	IUser,
@@ -34,9 +34,7 @@ const TeamMembers: React.FC = () => {
 			</div>
 			<div className={styles.team}>
 				<h3>Members:</h3>
-				<div className={styles.members}>
-					<Members />
-				</div>
+				<Members />
 			</div>
 		</section>
 	);

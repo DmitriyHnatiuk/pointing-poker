@@ -6,10 +6,12 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import reducer from 'redux/reducer';
 import membersReducer from 'redux/reducer/membersReducer';
+import storyPointCardsReducer from './reducer/storyPointCardsReducer';
 
 const rootReducer = combineReducers({
 	reducer,
-	membersReducer
+	membersReducer,
+	storyPointCardsReducer
 });
 
 const composeDev = composeWithDevTools || compose;

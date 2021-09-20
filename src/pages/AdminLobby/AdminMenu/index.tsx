@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Switch from 'components/common/Switch';
-import Card from './Card';
+import StoryPointCards from 'components/StoryPointCards';
 
 import styles from './index.module.scss';
 
@@ -36,7 +36,7 @@ const AdminMenu: React.FC = (): JSX.Element => {
 				</span>
 				<ul className={styles.cardsWrapper}>
 					<h2>Add card values:</h2>
-					<Card />
+					<StoryPointCards />
 				</ul>
 			</div>
 		</div>
