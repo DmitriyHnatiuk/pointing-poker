@@ -11,7 +11,7 @@ const ImagesFormik: React.FC<InterfaceImagesFormik> = ({
 	...props
 }) => {
 	const [field] = useField(props);
-	const { setFieldValue, values } = useFormikContext();
+	const { setFieldValue } = useFormikContext();
 	const { name } = props;
 
 	const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
