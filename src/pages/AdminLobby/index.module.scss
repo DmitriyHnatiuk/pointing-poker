@@ -7,13 +7,14 @@
 	padding: 10px 36px;
 	color: black;
 }
+
 .adminLobby input[type='text'] {
 	width: 20vw;
 	margin-top: 10px;
 	padding-left: 10px;
 	border: 1px solid $TextDark;
 	border-bottom-left-radius: 10px;
-	font-family: Roboto;
+	font-family: Roboto, sans-serif;
 	font-style: normal;
 	font-weight: 300;
 	font-size: 24px;

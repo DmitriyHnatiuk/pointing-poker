@@ -1,6 +1,6 @@
-export const ways = {
-	HOME: '/',
-	ADMIN: '/admin',
-	USER: '/user',
-	ERROR: '*'
-};
+export enum ways {
+	HOME = '/',
+	ADMIN = '/admin',
+	USER = '/user',
+	ERROR = '*'
+}

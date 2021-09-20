@@ -1,28 +1,25 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
+import { getMembers } from 'redux/reducer/selectors';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { getMembers } from 'redux/reducer/selectors';
 import { useSubmitFormRegistration } from 'hooks/submitForms';
-import { TypeInputFormikControl } from 'interfaces/commonForm';
-
 import { User } from 'redux/reducer/userReducer/types';
+
 import { initialValuesRegistration } from 'utils/initialValuesForms';
-import { btn } from 'constants/commonComponents';
+import { btnValue } from 'constants/commonComponents';
 
 import MyButton from 'components/common/MyButton';
 import FormikControl from 'components/common/Form/FormikControl';
+
 import { InterfaceModals } from 'interfaces/modals';
+import { TypeInputFormikControl } from 'interfaces/commonForm';
 
 import styles from './index.module.scss';
 
-const { CONFIRM, CANCEL } = btn;
-
-const FormRegistration: React.FC<InterfaceModals> = ({ open }) => {
+const FormRegistration: React.FC<InterfaceModals> = ({ close }) => {
 	const { avatar } = useTypedSelector<User>(getMembers);
 	const submit = useSubmitFormRegistration();
-
-	const closeModal = () => open(false);
 
 	return (
 		<Formik initialValues={initialValuesRegistration} onSubmit={submit}>
@@ -60,10 +57,10 @@ const FormRegistration: React.FC<InterfaceModals> = ({ open }) => {
 					<img src={avatar} alt="avatar" />
 
 					<div className={styles.buttons}>
-						<MyButton value={CONFIRM} type="submit" />
+						<MyButton value={btnValue.CONFIRM} type="submit" />
 						<MyButton
-							value={CANCEL}
-							onclick={closeModal}
+							value={btnValue.CANCEL}
+							onclick={close}
 							style={styles.cancel}
 						/>
 					</div>

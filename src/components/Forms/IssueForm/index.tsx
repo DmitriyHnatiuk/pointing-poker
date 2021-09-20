@@ -4,14 +4,16 @@ import { Form, Formik } from 'formik';
 import FormikControl from 'components/common/Form/FormikControl';
 import MyButton from 'components/common/MyButton';
 
+import { useSubmitFormIssues } from 'hooks/submitForms';
+
 import {
 	InterfaceOptions,
 	TypeInputFormikControl
 } from 'interfaces/commonForm';
 import { InterfaceModals } from 'interfaces/modals';
+
 import { initialIssues } from 'utils/initialValuesForms';
-import { btn } from 'constants/commonComponents';
-import { useSubmitFormIssues } from 'hooks/submitForms';
+import { btnValue } from 'constants/commonComponents';
 
 import styles from './index.module.scss';
 
@@ -21,11 +23,7 @@ const optionsPriority: InterfaceOptions[] = [
 	{ key: 'Height', value: 'height' }
 ];
 
-const { YES, NO } = btn;
-
-const IssueForm: React.FC<InterfaceModals> = ({ open }) => {
-	const closeModal = () => open(false);
-
+const IssueForm: React.FC<InterfaceModals> = ({ close }) => {
 	return (
 		<Formik initialValues={initialIssues} onSubmit={useSubmitFormIssues}>
 			{() => (
@@ -51,8 +49,12 @@ const IssueForm: React.FC<InterfaceModals> = ({ open }) => {
 						data={optionsPriority}
 					/>
 					<div className={styles.buttons}>
-						<MyButton value={YES} type="submit" />
-						<MyButton value={NO} onclick={closeModal} style={styles.cancel} />
+						<MyButton value={btnValue.YES} type="submit" />
+						<MyButton
+							value={btnValue.NO}
+							onclick={close}
+							style={styles.cancel}
+						/>
 					</div>
 				</Form>
 			)}

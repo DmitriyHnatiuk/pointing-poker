@@ -14,13 +14,17 @@ const Modals: React.FC<Modal> = ({ type, open }) => {
 	const ISSUE = type === TypeModalsOpen.issue;
 	const KICK = type === TypeModalsOpen.kick;
 
+	const onCloseModal = () => {
+		open(false);
+	};
+
 	return createPortal(
 		<div className={styles.modal}>
-			{REGISTRATION && <FormRegistration open={open} />}
-			{ISSUE && <IssueForm open={open} />}
+			{REGISTRATION && <FormRegistration close={onCloseModal} />}
+			{ISSUE && <IssueForm close={onCloseModal} />}
 			{KICK && (
 				<ModalKick
-					open={open}
+					close={onCloseModal}
 					player="player"
 					playerKick="kick player"
 					vote={false}

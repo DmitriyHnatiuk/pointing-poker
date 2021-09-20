@@ -9,11 +9,11 @@ export interface Modal {
 }
 
 export interface InterfaceModals {
-	open: Dispatch<SetStateAction<boolean>>;
+	close: () => void;
 }
 
 export interface InterfaceModalsKick {
-	open: Dispatch<SetStateAction<boolean>>;
+	close: () => void;
 	vote: boolean;
 	player?: string;
 	playerKick: string;

@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-
 import { useDispatch } from 'react-redux';
-import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
+
+import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 import { User } from 'redux/reducer/userReducer/types';
 import { getMembers } from 'redux/reducer/selectors';
 
-import { btn } from 'constants/commonComponents';
+import { TypeModalsOpen } from 'interfaces/modals';
+
+import { btnValue } from 'constants/commonComponents';
+
+import Modals from 'components/common/Modals';
 import MyButton from 'components/common/MyButton';
 import MyInput from 'components/common/MyInput';
 
 import pokerPlanningImage from 'assets/images/MainPage/poker-planning.jpg';
 
 import styles from './index.module.scss';
-import Modals from '../../components/common/Modals';
-import { TypeModalsOpen } from '../../interfaces/modals';
-
-const { START, CONNECT } = btn;
 
 const MainPage: React.FC = (): JSX.Element => {
 	const [openModal, setOpenModal] = useState(false);
@@ -58,18 +58,20 @@ const MainPage: React.FC = (): JSX.Element => {
 					<div className={styles.start}>
 						<h3>Start your planning:</h3>
 						<span>Create session:</span>
-						<MyButton onclick={openModals} value={START} />
+						<MyButton onclick={openModals} value={btnValue.START} />
 					</div>
 					<div className={styles.or}>
 						<h3>OR:</h3>
 						<span>Connect to lobby:</span>
 						<form>
 							<MyInput value={roomNumber} onchange={connectToRoom} />
-							<MyButton value={CONNECT} onclick={setUser} />
+							<MyButton value={btnValue.CONNECT} onclick={setUser} />
 						</form>
 					</div>
 				</section>
-				{openModal && <Modals open={setOpenModal} type={TypeModalsOpen.kick} />}
+				{openModal && (
+					<Modals open={setOpenModal} type={TypeModalsOpen.registration} />
+				)}
 			</div>
 		</div>
 	);
