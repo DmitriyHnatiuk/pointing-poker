@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
 import { getMembers } from 'redux/reducer/selectors';
-import { Profile, User } from 'redux/reducer/userReducer/types';
+import { User } from 'redux/reducer/userReducer/types';
 import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 
 import { URL } from 'constants/API';
@@ -24,47 +24,46 @@ const TeamMembers: React.FC = () => {
 	const dispatch = useDispatch();
 	const userData = useTypedSelector<User>(getMembers);
 
+	const setExit = () => {
+		socket.offAny();
+		history.push(HOME);
+	};
+
 	useEffect(() => {
 		socket.connect();
 		socket.emit(
-			'event://connect to room',
+			'event://connect_to_room',
 			userData,
 			(res: { status: string }) => {
-				const response = res.status
-					? console.log('done')
-					: console.log('error');
+				const response = res.status === 'ok' ? console.log('done') : setExit();
 				return response;
 			}
 		);
+
+		socket.onAny((event, ...args) => {
+			console.log(event, args);
+		});
+
+		socket.on('event://your_data', (data) => {
+			return dispatch(setUserDataActionCreation(data));
+		});
+
+		socket.on('event://your_room_data', (rooms) => {
+			if (!rooms) {
+				return history.push(HOME);
+			}
+			return dispatch(setUserDataActionCreation({ users: rooms.users }));
+		});
+
+		// socket.on('event://message', (ms, obj) => {
+		// 	console.log(ms, obj);
+		// });
+
+		socket.on('event://error', (error) => {
+			console.log(error);
+			setExit();
+		});
 	}, []);
-
-	// test
-	socket.on('event://your room members', (members: Profile) => {
-		if (!members) {
-			return history.push(HOME);
-		}
-		const obj = { users: members.users };
-
-		return dispatch(setUserDataActionCreation(obj));
-	});
-
-	socket.on('event://your room data', (rooms) => {
-		if (!rooms) {
-			return history.push(HOME);
-		}
-		const obj = { users: rooms.users };
-
-		return dispatch(setUserDataActionCreation(obj));
-	});
-
-	socket.on('event://message', (ms, obj) => {
-		console.log(ms, obj);
-	});
-
-	socket.on('event://error', (err) => {
-		console.log(err);
-		history.push(HOME);
-	});
 
 	const { users } = useTypedSelector<User>(getMembers);
 
@@ -75,10 +74,6 @@ const TeamMembers: React.FC = () => {
 	const isUsers = useMemo(() => {
 		return users.filter((user) => user.isAdmin === false);
 	}, [users]);
-
-	const setExit = () => {
-		return history.push(HOME);
-	};
 
 	return (
 		<section className={styles.section}>
