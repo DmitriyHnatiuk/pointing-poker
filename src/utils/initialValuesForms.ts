@@ -1,4 +1,4 @@
-import { FieldIssues, FieldRegistry } from '../interfaces/commonForm';
+import { FieldIssues, FieldRegistry } from 'interfaces/commonForm';
 
 export const initialValuesRegistration: FieldRegistry = {
 	firstName: '',

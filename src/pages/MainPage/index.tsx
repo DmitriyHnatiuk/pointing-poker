@@ -10,17 +10,23 @@ import { getMembers } from 'redux/reducer/selectors';
 import { btn } from 'constants/commonComponents';
 import MyButton from 'components/common/MyButton';
 import MyInput from 'components/common/MyInput';
-import FormRegistration from 'components/Forms/RegistrationForm';
 
 import pokerPlanningImage from 'assets/images/MainPage/poker-planning.jpg';
 
 import styles from './index.module.scss';
+import Modals from '../../components/common/Modals';
+import { TypeModalsOpen } from '../../interfaces/modals';
 
 const { START, CONNECT } = btn;
 
 const MainPage: React.FC = (): JSX.Element => {
+	const [openModal, setOpenModal] = useState(false);
 	const [form, setForm] = useState(false);
 	const dispatch = useDispatch();
+
+	const openModals = () => {
+		setOpenModal(true);
+	};
 
 	const { roomNumber } = useTypedSelector<User>(getMembers);
 
@@ -52,7 +58,7 @@ const MainPage: React.FC = (): JSX.Element => {
 					<div className={styles.start}>
 						<h3>Start your planning:</h3>
 						<span>Create session:</span>
-						<MyButton onclick={setAdmin} value={START} />
+						<MyButton onclick={openModals} value={START} />
 					</div>
 					<div className={styles.or}>
 						<h3>OR:</h3>
@@ -63,12 +69,8 @@ const MainPage: React.FC = (): JSX.Element => {
 						</form>
 					</div>
 				</section>
+				{openModal && <Modals open={setOpenModal} type={TypeModalsOpen.kick} />}
 			</div>
-			{form && (
-				<div className={styles.form}>
-					<FormRegistration setForm={setForm} />
-				</div>
-			)}
 		</div>
 	);
 };

@@ -5,7 +5,11 @@ import { InterfaceImagesFormik } from 'interfaces/commonForm';
 
 import styles from './index.module.scss';
 
-const ImagesFormik: React.FC<InterfaceImagesFormik> = ({ label, ...props }) => {
+const ImagesFormik: React.FC<InterfaceImagesFormik> = ({
+	label,
+	style,
+	...props
+}) => {
 	const [field] = useField(props);
 	const { setFieldValue, values } = useFormikContext();
 	const { name } = props;
@@ -16,11 +20,11 @@ const ImagesFormik: React.FC<InterfaceImagesFormik> = ({ label, ...props }) => {
 			setFieldValue(`${name}`, file[0], false);
 		}
 	};
-	console.log(values);
+
 	field.value = undefined;
 
 	return (
-		<div className={styles.formControl}>
+		<div className={`${styles.formControl} ${style}`}>
 			<label htmlFor="name">{label}</label>
 			<Field
 				type="file"

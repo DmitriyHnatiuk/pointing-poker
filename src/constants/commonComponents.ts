@@ -23,5 +23,7 @@ export const btn = {
 	CANCEL: 'Cancel',
 	START_GAME: 'Start Game',
 	CANCEL_GAME: 'Cancel game',
-	OBSERVER: 'observer'
+	OBSERVER: 'observer',
+	YES: 'Yes',
+	NO: 'No'
 };

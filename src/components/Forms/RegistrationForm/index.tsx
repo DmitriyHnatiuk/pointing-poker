@@ -12,56 +12,60 @@ import { btn } from 'constants/commonComponents';
 
 import MyButton from 'components/common/MyButton';
 import FormikControl from 'components/common/Form/FormikControl';
+import { InterfaceModals } from 'interfaces/modals';
 
 import styles from './index.module.scss';
 
 const { CONFIRM, CANCEL } = btn;
 
-const FormRegistration: React.FC<{ setForm: (arg: boolean) => void }> = ({
-	setForm
-}) => {
+const FormRegistration: React.FC<InterfaceModals> = ({ open }) => {
 	const { avatar } = useTypedSelector<User>(getMembers);
-	const toHome = () => setForm(false);
 	const submit = useSubmitFormRegistration();
+
+	const closeModal = () => open(false);
 
 	return (
 		<Formik initialValues={initialValuesRegistration} onSubmit={submit}>
 			{() => (
 				<Form className={styles.form}>
-					<div className={styles.formContent}>
-						<div className={styles.formFields}>
-							<h1 className={styles.title}>Connect to lobby</h1>
-							<FormikControl
-								control={TypeInputFormikControl.input}
-								label="First name"
-								name="firstName"
-							/>
-							<FormikControl
-								control={TypeInputFormikControl.input}
-								label="Last name"
-								name="lastName"
-							/>
-							<FormikControl
-								control={TypeInputFormikControl.input}
-								label="Job name"
-								name="position"
-							/>
-							<FormikControl
-								control={TypeInputFormikControl.image}
-								label="Avatar"
-								name="avatar"
-							/>
-							<img src={avatar} alt="avatar" />
-						</div>
+					<div className={styles.formHeader}>
+						<h1 className={styles.title}>Connect to lobby</h1>
 						<FormikControl
 							control={TypeInputFormikControl.switch}
 							label="Connect as Observer"
 							name="observer"
+							style={styles.observer}
 						/>
 					</div>
+					<FormikControl
+						control={TypeInputFormikControl.input}
+						label="First name"
+						name="firstName"
+					/>
+					<FormikControl
+						control={TypeInputFormikControl.input}
+						label="Last name"
+						name="lastName"
+					/>
+					<FormikControl
+						control={TypeInputFormikControl.input}
+						label="Job name"
+						name="position"
+					/>
+					<FormikControl
+						control={TypeInputFormikControl.image}
+						label="Avatar"
+						name="avatar"
+					/>
+					<img src={avatar} alt="avatar" />
+
 					<div className={styles.buttons}>
 						<MyButton value={CONFIRM} type="submit" />
-						<MyButton value={CANCEL} onclick={toHome} style={styles.cancel} />
+						<MyButton
+							value={CANCEL}
+							onclick={closeModal}
+							style={styles.cancel}
+						/>
 					</div>
 				</Form>
 			)}
