@@ -11,15 +11,15 @@ const Avatar: React.FC<InterfaceAvatar> = (props) => {
 		if (lastName) {
 			return (
 				<span className={styles.initials}>
-					{firstName?.[0]}
-					{lastName[0]}
+					{firstName?.trim()[0]}
+					{lastName.trim()[0]}
 				</span>
 			);
 		}
 		return (
 			<span className={styles.initials}>
-				{firstName?.[0]}
-				{firstName?.[1]}
+				{firstName?.trim()[0]}
+				{firstName?.trim()[1]}
 			</span>
 		);
 	};
