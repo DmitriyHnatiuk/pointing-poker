@@ -4,6 +4,7 @@ export interface InterfaceFormikControl {
 	control: string;
 	name: string;
 	label: string;
+	style?: string;
 	data?: TypeData;
 	onChange?: (e: ChangeEvent) => void;
 	children?: (errorMessage: string) => React.ReactNode;
@@ -14,16 +15,19 @@ type TypeData = InterfaceOptions[];
 export interface InterfaceFormikInput {
 	name: string;
 	label: string;
+	style?: string;
 }
 
 export interface InterfaceImagesFormik {
 	name: string;
 	label: string;
+	style?: string;
 }
 
 export interface InterfaceFormikSelect {
 	name: string;
 	label: string;
+	style?: string;
 	options: InterfaceOptions[];
 }
 

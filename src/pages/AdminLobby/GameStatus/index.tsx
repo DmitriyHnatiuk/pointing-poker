@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { ways } from 'constants/constRouter';
-import { btn } from 'constants/commonComponents';
+import { btnValue } from 'constants/commonComponents';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { Game } from 'redux/reducer/gameSettingReducer/types';
@@ -14,7 +14,7 @@ import MyButton from 'components/common/MyButton';
 import styles from './index.module.scss';
 
 const { HOME } = ways;
-const { START_GAME, CANCEL_GAME } = btn;
+const { START_GAME, CANCEL_GAME } = btnValue;
 
 const set = () => console.log('set-set'); // #
 

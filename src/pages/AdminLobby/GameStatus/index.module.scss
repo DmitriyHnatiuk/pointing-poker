@@ -2,7 +2,7 @@
 
 .planningTitle {
 	font-weight: bold;
-	font-family: Ruda;
+	font-family: Ruda, sans-serif;
 	font-size: 24px;
 	text-align: center;
 	color: $TextDark;
@@ -22,12 +22,12 @@
 }
 
 .title {
-	font-family: Ruda;
+	font-family: Ruda, sans-serif;
 	font-size: 12px;
 	font-style: normal;
 	font-weight: 700;
 	line-height: 15px;
-	letter-spacing: 0em;
+	letter-spacing: 0;
 	text-align: left;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .titleLink {
-	font-family: Roboto;
+	font-family: Roboto, sans-serif;
 	font-style: italic;
 	font-weight: normal;
 	font-size: 24px;

@@ -1,10 +1,11 @@
-@import "assets/styles/_variables.scss";
+@import 'assets/styles/_variables.scss';
 
 .form {
 	width: 50%;
 	min-height: 500px;
+	max-width: 800px;
 	margin: auto;
-	top: 15%;
+	top: 50px;
 	padding: 60px;
 	position: relative;
 	display: flex;
@@ -15,16 +16,26 @@
 	box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
 	background-color: $white-color;
 }
-.formContent {
+
+.formHeader {
 	display: flex;
-	align-items: flex-start;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.observer {
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .title {
 	font-family: Roboto, sans-serif;
-	font-size: 38px;
-	font-weight: 700;
-	margin-bottom: 30px;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 64px;
+	line-height: 75px;
+	margin-right: 15px;
 }
 
 .cancel {
