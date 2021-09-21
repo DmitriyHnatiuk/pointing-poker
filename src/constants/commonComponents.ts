@@ -16,12 +16,14 @@ export const GitHubItems: Array<IGitHubItems> = [
 	{ id: 3, href: 'https://github.com/NiFroPP', name: 'nifropp' }
 ];
 
-export const btn = {
-	START: 'Start new game',
-	CONNECT: 'Connect',
-	CONFIRM: 'Confirm',
-	CANCEL: 'Cancel',
-	START_GAME: 'Start Game',
-	CANCEL_GAME: 'Cancel game',
-	OBSERVER: 'observer'
-};
+export enum btnValue {
+	START = 'Start new game',
+	CONNECT = 'Connect',
+	CONFIRM = 'Confirm',
+	CANCEL = 'Cancel',
+	START_GAME = 'Start Game',
+	CANCEL_GAME = 'Cancel game',
+	OBSERVER = 'observer',
+	YES = 'Yes',
+	NO = 'No'
+}

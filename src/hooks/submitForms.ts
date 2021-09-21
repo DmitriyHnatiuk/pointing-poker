@@ -7,7 +7,7 @@ import { FormikHelpers } from 'formik/dist/types';
 import { getMembers } from 'redux/reducer/selectors';
 import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 import { User } from 'redux/reducer/userReducer/types';
-import { FieldIssues, FieldRegistry } from '../interfaces/commonForm';
+import { FieldIssues, FieldRegistry } from 'interfaces/commonForm';
 import { useTypedSelector } from './useTypedSelector';
 
 const { ADMIN, USER } = ways;
@@ -26,12 +26,10 @@ export const useSubmitFormRegistration = (): ((
 		return history.push(path);
 	};
 
-	const submit = (values: FieldRegistry) => {
+	return (values: FieldRegistry) => {
 		dispatch(setUserDataActionCreation(values));
 		toLobby();
 	};
-
-	return submit;
 };
 
 export const useSubmitFormIssues = (
