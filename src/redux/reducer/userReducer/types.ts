@@ -10,7 +10,7 @@ export interface User {
 	firstName: string;
 	lastName: string;
 	position: string;
-	avatar: string;
+	avatar: string | File;
 	observer: boolean;
 	isAdmin: boolean;
 	karma: number;
@@ -24,7 +24,7 @@ export interface Users {
 	firstName: string;
 	lastName: string;
 	position: string;
-	avatar: string;
+	avatar: string | File;
 	observer?: boolean;
 	isAdmin: boolean;
 	karma: number;

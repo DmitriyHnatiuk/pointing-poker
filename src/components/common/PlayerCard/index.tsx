@@ -24,9 +24,6 @@ const PlayerCard: React.FC<{ user: Users }> = ({ user }) => {
 		<div className={styles.card}>
 			<div className={styles.content}>
 				<div className={styles.member}>
-					<div className={styles.avatar}>
-						<img src={ava} alt="avatar" />
-					</div>
 					<div className={styles.player}>
 						{isAdmin && <div className={styles.admin}>Admin</div>}
 						<div className={styles.name}>{`${firstName} ${lastName}`}</div>

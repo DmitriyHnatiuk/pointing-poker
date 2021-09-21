@@ -1,4 +1,4 @@
-import { actionCreationArguments } from 'interfaces/commonComponents';
+import { ActionCreationArguments } from 'interfaces/commonComponents';
 import { User } from './types';
 
 export const SET_DATA = 'SET_DATA';
@@ -95,10 +95,10 @@ const userReducer = (
 	}
 };
 
-export const deleteUserActionCreation = (value: actionCreationArguments) =>
+export const deleteUserActionCreation = (value: ActionCreationArguments) =>
 	({ type: DELETE_USER, payload: value } as const);
 
-export const setUserDataActionCreation = (value: actionCreationArguments) =>
+export const setUserDataActionCreation = (value: ActionCreationArguments) =>
 	({ type: SET_DATA, payload: value } as const);
 
 type AC1Type = ReturnType<typeof deleteUserActionCreation>;

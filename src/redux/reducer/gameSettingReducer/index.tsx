@@ -1,4 +1,4 @@
-import { actionCreationArguments } from 'interfaces/commonComponents';
+import { ActionCreationArguments } from 'interfaces/commonComponents';
 
 export const SET_DATA = 'SET_DATA';
 export const SET_NAME = 'SET_NAME';
@@ -42,7 +42,7 @@ const reducer = (
 	}
 };
 
-export const setDataActionCreation = (value: actionCreationArguments) =>
+export const setDataActionCreation = (value: ActionCreationArguments) =>
 	({ type: SET_DATA, payload: value } as const);
 
 type AC1Type = ReturnType<typeof setDataActionCreation>;

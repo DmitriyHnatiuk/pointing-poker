@@ -16,6 +16,7 @@ import { InterfaceModals } from 'interfaces/modals';
 import { TypeInputFormikControl } from 'interfaces/commonForm';
 
 import styles from './index.module.scss';
+import Avatar from '../../Avatar';
 
 const FormRegistration: React.FC<InterfaceModals> = ({ close }) => {
 	const { avatar } = useTypedSelector<User>(getMembers);
@@ -23,7 +24,7 @@ const FormRegistration: React.FC<InterfaceModals> = ({ close }) => {
 
 	return (
 		<Formik initialValues={initialValuesRegistration} onSubmit={submit}>
-			{() => (
+			{({ values }) => (
 				<Form className={styles.form}>
 					<div className={styles.formHeader}>
 						<h1 className={styles.title}>Connect to lobby</h1>
@@ -54,7 +55,11 @@ const FormRegistration: React.FC<InterfaceModals> = ({ close }) => {
 						label="Avatar"
 						name="avatar"
 					/>
-					<img src={avatar} alt="avatar" />
+					<Avatar
+						firstName={values.firstName}
+						lastName={values.lastName}
+						avatar={values.avatar}
+					/>
 
 					<div className={styles.buttons}>
 						<MyButton value={btnValue.CONFIRM} type="submit" />
