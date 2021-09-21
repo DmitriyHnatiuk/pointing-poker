@@ -9,7 +9,7 @@ import { Game } from 'redux/reducer/gameSettingReducer/types';
 import { User } from 'redux/reducer/userReducer/types';
 import { getGame, getMembers } from 'redux/reducer/selectors';
 
-import PlayerCard from 'components/common/PlayerCard';
+import PlayerCard from 'components/common/UserCard';
 import MyButton from 'components/common/MyButton';
 import styles from './index.module.scss';
 

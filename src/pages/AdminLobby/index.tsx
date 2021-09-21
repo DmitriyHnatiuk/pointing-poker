@@ -12,9 +12,9 @@ import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 import { ways } from 'constants/constRouter';
 import { URL } from 'constants/API';
 
+import Members from './Members';
 import GameStatus from './GameStatus';
 import Issues from './Issues';
-import Members from './Members';
 import AdminMenu from './AdminMenu';
 
 import styles from './index.module.scss';
