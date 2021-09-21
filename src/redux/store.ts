@@ -1,24 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import reducer from 'redux/reducer';
-import membersReducer from 'redux/reducer/membersReducer';
-import storyPointCardsReducer from './reducer/storyPointCardsReducer';
-
-const rootReducer = combineReducers({
-	reducer,
-	membersReducer,
-	storyPointCardsReducer
-});
 
 const composeDev = composeWithDevTools || compose;
-
 const devTools = composeDev(applyMiddleware(thunkMiddleware));
 
-const store = createStore(rootReducer, devTools);
+const store = createStore(reducer, devTools);
 
 export default store;
 

@@ -8,7 +8,7 @@ import store from 'redux/store';
 import 'assets/styles/global/reset.scss';
 import 'assets/styles/global/global.scss';
 
-import App from 'App';
+import App from 'app';
 
 ReactDOM.render(
 	<React.StrictMode>
