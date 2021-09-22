@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import logo from 'assets/images/Header/header-logo.svg';
 import chat from 'assets/images/Header/chat-icon.svg';
+import { ways } from 'constants/constRouter';
 
 import styles from './index.module.scss';
 
@@ -10,8 +12,12 @@ const Header: React.FC = (): JSX.Element => {
 		<header className={styles.header}>
 			<div className={styles.line_one}>Line</div>
 			<div className={styles.line_two}>Line</div>
-			<img className={styles.logo} src={logo} alt="logo" />
-			<img className={styles.chat} src={chat} alt="chat" />
+			<Link to={ways.HOME}>
+				<img className={styles.logo} src={logo} alt="logo" />
+			</Link>
+			<Link to={ways.CHAT}>
+				<img className={styles.chat} src={chat} alt="chat" />
+			</Link>
 		</header>
 	);
 };

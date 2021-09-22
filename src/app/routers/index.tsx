@@ -13,8 +13,9 @@ import MainPage from 'pages/MainPage';
 import Error404 from 'pages/Error404';
 import AdminLobby from 'pages/AdminLobby';
 import TeamMembers from 'pages/TeamMembers';
+import Chat from 'components/common/Chat';
 
-const { HOME, ADMIN, USER, ERROR } = ways;
+const { HOME, ADMIN, USER, ERROR, CHAT } = ways;
 
 const Routers: React.FC = (): JSX.Element => {
 	const { isAdmin } = useTypedSelector<User>(getMembers);
@@ -30,6 +31,7 @@ const Routers: React.FC = (): JSX.Element => {
 					{!isAdmin && roomNumber && (
 						<Route exact path={USER} component={TeamMembers} />
 					)}
+					<Route path={CHAT} component={Chat} />
 					<Route path={ERROR} component={Error404} />
 				</Switch>
 			</Main>
