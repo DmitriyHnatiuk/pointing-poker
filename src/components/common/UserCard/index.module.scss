@@ -1,8 +1,9 @@
 @import '/src/assets/styles/variables';
 
 .card {
-	width: 40%;
+	width: 300px;
 	min-height: 75px;
+	margin: 10px;
 	border: 1px solid $Deep-Koamaru;
 	border-radius: 5px;
 	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -25,9 +26,25 @@
 	flex-wrap: wrap;
 }
 
-.avatar img {
-	width: 100%;
+.avatar img,
+.avatar div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 55px;
 	height: 55px;
+}
+
+.avatar img {
+	border: 1px solid $Deep-Koamaru;
+	border-radius: 50%;
+}
+
+.avatar div {
+	font-size: 24px;
+	border-radius: 50%;
+	color: $Deep-Koamaru;
+	background-color: $Medium-Aquamarine;
 }
 
 .player {

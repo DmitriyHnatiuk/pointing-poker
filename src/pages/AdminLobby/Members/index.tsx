@@ -4,7 +4,7 @@ import { useTypedSelector } from 'hooks/useTypedSelector';
 import { getMembers } from 'redux/reducer/selectors';
 import { User } from 'redux/reducer/userReducer/types';
 
-import PlayerCard from 'components/common/PlayerCard';
+import PlayerCard from 'components/common/UserCard';
 
 import styles from './index.module.scss';
 

@@ -11,7 +11,7 @@ import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 import { URL } from 'constants/API';
 import { ways } from 'constants/constRouter';
 
-import PlayerCard from 'components/common/PlayerCard';
+import PlayerCard from 'components/common/UserCard';
 import MyButton from 'components/common/MyButton';
 
 import styles from './index.module.scss';

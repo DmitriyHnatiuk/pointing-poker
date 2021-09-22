@@ -48,10 +48,23 @@
 	text-align: left;
 }
 
+.inputLink {
+	width: 20vw;
+	margin-top: 10px;
+	padding-left: 10px;
+	border: 1px solid $TextDark;
+	border-bottom-left-radius: 10px;
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: 300;
+	font-size: 24px;
+	line-height: 28px;
+}
+
 .buttonCopy {
 	width: 100px;
 	height: 34px;
-	border-radius: 0 3px 3px 0;
+	border-radius: 0px 3px 3px 0px;
 }
 
 .buttons {
