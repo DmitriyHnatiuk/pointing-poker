@@ -1,5 +1,8 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
+import socketCreator, { UNSUBSCRIBE } from 'redux/thunk';
 
 import { ways } from 'constants/constRouter';
 import { btnValue } from 'constants/commonComponents';
@@ -14,17 +17,22 @@ import MyButton from 'components/common/MyButton';
 import styles from './index.module.scss';
 
 const { HOME } = ways;
-const { START_GAME, CANCEL_GAME } = btnValue;
+const { START_GAME, CANCEL_GAME, COPY } = btnValue;
 
 const set = () => console.log('set-set'); // #
 
 const GameStatus: React.FC = (): JSX.Element => {
+	const dispatch = useDispatch();
+	const history = useHistory();
+
 	const user = useTypedSelector<User>(getMembers);
 	const { roomNumber } = useTypedSelector<User>(getMembers);
 	const { planningTitle } = useTypedSelector<Game>(getGame);
 
-	const history = useHistory();
-	const toHome = () => history.push(HOME);
+	const setExit = () => {
+		dispatch(socketCreator({ type: UNSUBSCRIBE }));
+		history.push(HOME);
+	};
 
 	const copyLink = () => navigator.clipboard.writeText(roomNumber);
 	const changeLink = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -50,14 +58,14 @@ const GameStatus: React.FC = (): JSX.Element => {
 					<MyButton
 						style={styles.buttonCopy}
 						type="button"
-						value="Copy"
+						value={COPY}
 						onclick={copyLink}
 					/>
 				</label>
 				<div className={styles.buttons}>
 					<MyButton onclick={set} value={START_GAME} />
 					<MyButton
-						onclick={toHome}
+						onclick={setExit}
 						value={CANCEL_GAME}
 						style={styles.cancel}
 					/>
