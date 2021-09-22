@@ -41,7 +41,7 @@ export interface FieldRegistry {
 	lastName: string;
 	position: string;
 	observer: boolean;
-	avatar: string;
+	avatar: File | string;
 }
 
 export interface FieldIssues {

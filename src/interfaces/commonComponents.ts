@@ -5,11 +5,12 @@ export interface IGitHubItems {
 	href: string;
 	name: string;
 }
-export interface actionCreationArguments {
+
+export interface ActionCreationArguments {
 	firstName?: string;
 	lastName?: string;
 	position?: string;
-	avatar?: string;
+	avatar?: string | File;
 	observer?: boolean;
 	isAdmin?: boolean;
 	selectedCard?: string;
@@ -17,4 +18,10 @@ export interface actionCreationArguments {
 	karma?: number;
 	users?: Users[];
 	id?: string;
+}
+
+export interface InterfaceAvatar {
+	firstName: string | undefined;
+	lastName: string | undefined;
+	avatar: File | string;
 }

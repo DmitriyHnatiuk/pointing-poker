@@ -1,3 +1,4 @@
+import { ActionCreationArguments } from 'interfaces/commonComponents';
 import { Game, GameAction, PlayingCard, SettingsActionEnum } from './types';
 
 export const SET_DATA = 'SET_DATA';
@@ -68,6 +69,8 @@ const reducer = (
 	}
 };
 
+export const setDataActionCreation = (value: ActionCreationArguments) =>
+	({ type: SET_DATA, payload: value } as const);
 export const editPlayingCard = (
 	card: PlayingCard,
 	score: string
