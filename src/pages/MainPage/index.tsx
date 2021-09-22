@@ -3,13 +3,16 @@ import { useDispatch } from 'react-redux';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
+import { deleteRouterActionCreation } from 'redux/reducer/routerReducer';
 import { setUserDataActionCreation } from 'redux/reducer/userReducer';
+import { getMembers, getPath } from 'redux/reducer/selectors';
 import { User } from 'redux/reducer/userReducer/types';
-import { getMembers } from 'redux/reducer/selectors';
+import { Rout } from 'redux/reducer/routerReducer/types';
 
 import { TypeModalsOpen } from 'interfaces/modals';
 
 import { btnValue } from 'constants/commonComponents';
+import { ways } from 'constants/constRouter';
 
 import Modals from 'components/common/Modals';
 import MyButton from 'components/common/MyButton';
@@ -19,25 +22,32 @@ import pokerPlanningImage from 'assets/images/MainPage/poker-planning.jpg';
 
 import styles from './index.module.scss';
 
+const { HOME } = ways;
+
 const MainPage: React.FC = (): JSX.Element => {
 	const [openModal, setOpenModal] = useState(false);
 	const dispatch = useDispatch();
 
 	const { roomNumber } = useTypedSelector<User>(getMembers);
+	const { path } = useTypedSelector<Rout>(getPath);
+
+	const resetPath = () =>
+		path === HOME && dispatch(deleteRouterActionCreation());
 
 	const connectToRoom = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		const obj = { roomNumber: event.target.value };
-		dispatch(setUserDataActionCreation(obj));
+		dispatch(setUserDataActionCreation({ roomNumber: event.target.value }));
 	};
 
 	const setAdmin = () => {
 		setOpenModal(true);
+		resetPath();
 		dispatch(setUserDataActionCreation({ isAdmin: true }));
 	};
 
 	const setUser = () => {
 		if (roomNumber) {
 			setOpenModal(true);
+			resetPath();
 			dispatch(setUserDataActionCreation({ isAdmin: false }));
 		}
 		return null;

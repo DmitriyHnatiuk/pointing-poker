@@ -70,23 +70,23 @@ const initialStore: User = {
 
 type StateType = typeof initialStore;
 
-type ActionType = AC1Type | AC2Type;
+export type ActionType = AC1Type | AC2Type | AC3Type;
 
 const userReducer = (
 	state: StateType = initialStore,
-	action: ActionType
+	{ type, payload }: ActionType
 ): StateType => {
-	switch (action.type) {
+	switch (type) {
 		case SET_DATA: {
 			return {
 				...state,
-				...action.payload
+				...payload
 			};
 		}
 		case DELETE_USER: {
 			return {
 				...state,
-				users: state.users.filter((user) => user.id !== action.payload.id)
+				users: state.users.filter((user) => user.id !== payload.id)
 			};
 		}
 
@@ -95,13 +95,17 @@ const userReducer = (
 	}
 };
 
-export const deleteUserActionCreation = (value: ActionCreationArguments) =>
-	({ type: DELETE_USER, payload: value } as const);
+export const deleteUserActionCreation = (payload: ActionCreationArguments) =>
+	({ type: DELETE_USER, payload } as const);
 
-export const setUserDataActionCreation = (value: ActionCreationArguments) =>
-	({ type: SET_DATA, payload: value } as const);
+export const setUserDataActionCreation = (payload: ActionCreationArguments) =>
+	({ type: SET_DATA, payload } as const);
+
+export const resetUserDataActionCreation = () =>
+	({ type: SET_DATA, payload: initialStore } as const);
 
 type AC1Type = ReturnType<typeof deleteUserActionCreation>;
 type AC2Type = ReturnType<typeof setUserDataActionCreation>;
+type AC3Type = ReturnType<typeof resetUserDataActionCreation>;
 
 export default userReducer;

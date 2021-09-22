@@ -5,14 +5,12 @@ import { Users } from 'redux/reducer/userReducer/types';
 
 import { deleteUserActionCreation } from 'redux/reducer/userReducer';
 
-import unknownAvatar from 'assets/images/CardPlayer/unknown-avatar.svg';
 import userDeleteImage from 'assets/images/CardPlayer/player-delete.svg';
 
 import styles from './index.module.scss';
 
 const PlayerCard: React.FC<{ user: Users }> = ({ user }) => {
-	const { firstName, lastName, position, isAdmin, avatar } = user;
-	const ava = avatar || unknownAvatar;
+	const { firstName, lastName, position, isAdmin } = user;
 
 	const dispatch = useDispatch();
 
