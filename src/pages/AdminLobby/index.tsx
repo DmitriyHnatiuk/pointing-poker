@@ -1,10 +1,12 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { getPath } from 'redux/reducer/selectors';
+import { getModal, getPath } from 'redux/reducer/selectors';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { Rout } from 'redux/reducer/routerReducer/types';
+import { Modal } from 'redux/reducer/modalReducer/types';
 
+import Modals from 'components/common/Modals';
 import Members from './Members';
 import GameStatus from './GameStatus';
 import Issues from './Issues';
@@ -14,6 +16,7 @@ import styles from './index.module.scss';
 
 const AdminLobby: React.FC = (): JSX.Element => {
 	const { path } = useTypedSelector<Rout>(getPath);
+	const { openModal } = useTypedSelector<Modal>(getModal);
 
 	return (
 		<div className={styles.adminLobby}>
@@ -22,6 +25,7 @@ const AdminLobby: React.FC = (): JSX.Element => {
 			<Members />
 			<Issues />
 			<AdminMenu />
+			{openModal && <Modals />}
 		</div>
 	);
 };

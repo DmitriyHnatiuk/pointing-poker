@@ -14,13 +14,10 @@ export interface InterfaceModals {
 
 export interface InterfaceModalsKick {
 	close: () => void;
-	vote: boolean;
-	player?: string;
-	playerKick: string;
 }
 
 export enum TypeModalsOpen {
-	registration = 'registration',
-	issue = 'issue',
-	kick = 'kick'
+	registration = 'REGISTRATION',
+	issue = 'ISSUES',
+	kick = 'KICK'
 }
