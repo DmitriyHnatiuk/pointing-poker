@@ -5,15 +5,17 @@ import { useDispatch } from 'react-redux';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
 import socketCreator, { UNSUBSCRIBE } from 'redux/thunk';
-import { getMembers, getPath } from 'redux/reducer/selectors';
+import { getMembers, getModal, getPath } from 'redux/reducer/selectors';
 import { User } from 'redux/reducer/userReducer/types';
 import { Rout } from 'redux/reducer/routerReducer/types';
+import { Modal } from 'redux/reducer/modalReducer/types';
 
 import { ways } from 'constants/constRouter';
 import { btnValue } from 'constants/commonComponents';
 
 import PlayerCard from 'components/common/UserCard';
 import MyButton from 'components/common/MyButton';
+import Modals from 'components/common/Modals';
 
 import styles from './index.module.scss';
 
@@ -30,6 +32,7 @@ const TeamMembers: React.FC = () => {
 
 	const { path } = useTypedSelector<Rout>(getPath);
 	const { users } = useTypedSelector<User>(getMembers);
+	const { openModal } = useTypedSelector<Modal>(getModal);
 
 	const admin = useMemo(() => {
 		return users.find((user) => user.isAdmin === true);
@@ -61,6 +64,7 @@ const TeamMembers: React.FC = () => {
 						)}
 					</div>
 				</div>
+				{openModal && <Modals />}
 			</section>
 		</>
 	);

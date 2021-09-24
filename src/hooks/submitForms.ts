@@ -5,6 +5,7 @@ import { ways } from 'constants/constRouter';
 
 import { FormikHelpers } from 'formik/dist/types';
 
+import { deleteModalActionCreation } from 'redux/reducer/modalReducer';
 import socketCreator, { SUBSCRIBE } from 'redux/thunk';
 import { getMembers } from 'redux/reducer/selectors';
 
@@ -36,7 +37,7 @@ export const useSubmitFormRegistration = (): ((
 				type: SUBSCRIBE
 			})
 		);
-
+		dispatch(deleteModalActionCreation());
 		toLobby();
 	};
 

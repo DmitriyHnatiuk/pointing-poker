@@ -12,4 +12,5 @@ export interface dataTypes {
 	type: string;
 	usersData?: userDataTypes | null;
 	message?: string;
+	id?: string;
 }

@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
+import { setModalDataActionCreation } from 'redux/reducer/modalReducer';
 import { deleteRouterActionCreation } from 'redux/reducer/routerReducer';
 import { setUserDataActionCreation } from 'redux/reducer/userReducer';
-import { getMembers, getPath } from 'redux/reducer/selectors';
+import { getMembers, getModal, getPath } from 'redux/reducer/selectors';
 import { User } from 'redux/reducer/userReducer/types';
 import { Rout } from 'redux/reducer/routerReducer/types';
-
-import { TypeModalsOpen } from 'interfaces/modals';
 
 import { btnValue } from 'constants/commonComponents';
 import { ways } from 'constants/constRouter';
@@ -25,9 +24,9 @@ import styles from './index.module.scss';
 const { HOME } = ways;
 
 const MainPage: React.FC = (): JSX.Element => {
-	const [openModal, setOpenModal] = useState(false);
 	const dispatch = useDispatch();
 
+	const { openModal } = useTypedSelector(getModal);
 	const { roomNumber } = useTypedSelector<User>(getMembers);
 	const { path } = useTypedSelector<Rout>(getPath);
 
@@ -39,15 +38,15 @@ const MainPage: React.FC = (): JSX.Element => {
 	};
 
 	const setAdmin = () => {
-		setOpenModal(true);
 		resetPath();
+		dispatch(setModalDataActionCreation({ openModal: true }));
 		dispatch(setUserDataActionCreation({ isAdmin: true }));
 	};
 
 	const setUser = () => {
 		if (roomNumber) {
-			setOpenModal(true);
 			resetPath();
+			dispatch(setModalDataActionCreation({ openModal: true }));
 			dispatch(setUserDataActionCreation({ isAdmin: false }));
 		}
 		return null;
@@ -74,9 +73,7 @@ const MainPage: React.FC = (): JSX.Element => {
 						</form>
 					</div>
 				</section>
-				{openModal && (
-					<Modals open={setOpenModal} type={TypeModalsOpen.registration} />
-				)}
+				{openModal && <Modals />}
 			</div>
 		</div>
 	);
