@@ -11,7 +11,7 @@ type StateType = typeof initialStore;
 
 export type routerActionType = AC1Type | AC2Type;
 
-const userReducer = (
+const routerReducer = (
 	state: StateType = initialStore,
 	{ type, payload }: routerActionType
 ): StateType => {
@@ -37,4 +37,4 @@ export const setRouterDataActionCreation = (payload: string) =>
 type AC1Type = ReturnType<typeof deleteRouterActionCreation>;
 type AC2Type = ReturnType<typeof setRouterDataActionCreation>;
 
-export default userReducer;
+export default routerReducer;

@@ -1,16 +1,29 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import { getModal } from 'redux/reducer/selectors';
+import socketCreator, { AGREE, DELETE } from 'redux/thunk';
+import { useTypedSelector } from 'hooks/useTypedSelector';
+import { deleteModalActionCreation } from 'redux/reducer/modalReducer';
 
 import MyButton from 'components/common/MyButton';
+
 import { btnValue } from 'constants/commonComponents';
 import { InterfaceModalsKick } from 'interfaces/modals';
 
 import styles from './index.module.scss';
 
-const ModalKick: React.FC<InterfaceModalsKick> = (props) => {
-	const { close, playerKick, player, vote } = props;
-
+const ModalKick: React.FC<InterfaceModalsKick> = ({ close }) => {
+	const dispatch = useDispatch();
+	const modal = useTypedSelector(getModal);
+	const { player, playerKick, id, vote } = modal;
 	const omSubmitBtn = () => {
-		return vote ? console.log('vote') : console.log('admin');
+		if (vote) {
+			dispatch(socketCreator({ type: AGREE, id }));
+		} else {
+			dispatch(socketCreator({ type: DELETE, id }));
+		}
+		return dispatch(deleteModalActionCreation());
 	};
 
 	return (
@@ -31,7 +44,7 @@ const ModalKick: React.FC<InterfaceModalsKick> = (props) => {
 						<h2 className={styles.title}>Kick player? </h2>
 						<p className={styles.text}>
 							Are you really want to remove player
-							<span className={styles.player}>` ${player} `</span>
+							<span className={styles.player}> {playerKick} </span>
 							from game session?
 						</p>
 					</>
