@@ -1,20 +1,6 @@
-@import 'assets/styles/_variables.scss';
+@import '/src/assets/styles/variables';
 
-.container {
-	text-align: center;
-}
-
-.title {
-	font-size: 24px;
-}
-
-.issues {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-}
-
-.new {
+.card {
 	display: flex;
 	align-items: center;
 	width: 200px;
@@ -29,32 +15,49 @@
 	transition: all 0.5s;
 }
 
-.new:hover {
+.card:hover {
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
-.newContent {
+.content {
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
-	align-items: center;
 	width: 100%;
 }
 
-.new:hover {
-	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+.title {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
 }
 
-.new img {
+.issue {
+	font-size: 24px;
+}
+
+.priority {
+	padding-top: 3px;
+	text-align: start;
+	font-size: 10px;
+}
+
+.delete {
+	display: flex;
+	align-items: center;
+}
+.delete img {
 	width: 25px;
 	height: 25px;
 	transition: all 0.5s;
 }
 
-.new img:hover {
+.delete img:hover {
 	cursor: pointer;
 	transform: scale(1.1);
 }
 
-.new img:active {
+.delete img:active {
 	transform: scale(1.2);
 }
