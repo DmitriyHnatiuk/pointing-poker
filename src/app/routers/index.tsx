@@ -13,7 +13,7 @@ import MainPage from 'pages/MainPage';
 import Error404 from 'pages/Error404';
 import AdminLobby from 'pages/AdminLobby';
 import TeamMembers from 'pages/TeamMembers';
-import PageChat from '../../pages/ChatPage';
+import PageChat from 'pages/ChatPage';
 
 const { HOME, ADMIN, USER, ERROR, CHAT } = ways;
 
