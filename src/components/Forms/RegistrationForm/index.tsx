@@ -1,10 +1,7 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import { getMembers } from 'redux/reducer/selectors';
 
-import { useTypedSelector } from 'hooks/useTypedSelector';
 import { useSubmitFormRegistration } from 'hooks/submitForms';
-import { User } from 'redux/reducer/userReducer/types';
 
 import { initialValuesRegistration } from 'utils/initialValuesForms';
 import { btnValue } from 'constants/commonComponents';
@@ -15,11 +12,11 @@ import FormikControl from 'components/common/Form/FormikControl';
 import { InterfaceModals } from 'interfaces/modals';
 import { TypeInputFormikControl } from 'interfaces/commonForm';
 
+import Avatar from 'components/Avatar';
+
 import styles from './index.module.scss';
-import Avatar from '../../Avatar';
 
 const FormRegistration: React.FC<InterfaceModals> = ({ close }) => {
-	const { avatar } = useTypedSelector<User>(getMembers);
 	const submit = useSubmitFormRegistration();
 
 	return (

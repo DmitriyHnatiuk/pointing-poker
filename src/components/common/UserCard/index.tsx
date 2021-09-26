@@ -1,23 +1,39 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import { setModalDataActionCreation } from 'redux/reducer/modalReducer';
+import { useTypedSelector } from 'hooks/useTypedSelector';
+import { getMembers } from 'redux/reducer/selectors';
+
 import { Users } from 'redux/reducer/userReducer/types';
+import socketCreator, { DELETE, KICK } from 'redux/thunk';
 
-import { deleteUserActionCreation } from 'redux/reducer/userReducer';
-
-import unknownAvatar from 'assets/images/CardPlayer/unknown-avatar.svg';
 import userDeleteImage from 'assets/images/CardPlayer/player-delete.svg';
 
 import styles from './index.module.scss';
 
 const PlayerCard: React.FC<{ user: Users }> = ({ user }) => {
-	const { firstName, lastName, position, isAdmin, avatar } = user;
-	const ava = avatar || unknownAvatar;
-
 	const dispatch = useDispatch();
 
-	const onDeleteUser = () => {
-		dispatch(deleteUserActionCreation(user));
+	const { firstName, lastName, position, isAdmin, id } = user;
+	const member = useTypedSelector(getMembers);
+
+	const onDeleteUser = (event: React.MouseEvent<HTMLElement>) => {
+		const button = event.target as HTMLElement;
+
+		if (member.isAdmin) {
+			const playerKick = `${firstName} ${lastName}`;
+			return dispatch(
+				setModalDataActionCreation({
+					openModal: true,
+					type: KICK,
+					vote: false,
+					id: button.id,
+					playerKick
+				})
+			);
+		}
+		return dispatch(socketCreator({ type: DELETE, id: button.id }));
 	};
 
 	return (
@@ -34,6 +50,7 @@ const PlayerCard: React.FC<{ user: Users }> = ({ user }) => {
 					{!isAdmin && (
 						<div>
 							<img
+								id={id}
 								src={userDeleteImage}
 								alt="del"
 								onClick={onDeleteUser}

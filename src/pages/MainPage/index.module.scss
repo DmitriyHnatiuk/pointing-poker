@@ -1,4 +1,4 @@
-@import '/src/assets/styles/variables';
+@import "/src/assets/styles/variables";
 
 .main_page {
 	display: flex;
@@ -58,11 +58,4 @@
 
 .or form {
 	padding: 15px 30px 30px;
-}
-
-.form {
-	position: absolute;
-	width: 100vw;
-	height: 100vh;
-	background-color: rgba(196, 196, 196, 0.6);
 }
