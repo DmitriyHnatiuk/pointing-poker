@@ -25,5 +25,7 @@ export enum btnValue {
 	CANCEL_GAME = 'Cancel game',
 	OBSERVER = 'observer',
 	YES = 'Yes',
-	NO = 'No'
+	NO = 'No',
+	COPY = 'Copy',
+	EXIT = 'Exit'
 }
