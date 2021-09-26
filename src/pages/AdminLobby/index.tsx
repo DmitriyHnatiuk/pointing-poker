@@ -12,6 +12,7 @@ import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 import { ways } from 'constants/constRouter';
 import { URL } from 'constants/API';
 
+import InstallTimer from 'components/common/Timer/InstallTimer';
 import Members from './Members';
 import GameStatus from './GameStatus';
 import Issues from './Issues';
@@ -75,6 +76,7 @@ const AdminLobby: React.FC = (): JSX.Element => {
 			<GameStatus />
 			<Members />
 			<Issues />
+			<InstallTimer />
 			<AdminMenu />
 		</div>
 	);

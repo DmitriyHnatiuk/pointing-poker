@@ -1,5 +1,11 @@
 import { ActionCreationArguments } from 'interfaces/commonComponents';
-import { Game, GameAction, PlayingCard, SettingsActionEnum } from './types';
+import {
+	Game,
+	GameAction,
+	PlayingCard,
+	SettingsActionEnum,
+	TimerSettings
+} from './types';
 
 export const SET_DATA = 'SET_DATA';
 export const SET_NAME = 'SET_NAME';
@@ -12,6 +18,10 @@ const initialStore: Game = {
 	room: '',
 	issues: ['Issues 545'],
 	scoreType: 'SP',
+	timer: {
+		min: '00',
+		sec: '00'
+	},
 	cards: [
 		{
 			id: 1,
@@ -64,6 +74,13 @@ const reducer = (
 			};
 		}
 
+		case SettingsActionEnum.SETTING_TIMER: {
+			return {
+				...state,
+				timer: action.payload
+			};
+		}
+
 		default:
 			return state;
 	}
@@ -87,6 +104,11 @@ export const deletePlayingCard = (card: PlayingCard): GameAction => ({
 export const addPlayingCard = (): GameAction => ({
 	type: SettingsActionEnum.ADD_PLAYING_CARD,
 	payload: { id: 5, score: '55' }
+});
+
+export const setTimer = (timer: TimerSettings): GameAction => ({
+	type: SettingsActionEnum.SETTING_TIMER,
+	payload: timer
 });
 
 export default reducer;

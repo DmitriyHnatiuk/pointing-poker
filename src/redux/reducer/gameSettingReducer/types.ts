@@ -6,6 +6,12 @@ export interface Game {
 	issues: Array<string>;
 	scoreType: string;
 	cards: PlayingCard[];
+	timer: TimerSettings;
+}
+
+export interface TimerSettings {
+	min: string;
+	sec: string;
 }
 
 export interface PlayingCard {
@@ -17,7 +23,8 @@ export interface PlayingCard {
 export enum SettingsActionEnum {
 	EDIT_PLAYING_CARD = 'EDIT_PLAYING_CARD',
 	DELETE_PLAYING_CARD = 'DELETE_PLAYING_CARD',
-	ADD_PLAYING_CARD = 'ADD_PLAYING_CARD'
+	ADD_PLAYING_CARD = 'ADD_PLAYING_CARD',
+	SETTING_TIMER = 'SETTING_TIMER'
 }
 
 interface EditPlayingCardAction {
@@ -35,7 +42,13 @@ interface AddPlayingCardAction {
 	payload: PlayingCard;
 }
 
+interface SettingTimerAction {
+	type: SettingsActionEnum.SETTING_TIMER;
+	payload: TimerSettings;
+}
+
 export type GameAction =
 	| EditPlayingCardAction
 	| DeletePlayingCardAction
-	| AddPlayingCardAction;
+	| AddPlayingCardAction
+	| SettingTimerAction;
