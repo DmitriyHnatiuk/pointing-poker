@@ -7,8 +7,6 @@ import { Rout } from 'redux/reducer/routerReducer/types';
 import { Modal } from 'redux/reducer/modalReducer/types';
 
 import Modals from 'components/common/Modals';
-import { ways } from 'constants/constRouter';
-import { URL } from 'constants/API';
 
 import InstallTimer from 'components/common/Timer/InstallTimer';
 import Members from './Members';
