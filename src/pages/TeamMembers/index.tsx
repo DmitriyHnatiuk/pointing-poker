@@ -1,13 +1,12 @@
 import React, { useMemo } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import history from 'utils/history';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
 import socketCreator, { UNSUBSCRIBE } from 'redux/thunk';
-import { getMembers, getModal, getPath } from 'redux/reducer/selectors';
+import { getMembers, getModal } from 'redux/reducer/selectors';
 import { User } from 'redux/reducer/userReducer/types';
-import { Rout } from 'redux/reducer/routerReducer/types';
 import { Modal } from 'redux/reducer/modalReducer/types';
 
 import { ways } from 'constants/constRouter';
@@ -22,7 +21,6 @@ import styles from './index.module.scss';
 const { HOME } = ways;
 
 const TeamMembers: React.FC = () => {
-	const history = useHistory();
 	const dispatch = useDispatch();
 
 	const setExit = () => {
@@ -30,7 +28,6 @@ const TeamMembers: React.FC = () => {
 		history.push(HOME);
 	};
 
-	const { path } = useTypedSelector<Rout>(getPath);
 	const { users } = useTypedSelector<User>(getMembers);
 	const { openModal } = useTypedSelector<Modal>(getModal);
 
@@ -44,7 +41,6 @@ const TeamMembers: React.FC = () => {
 
 	return (
 		<>
-			{path && <Redirect to={path} />}
 			<section className={styles.section}>
 				<h3>Spring planning:</h3>
 				<div className={styles.scram}>

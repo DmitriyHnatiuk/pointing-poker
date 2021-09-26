@@ -1,9 +1,6 @@
 import { io } from 'socket.io-client';
+import history from 'utils/history';
 
-import {
-	routerActionType,
-	setRouterDataActionCreation
-} from 'redux/reducer/routerReducer';
 import { RootState } from 'redux/store';
 import {
 	ActionType,
@@ -35,7 +32,7 @@ const { HOME } = ways;
 type dispatchTypes = ThunkDispatch<
 	RootState,
 	never,
-	ActionType | routerActionType | modalActionType
+	ActionType | modalActionType
 >;
 
 const socketCreator =
@@ -46,7 +43,7 @@ const socketCreator =
 		const setExit = () => {
 			socket.offAny();
 			socket.disconnect();
-			return dispatch(setRouterDataActionCreation(HOME));
+			history.push(HOME);
 		};
 
 		socket.connect();

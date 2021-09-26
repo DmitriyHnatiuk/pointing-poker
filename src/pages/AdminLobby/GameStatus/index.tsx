@@ -1,8 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 import socketCreator, { UNSUBSCRIBE } from 'redux/thunk';
+
+import history from 'utils/history';
 
 import { ways } from 'constants/constRouter';
 import { btnValue } from 'constants/commonComponents';
@@ -23,7 +24,6 @@ const set = () => console.log('set-set'); // #
 
 const GameStatus: React.FC = (): JSX.Element => {
 	const dispatch = useDispatch();
-	const history = useHistory();
 
 	const user = useTypedSelector<User>(getMembers);
 	const { roomNumber } = useTypedSelector<User>(getMembers);

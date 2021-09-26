@@ -1,7 +1,8 @@
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 import { ways } from 'constants/constRouter';
+
+import history from 'utils/history';
 
 import { FormikHelpers } from 'formik/dist/types';
 
@@ -19,7 +20,6 @@ export const useSubmitFormRegistration = (): ((
 	values: FieldRegistry,
 	actions: FormikHelpers<FieldRegistry>
 ) => void) => {
-	const history = useHistory();
 	const dispatch = useDispatch();
 	const { isAdmin } = useTypedSelector<User>(getMembers);
 	const { roomNumber } = useTypedSelector<User>(getMembers);
