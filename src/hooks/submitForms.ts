@@ -1,9 +1,5 @@
 import { useDispatch } from 'react-redux';
 
-import { ways } from 'constants/constRouter';
-
-import history from 'utils/history';
-
 import { FormikHelpers } from 'formik/dist/types';
 
 import { deleteModalActionCreation } from 'redux/reducer/modalReducer';
@@ -14,8 +10,6 @@ import { User } from 'redux/reducer/userReducer/types';
 import { FieldIssues, FieldRegistry } from 'interfaces/commonForm';
 import { useTypedSelector } from './useTypedSelector';
 
-const { ADMIN, USER } = ways;
-
 export const useSubmitFormRegistration = (): ((
 	values: FieldRegistry,
 	actions: FormikHelpers<FieldRegistry>
@@ -23,12 +17,6 @@ export const useSubmitFormRegistration = (): ((
 	const dispatch = useDispatch();
 	const { isAdmin } = useTypedSelector<User>(getMembers);
 	const { roomNumber } = useTypedSelector<User>(getMembers);
-
-	const toLobby = () => {
-		const path = isAdmin ? ADMIN : USER;
-
-		return history.push(path);
-	};
 
 	const submit = (values: FieldRegistry) => {
 		dispatch(
@@ -38,7 +26,6 @@ export const useSubmitFormRegistration = (): ((
 			})
 		);
 		dispatch(deleteModalActionCreation());
-		toLobby();
 	};
 
 	return submit;

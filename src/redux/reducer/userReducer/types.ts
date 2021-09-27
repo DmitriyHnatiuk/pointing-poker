@@ -15,6 +15,7 @@ export interface User {
 	isAdmin: boolean;
 	karma: number;
 	id: string;
+	login: boolean;
 	users: Users[];
 }
 
@@ -29,4 +30,5 @@ export interface Users {
 	isAdmin: boolean;
 	karma: number;
 	id: string;
+	login: boolean;
 }

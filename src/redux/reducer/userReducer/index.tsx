@@ -15,6 +15,7 @@ const initialStore: User = {
 	isAdmin: false,
 	karma: 0,
 	id: '',
+	login: false,
 	users: [
 		{
 			selectedCard: '',
@@ -26,6 +27,7 @@ const initialStore: User = {
 			lastName: 'Petrov',
 			position: 'Senior JS Dev',
 			isAdmin: true,
+			login: false,
 			avatar: `https://png.pngtree.com/png-clipart/20190924/original
 				/pngtree-human-avatar-free-vector-png-image_4825373.jpg`
 		},
@@ -39,6 +41,7 @@ const initialStore: User = {
 			lastName: 'One',
 			position: 'Junior JS Dev',
 			isAdmin: false,
+			login: false,
 			avatar: 'https://pngimg.com/uploads/avatar/avatar_PNG41.png'
 		},
 		{
@@ -51,6 +54,7 @@ const initialStore: User = {
 			lastName: 'Two',
 			position: 'Junior JS Dev',
 			isAdmin: false,
+			login: false,
 			avatar: ''
 		},
 		{
@@ -63,6 +67,7 @@ const initialStore: User = {
 			lastName: 'Three',
 			position: 'Junior JS Dev',
 			isAdmin: false,
+			login: false,
 			avatar: ''
 		}
 	]
