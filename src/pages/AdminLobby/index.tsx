@@ -1,9 +1,7 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
-import { getModal, getPath } from 'redux/reducer/selectors';
+import { getModal } from 'redux/reducer/selectors';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { Rout } from 'redux/reducer/routerReducer/types';
 import { Modal } from 'redux/reducer/modalReducer/types';
 
 import Modals from 'components/common/Modals';
@@ -17,12 +15,10 @@ import AdminMenu from './AdminMenu';
 import styles from './index.module.scss';
 
 const AdminLobby: React.FC = (): JSX.Element => {
-	const { path } = useTypedSelector<Rout>(getPath);
 	const { openModal } = useTypedSelector<Modal>(getModal);
 
 	return (
 		<div className={styles.adminLobby}>
-			{path && <Redirect to={path} />}
 			<GameStatus />
 			<Members />
 			<Issues />

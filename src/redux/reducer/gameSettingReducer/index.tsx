@@ -1,7 +1,7 @@
-import { ActionCreationArguments } from 'interfaces/commonComponents';
 import {
 	Game,
 	GameAction,
+	Issue,
 	PlayingCard,
 	SettingsActionEnum,
 	TimerSettings
@@ -16,7 +16,7 @@ const initialStore: Game = {
 	userName: '',
 	isAdmin: false,
 	room: '',
-	issues: ['Issues 545'],
+	issues: [{ id: 1, title: 'Issue_1', priority: 'LOW priority' }],
 	scoreType: 'SP',
 	timer: {
 		min: '00',
@@ -70,7 +70,40 @@ const reducer = (
 		case SettingsActionEnum.ADD_PLAYING_CARD: {
 			return {
 				...state,
-				cards: [...state.cards, action.payload]
+				cards: [
+					...state.cards,
+					{
+						id:
+							state.cards.length === 0
+								? 1
+								: state.cards[state.cards.length - 1].id + 1,
+						score: action.payload.score
+					}
+				]
+			};
+		}
+
+		case SettingsActionEnum.ADD_ISSUE: {
+			return {
+				...state,
+				issues: [
+					...state.issues,
+					{
+						id:
+							state.issues.length === 0
+								? 1
+								: state.issues[state.issues.length - 1].id + 1,
+						title: action.payload.title,
+						priority: action.payload.priority
+					}
+				]
+			};
+		}
+
+		case SettingsActionEnum.DELETE_ISSUE: {
+			return {
+				...state,
+				issues: state.issues.filter((issue) => issue.id !== action.payload.id)
 			};
 		}
 
@@ -86,8 +119,16 @@ const reducer = (
 	}
 };
 
-export const setDataActionCreation = (value: ActionCreationArguments) =>
-	({ type: SET_DATA, payload: value } as const);
+export const addIssue = (): GameAction => ({
+	type: SettingsActionEnum.ADD_ISSUE,
+	payload: { id: 3, title: 'Issue_3', priority: 'LOW priority' }
+});
+
+export const deleteIssue = (issue: Issue): GameAction => ({
+	type: SettingsActionEnum.DELETE_ISSUE,
+	payload: issue
+});
+
 export const editPlayingCard = (
 	card: PlayingCard,
 	score: string
