@@ -15,9 +15,7 @@ const Header: React.FC = (): JSX.Element => {
 			<Link to={ways.HOME}>
 				<img className={styles.logo} src={logo} alt="logo" />
 			</Link>
-			<Link to={ways.CHAT}>
-				<img className={styles.chat} src={chat} alt="chat" />
-			</Link>
+			<img className={styles.chat} src={chat} alt="chat" />
 		</header>
 	);
 };
