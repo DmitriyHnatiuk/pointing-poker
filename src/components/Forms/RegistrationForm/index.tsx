@@ -13,8 +13,6 @@ import Avatar from 'components/Avatar';
 import { InterfaceModals } from 'interfaces/modals';
 import { TypeInputFormikControl } from 'interfaces/commonForm';
 
-import Avatar from 'components/Avatar';
-
 import styles from './index.module.scss';
 
 const FormRegistration: React.FC<InterfaceModals> = ({ close }) => {
