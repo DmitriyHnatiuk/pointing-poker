@@ -69,7 +69,6 @@ export type GameAction =
 	| EditPlayingCardAction
 	| DeletePlayingCardAction
 	| AddPlayingCardAction
-	| SettingTimerAction;
-	| AddPlayingCardAction
+	| SettingTimerAction
 	| AddIssueAction
 	| DeleteIssueAction;
