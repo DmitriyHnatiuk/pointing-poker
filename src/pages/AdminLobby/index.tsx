@@ -5,6 +5,8 @@ import { useTypedSelector } from 'hooks/useTypedSelector';
 import { Modal } from 'redux/reducer/modalReducer/types';
 
 import Modals from 'components/common/Modals';
+
+import InstallTimer from 'components/common/Timer/InstallTimer';
 import Members from './Members';
 import GameStatus from './GameStatus';
 import Issues from './Issues';
@@ -20,6 +22,7 @@ const AdminLobby: React.FC = (): JSX.Element => {
 			<GameStatus />
 			<Members />
 			<Issues />
+			<InstallTimer />
 			<AdminMenu />
 			{openModal && <Modals />}
 		</div>

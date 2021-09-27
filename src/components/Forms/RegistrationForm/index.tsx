@@ -8,6 +8,7 @@ import { btnValue } from 'constants/commonComponents';
 
 import MyButton from 'components/common/MyButton';
 import FormikControl from 'components/common/Form/FormikControl';
+import Avatar from 'components/Avatar';
 
 import { InterfaceModals } from 'interfaces/modals';
 import { TypeInputFormikControl } from 'interfaces/commonForm';

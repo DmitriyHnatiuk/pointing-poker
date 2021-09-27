@@ -1,0 +1,58 @@
+@import 'assets/styles/_variables.scss';
+
+.timer {
+  padding: 10px;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  background-color: $white-color;
+  border-radius: 4px;
+  box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
+}
+
+.clockBlock {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.separator {
+  font-family: Ruda, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 81px;
+  padding:5px;
+}
+
+.clockLabel {
+  width: 100%;
+  text-align: left;
+  font-family: Ruda, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  color: $ColorTimer;
+}
+
+
+.clockInput {
+  width: 80px;
+  font-family: Ruda, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 81px;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+
+  &:focus{
+    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+  }
+
+}
