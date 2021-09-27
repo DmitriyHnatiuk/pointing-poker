@@ -35,21 +35,25 @@ const FormRegistration: React.FC<InterfaceModals> = ({ close }) => {
 						control={TypeInputFormikControl.input}
 						label="First name"
 						name="firstName"
+						style={styles.input}
 					/>
 					<FormikControl
 						control={TypeInputFormikControl.input}
 						label="Last name"
 						name="lastName"
+						style={styles.input}
 					/>
 					<FormikControl
 						control={TypeInputFormikControl.input}
 						label="Job name"
 						name="position"
+						style={styles.input}
 					/>
 					<FormikControl
 						control={TypeInputFormikControl.image}
 						label="Avatar"
 						name="avatar"
+						style={styles.input}
 					/>
 					<Avatar
 						firstName={values.firstName}

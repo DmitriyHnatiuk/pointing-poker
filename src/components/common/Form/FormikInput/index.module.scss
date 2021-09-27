@@ -1,4 +1,5 @@
 .formControl {
+	position: relative;
 	margin-bottom: 15px;
 	display: flex;
 	justify-content: flex-start;
@@ -21,6 +22,7 @@
 	height: 50px;
 	width: 400px;
 	min-width: 250px;
+	max-width: 100%;
 	border-radius: 5px;
 	font-family: Roboto, sans-serif;
 	font-style: normal;
