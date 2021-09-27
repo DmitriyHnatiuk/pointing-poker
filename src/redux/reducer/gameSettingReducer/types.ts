@@ -3,7 +3,7 @@ export interface Game {
 	isAdmin: boolean;
 	room: string;
 	planningTitle: string;
-	issues: Array<string>;
+	issues: Issue[];
 	scoreType: string;
 	cards: PlayingCard[];
 }
@@ -14,10 +14,18 @@ export interface PlayingCard {
 	isFirstCard?: boolean;
 }
 
+export interface Issue {
+	id: number;
+	title: string;
+	priority: string;
+}
+
 export enum SettingsActionEnum {
 	EDIT_PLAYING_CARD = 'EDIT_PLAYING_CARD',
 	DELETE_PLAYING_CARD = 'DELETE_PLAYING_CARD',
-	ADD_PLAYING_CARD = 'ADD_PLAYING_CARD'
+	ADD_PLAYING_CARD = 'ADD_PLAYING_CARD',
+	ADD_ISSUE = 'ADD_ISSUE',
+	DELETE_ISSUE = 'DELETE_ISSUE'
 }
 
 interface EditPlayingCardAction {
@@ -35,7 +43,19 @@ interface AddPlayingCardAction {
 	payload: PlayingCard;
 }
 
+interface AddIssueAction {
+	type: SettingsActionEnum.ADD_ISSUE;
+	payload: Issue;
+}
+
+interface DeleteIssueAction {
+	type: SettingsActionEnum.DELETE_ISSUE;
+	payload: Issue;
+}
+
 export type GameAction =
 	| EditPlayingCardAction
 	| DeletePlayingCardAction
-	| AddPlayingCardAction;
+	| AddPlayingCardAction
+	| AddIssueAction
+	| DeleteIssueAction;

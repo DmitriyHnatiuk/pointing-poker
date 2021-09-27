@@ -28,6 +28,12 @@
 	margin-top: 50px;
 }
 
+.members {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
 .members > div {
 	margin: 10px;
 }
