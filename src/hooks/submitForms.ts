@@ -30,7 +30,7 @@ export const useSubmitFormRegistration = (): ((
 		return history.push(path);
 	};
 
-	const submit = (values: FieldRegistry) => {
+	const submitForm = (values: FieldRegistry) => {
 		dispatch(
 			socketCreator({
 				usersData: { ...values, isAdmin, roomNumber },
@@ -41,7 +41,7 @@ export const useSubmitFormRegistration = (): ((
 		toLobby();
 	};
 
-	return submit;
+	return submitForm;
 };
 
 export const useSubmitFormIssues = (
