@@ -29,3 +29,8 @@ export enum btnValue {
 	COPY = 'Copy',
 	EXIT = 'Exit'
 }
+
+export const typeMessage = {
+	ERROR: 'Error:',
+	MESSAGE: 'Message:'
+};
