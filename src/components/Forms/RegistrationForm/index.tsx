@@ -35,21 +35,25 @@ const FormRegistration: React.FC<InterfaceModals> = ({ close }) => {
 						control={TypeInputFormikControl.input}
 						label="First name"
 						name="firstName"
+						style={styles.input}
 					/>
 					<FormikControl
 						control={TypeInputFormikControl.input}
 						label="Last name"
 						name="lastName"
+						style={styles.input}
 					/>
 					<FormikControl
 						control={TypeInputFormikControl.input}
 						label="Job name"
 						name="position"
+						style={styles.input}
 					/>
 					<FormikControl
 						control={TypeInputFormikControl.image}
 						label="Avatar"
 						name="avatar"
+						style={styles.input}
 					/>
 					<Avatar
 						firstName={values.firstName}
@@ -58,11 +62,15 @@ const FormRegistration: React.FC<InterfaceModals> = ({ close }) => {
 					/>
 
 					<div className={styles.buttons}>
-						<MyButton value={btnValue.CONFIRM} type="submit" />
+						<MyButton
+							value={btnValue.CONFIRM}
+							type="submit"
+							style={styles.btn}
+						/>
 						<MyButton
 							value={btnValue.CANCEL}
 							onclick={close}
-							style={styles.cancel}
+							style={`${styles.btn} ${styles.cancel}`}
 						/>
 					</div>
 				</Form>

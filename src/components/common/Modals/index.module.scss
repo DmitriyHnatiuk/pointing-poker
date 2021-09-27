@@ -10,4 +10,8 @@
 	min-height: 100vh;
 	z-index: 10;
 	background-color: $BackgroundGrayModal;
+	overflow-y: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
