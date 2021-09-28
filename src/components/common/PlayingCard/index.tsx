@@ -7,7 +7,7 @@ import {
 	deletePlayingCard
 } from 'redux/reducer/gameSettingReducer';
 
-import pencil from 'assets/images/PlayingCard/pencil.svg';
+import deleteCard from 'assets/images/CardPlayer/player-delete.svg';
 import cup from 'assets/images/PlayingCard/cup.svg';
 
 import styles from './index.module.scss';
@@ -37,7 +37,7 @@ const PlayingCardComponent: React.FC<{ card: PlayingCard; scoreType: string }> =
 							onChange={onEditScore}
 						/>
 						<img
-							src={pencil}
+							src={deleteCard}
 							alt="pencil"
 							aria-hidden="true"
 							title="Delete card"

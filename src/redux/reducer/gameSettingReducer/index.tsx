@@ -15,13 +15,15 @@ export const SET_ADMIN = 'SET_ADMIN';
 const initialStore: Game = {
 	userName: '',
 	isAdmin: false,
+	isAdminAsPlayer: false,
 	room: '',
 	issues: [{ id: 1, title: 'Issue_1', priority: 'LOW priority' }],
-	scoreType: 'SP',
+	scoreType: 'ST',
 	timer: {
 		min: '00',
 		sec: '00'
 	},
+	isTimer: false,
 	cards: [
 		{
 			id: 1,
@@ -114,6 +116,27 @@ const reducer = (
 			};
 		}
 
+		case SettingsActionEnum.TOGGLE_IS_TIMER: {
+			return {
+				...state,
+				isTimer: !state.isTimer
+			};
+		}
+
+		case SettingsActionEnum.TOGGLE_IS_ADMIN_PLAYER: {
+			return {
+				...state,
+				isAdminAsPlayer: !state.isAdminAsPlayer
+			};
+		}
+
+		case SettingsActionEnum.SET_SCORE_TYPE: {
+			return {
+				...state,
+				scoreType: action.payload
+			};
+		}
+
 		default:
 			return state;
 	}
@@ -150,6 +173,19 @@ export const addPlayingCard = (): GameAction => ({
 export const setTimer = (timer: TimerSettings): GameAction => ({
 	type: SettingsActionEnum.SETTING_TIMER,
 	payload: timer
+});
+
+export const setIsTimer = (): GameAction => ({
+	type: SettingsActionEnum.TOGGLE_IS_TIMER
+});
+
+export const setIsAdminAsPlayerIsTimer = (): GameAction => ({
+	type: SettingsActionEnum.TOGGLE_IS_ADMIN_PLAYER
+});
+
+export const setScoreType = (storyType: string): GameAction => ({
+	type: SettingsActionEnum.SET_SCORE_TYPE,
+	payload: storyType
 });
 
 export default reducer;
