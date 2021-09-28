@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import socketCreator, { UNSUBSCRIBE } from 'redux/thunk';
+import socketCreator, { UNSUBSCRIBE, SET_START } from 'redux/thunk';
 
 import history from 'utils/history';
 
@@ -13,18 +13,17 @@ import { Game } from 'redux/reducer/gameSettingReducer/types';
 import { User } from 'redux/reducer/userReducer/types';
 import { getGame, getMembers } from 'redux/reducer/selectors';
 
-import PlayerCard from 'components/common/UserCard';
+import MasterCard from 'components/common/MasterCard';
 import MyButton from 'components/common/MyButton';
 import styles from './index.module.scss';
 
 const { HOME } = ways;
 const { START_GAME, CANCEL_GAME, COPY } = btnValue;
 
-const set = () => console.log('set-set'); // #
-
 const GameStatus: React.FC = (): JSX.Element => {
 	const dispatch = useDispatch();
 
+	const gameSettings = useTypedSelector(getGame);
 	const user = useTypedSelector<User>(getMembers);
 	const { roomNumber } = useTypedSelector<User>(getMembers);
 	const { planningTitle } = useTypedSelector<Game>(getGame);
@@ -35,16 +34,17 @@ const GameStatus: React.FC = (): JSX.Element => {
 	};
 
 	const copyLink = () => navigator.clipboard.writeText(roomNumber);
+
+	const setStart = () =>
+		dispatch(socketCreator({ type: SET_START, gameSettings }));
+
 	const changeLink = (event: React.ChangeEvent<HTMLInputElement>) =>
 		console.log(event.target.value); // #
 
 	return (
 		<>
 			<h1 className={styles.planningTitle}>{planningTitle}</h1>
-			<div className={styles.status}>
-				<span className={styles.titleStatus}>Scram master:</span>
-				<PlayerCard user={user} />
-			</div>
+			<MasterCard user={user} />
 			<div className={styles.gameStatus}>
 				<label htmlFor="link" className={styles.titleLink}>
 					<p>Link to lobby:</p>
@@ -63,7 +63,7 @@ const GameStatus: React.FC = (): JSX.Element => {
 					/>
 				</label>
 				<div className={styles.buttons}>
-					<MyButton onclick={set} value={START_GAME} />
+					<MyButton onclick={setStart} value={START_GAME} />
 					<MyButton
 						onclick={setExit}
 						value={CANCEL_GAME}
