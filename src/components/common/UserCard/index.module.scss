@@ -1,13 +1,14 @@
-@import '/src/assets/styles/variables';
+@import "/src/assets/styles/variables";
 
 .card {
-	width: 300px;
+	width: 30%;
 	min-height: 75px;
 	margin: 10px;
 	border: 1px solid $Deep-Koamaru;
 	border-radius: 5px;
 	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 	transition: all 0.5s;
+	word-break: break-all;
 }
 
 .card:hover {

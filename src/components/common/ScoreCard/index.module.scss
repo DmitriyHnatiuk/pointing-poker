@@ -1,0 +1,25 @@
+@import "/src/assets/styles/variables";
+
+.card {
+	width: 50%;
+	height: 50px;
+	margin: 10px;
+	border: 1px solid $Deep-Koamaru;
+	border-radius: 5px;
+	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+	transition: all 0.5s;
+	margin: auto;
+}
+
+.card:hover {
+	box-shadow: 4px 4px 4px $TextDark;
+}
+
+.score {
+	display: flex;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	font-size: 18px;
+	color: $Deep-Koamaru;
+}
