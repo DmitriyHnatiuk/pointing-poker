@@ -1,3 +1,5 @@
+import { Game } from 'redux/reducer/gameSettingReducer/types';
+
 export interface userDataTypes {
 	firstName?: string;
 	lastName?: string;
@@ -13,4 +15,5 @@ export interface dataTypes {
 	usersData?: userDataTypes | null;
 	message?: string;
 	id?: string;
+	gameSettings?: Game;
 }

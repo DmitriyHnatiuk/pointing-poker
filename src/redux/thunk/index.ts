@@ -24,6 +24,7 @@ export const ADMINS = 'ADMIN';
 export const DELETE = 'DELETE';
 export const MESSAGE = 'MESSAGE';
 export const SUBSCRIBE = 'SUBSCRIBE';
+export const SET_START = 'SET_START';
 export const UNSUBSCRIBE = 'UNSUBSCRIBE';
 export const ADMIN_AGREE = 'ADMIN_AGREE';
 export const USER_CONNECT = 'USER_CONNECT';
@@ -31,7 +32,7 @@ export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const ADMIN_DISAGREE = 'ADMIN_DISAGREE';
 
 const socket = io(ENDPOINT, { autoConnect: false });
-const { HOME, ADMIN, USER } = ways;
+const { HOME, ADMIN, USER, GAME } = ways;
 
 const toLobby = (isAdmin: boolean | undefined) => {
 	const path = isAdmin ? ADMIN : USER;
@@ -48,7 +49,7 @@ type dispatchTypes = ThunkDispatch<
 const socketCreator =
 	(data: dataTypes) =>
 	(dispatch: dispatchTypes): void => {
-		const { usersData, type, message, id } = data;
+		const { usersData, type, message, id, gameSettings } = data;
 
 		const setExit = () => {
 			history.push(HOME);
@@ -84,6 +85,16 @@ const socketCreator =
 				}
 
 				return dispatch(setUserDataActionCreation({ users: rooms.users }));
+			});
+
+			socket.on('event://your_game_data', (gameData, rooms) => {
+				if (!gameData) {
+					return setExit();
+				}
+				dispatch(setUserDataActionCreation({ login: true }));
+				history.push(GAME);
+
+				return console.log(gameData, rooms); // # dispatch gameData
 			});
 
 			if (usersData?.isAdmin) {
@@ -168,8 +179,12 @@ const socketCreator =
 			socket.emit('event://agree_delete', id);
 		}
 
-		// #chat parts
+		if (type === SET_START) {
+			socket.emit('event://admin_start_game', gameSettings);
+		}
+
 		if (type === CHAT) {
+			// #chat parts
 			socket.on('event://message_from_user', (ms) => console.log('user', ms));
 			socket.on('event://message_from_admin', (ms) => console.log('admin', ms));
 		}

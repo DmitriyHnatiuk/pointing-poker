@@ -1,8 +1,7 @@
 @import "/src/assets/styles/variables";
 
 .card {
-	width: 30%;
-	min-height: 75px;
+	width: 20%;
 	margin: 10px;
 	border: 1px solid $Deep-Koamaru;
 	border-radius: 5px;
@@ -18,6 +17,7 @@
 .content {
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 	justify-content: space-between;
 	padding: 10px;
 }

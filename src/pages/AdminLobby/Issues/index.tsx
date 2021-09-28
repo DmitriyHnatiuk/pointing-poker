@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { getGame } from 'redux/reducer/selectors';
+import { getGame, getMembers } from 'redux/reducer/selectors';
 import { Game } from 'redux/reducer/gameSettingReducer/types';
+import { User } from 'redux/reducer/userReducer/types';
+
 import { addIssue } from 'redux/reducer/gameSettingReducer';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
@@ -14,6 +16,7 @@ import addIssueImage from 'assets/images/PlayingCard/add_card.svg';
 import styles from './index.module.scss';
 
 const Issues: React.FC = (): JSX.Element => {
+	const { isAdmin } = useTypedSelector<User>(getMembers);
 	const { issues } = useTypedSelector<Game>(getGame);
 
 	const dispatch = useDispatch();
@@ -29,18 +32,20 @@ const Issues: React.FC = (): JSX.Element => {
 				{issues.map((issue) => (
 					<IssueCard issue={issue} key={issue.id} />
 				))}
-				<div className={styles.new}>
-					<div className={styles.newContent}>
-						<span>Crete new Issue</span>
-						<img
-							src={addIssueImage}
-							alt="add"
-							title="Add issue"
-							onClick={onAddIssue}
-							aria-hidden="true"
-						/>
+				{isAdmin && (
+					<div className={styles.new}>
+						<div className={styles.newContent}>
+							<span>Crete new Issue</span>
+							<img
+								src={addIssueImage}
+								alt="add"
+								title="Add issue"
+								onClick={onAddIssue}
+								aria-hidden="true"
+							/>
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 		</div>
 	);
