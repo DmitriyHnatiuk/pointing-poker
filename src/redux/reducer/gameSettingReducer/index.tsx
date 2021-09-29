@@ -17,7 +17,7 @@ const initialStore: Game = {
 	isAdmin: false,
 	isAdminAsPlayer: false,
 	room: '',
-	issues: [{ id: 1, title: 'Issue_1', priority: 'LOW priority' }],
+	issues: [{ id: 1, title: 'Issue_1', priority: 'LOW priority', link: '' }],
 	scoreType: 'ST',
 	timer: {
 		min: '00',
@@ -96,7 +96,8 @@ const reducer = (
 								? 1
 								: state.issues[state.issues.length - 1].id + 1,
 						title: action.payload.title,
-						priority: action.payload.priority
+						priority: action.payload.priority,
+						link: action.payload.link
 					}
 				]
 			};
@@ -142,9 +143,9 @@ const reducer = (
 	}
 };
 
-export const addIssue = (): GameAction => ({
+export const addIssue = (values: Issue): GameAction => ({
 	type: SettingsActionEnum.ADD_ISSUE,
-	payload: { id: 3, title: 'Issue_3', priority: 'LOW priority' }
+	payload: values
 });
 
 export const deleteIssue = (issue: Issue): GameAction => ({

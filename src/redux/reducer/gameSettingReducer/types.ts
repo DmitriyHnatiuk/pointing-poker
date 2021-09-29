@@ -26,6 +26,7 @@ export interface Issue {
 	id: number;
 	title: string;
 	priority: string;
+	link: string;
 }
 
 export enum SettingsActionEnum {
