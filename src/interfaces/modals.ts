@@ -19,5 +19,7 @@ export interface InterfaceModalsKick {
 export enum TypeModalsOpen {
 	registration = 'REGISTRATION',
 	issue = 'ISSUES',
-	kick = 'KICK'
+	kick = 'KICK',
+	message = 'MESSAGE',
+	connect = 'USER_CONNECT'
 }

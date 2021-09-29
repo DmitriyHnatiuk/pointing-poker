@@ -18,6 +18,7 @@ export interface ActionCreationArguments {
 	karma?: number;
 	users?: Users[];
 	id?: string;
+	login?: boolean;
 }
 
 export interface InterfaceAvatar {

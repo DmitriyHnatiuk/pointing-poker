@@ -1,0 +1,16 @@
+@import "/src/assets/styles/variables";
+
+.statistics {
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 50px;
+}
+.statistics h3 {
+  padding-left: 70px;
+}
+.cards {
+  display: flex;
+}
+.card {
+  text-align: center;
+}

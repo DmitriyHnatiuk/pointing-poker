@@ -12,7 +12,10 @@ import userDeleteImage from 'assets/images/CardPlayer/player-delete.svg';
 
 import styles from './index.module.scss';
 
-const PlayerCard: React.FC<{ user: Users }> = ({ user }) => {
+const PlayerCard: React.FC<{ user: Users; style?: string }> = ({
+	user,
+	style = ''
+}) => {
 	const dispatch = useDispatch();
 
 	const { firstName, lastName, position, isAdmin, id } = user;
@@ -37,7 +40,7 @@ const PlayerCard: React.FC<{ user: Users }> = ({ user }) => {
 	};
 
 	return (
-		<div className={styles.card}>
+		<div className={`${styles.card} ${style}`}>
 			<div className={styles.content}>
 				<div className={styles.member}>
 					<div className={styles.player}>

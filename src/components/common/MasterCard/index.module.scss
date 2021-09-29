@@ -1,0 +1,15 @@
+@import "/src/assets/styles/variables";
+
+.status {
+  padding-top: 10px;
+  text-align: left;
+  position: relative;
+}
+
+.titleStatus {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  font-size: 12px;
+  color: $Dark-Electric-Blue;
+}

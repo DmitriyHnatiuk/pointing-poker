@@ -1,0 +1,40 @@
+@import "assets/styles/_variables.scss";
+
+.modal {
+	position: relative;
+	top: 10px;
+	padding: 20px;
+	margin: 0 auto;
+	text-align: center;
+	background-color: $white-color;
+	width: 70vw;
+	height: 70vh;
+	overflow: auto;
+}
+
+.content {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding-top: 10%;
+}
+.title {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.message {
+	color: $Light-Sea-Green;
+}
+.error {
+	color: $Ferrari-Red;
+}
+
+.text {
+	font-family: Roboto, sans-serif;
+	font-weight: bold;
+	font-size: 2rem;
+	line-height: 75px;
+	word-wrap: break-word;
+	margin: 20px 0;
+}

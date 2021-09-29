@@ -9,6 +9,7 @@ const initialStore: Modal = {
 	player: '',
 	playerKick: '',
 	id: '',
+	error: false,
 	vote: true
 };
 

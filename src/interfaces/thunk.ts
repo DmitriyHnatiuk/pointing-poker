@@ -1,3 +1,5 @@
+import { Game } from 'redux/reducer/gameSettingReducer/types';
+
 import { interfaceChatMessage } from './commonChat';
 
 export interface userDataTypes {
@@ -15,4 +17,5 @@ export interface dataTypes {
 	usersData?: userDataTypes | null;
 	message?: string | interfaceChatMessage;
 	id?: string;
+	gameSettings?: Game;
 }
