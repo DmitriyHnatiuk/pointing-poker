@@ -1,4 +1,27 @@
-.main {
-	min-height: calc(100vh - 70px - 50px);
-	margin: 0 20vw;
+.chatOff {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: 50px auto;
+  min-height: calc(100vh - 70px - 100px);
+}
+
+.chatOn {
+  min-height: calc(100vh - 70px - 150px);
+  margin: 50px 20px;
+  display: grid;
+  grid-template-columns:2fr 0.7fr;
+  grid-template-rows: 1fr;
+  gap: 0 5px;
+  grid-template-areas: 'pages chat';
+}
+
+.page {
+  grid-area: pages;
+  grid-template-rows: 1fr;
+}
+
+.chatOff .page {
+  width: 80%;
 }

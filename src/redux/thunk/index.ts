@@ -16,6 +16,8 @@ import { ENDPOINT } from 'constants/API';
 import { ThunkDispatch } from 'redux-thunk';
 import { dataTypes } from 'interfaces/thunk';
 import { ways } from 'constants/constRouter';
+import { interfaceChatMessage } from '../../interfaces/commonChat';
+import { chatActionType, pushMessage } from '../reducer/chatReducer';
 
 export const CHAT = 'CHAT';
 export const KICK = 'KICK';
@@ -32,7 +34,7 @@ const { HOME } = ways;
 type dispatchTypes = ThunkDispatch<
 	RootState,
 	never,
-	ActionType | modalActionType
+	ActionType | modalActionType | chatActionType
 >;
 
 const socketCreator =
@@ -124,8 +126,14 @@ const socketCreator =
 
 		// #chat parts
 		if (type === CHAT) {
-			socket.on('event://message_from_user', (ms) => console.log('user', ms));
-			socket.on('event://message_from_admin', (ms) => console.log('admin', ms));
+			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+			socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
 		}
 
 		if (type === SEND_MESSAGE) {

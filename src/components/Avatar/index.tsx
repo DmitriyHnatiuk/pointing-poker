@@ -5,19 +5,19 @@ import { InterfaceAvatar } from 'interfaces/commonComponents';
 import styles from './index.module.scss';
 
 const Avatar: React.FC<InterfaceAvatar> = (props) => {
-	const { avatar, firstName, lastName } = props;
+	const { avatar, firstName, lastName, style } = props;
 
 	const AvatarInitials = () => {
 		if (lastName) {
 			return (
-				<span className={styles.initials}>
+				<span className={`${styles.initials} ${style}`}>
 					{firstName?.trim()[0]}
 					{lastName.trim()[0]}
 				</span>
 			);
 		}
 		return (
-			<span className={styles.initials}>
+			<span className={`${styles.initials} ${style}`}>
 				{firstName?.trim()[0]}
 				{firstName?.trim()[1]}
 			</span>
@@ -34,7 +34,7 @@ const Avatar: React.FC<InterfaceAvatar> = (props) => {
 	};
 
 	return (
-		<div className={styles.avatar}>
+		<div className={`${styles.avatar} ${style}`}>
 			{avatar ? <AvatarImg /> : <AvatarInitials />}
 		</div>
 	);

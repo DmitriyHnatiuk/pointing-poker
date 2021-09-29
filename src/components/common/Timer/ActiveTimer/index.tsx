@@ -7,7 +7,7 @@ import { setTimer } from 'redux/reducer/gameSettingReducer';
 
 import styles from './index.module.scss';
 
-const ActiveTimer = () => {
+const ActiveTimer: React.FC = () => {
 	const dispatch = useDispatch();
 	const { timer } = useTypedSelector((state) => state.gameSettings);
 
