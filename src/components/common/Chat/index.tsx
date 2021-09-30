@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import ChatMessage from 'components/common/ChatMessage';
@@ -53,17 +53,22 @@ const Chat: React.FC = (): JSX.Element => {
 		setTextValue(e.target.value);
 	};
 
-	const MessageList = messageList.map((item) => {
-		const { author, textMessage, date } = item;
-		return (
-			<ChatMessage
-				author={author}
-				textMessage={textMessage}
-				date={date}
-				key={`${textMessage}${date}${author.lastName}`}
-			/>
-		);
-	});
+	const MessageList = useMemo(
+		() =>
+			messageList.map((item) => {
+				const { author, textMessage, date, id } = item;
+				console.log(id);
+				return (
+					<ChatMessage
+						author={author}
+						textMessage={textMessage}
+						date={date}
+						key={`${id}`}
+					/>
+				);
+			}),
+		[messageList]
+	);
 
 	return (
 		<div className={styles.chat}>

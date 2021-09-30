@@ -6,4 +6,5 @@ export interface interfaceChatMessage {
 	};
 	date: string;
 	textMessage: string;
+	id?: string;
 }

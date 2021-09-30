@@ -183,21 +183,16 @@ const socketCreator =
 		}
 
 		if (type === CHAT) {
-			// #chat parts
-			socket.on('event://message_from_user', (ms) => console.log('user', ms));
-			socket.on('event://message_from_admin', (ms) => console.log('admin', ms));
-			// #chat parts
-			if (type === CHAT) {
-				socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
-					if (!ms) return;
-					dispatch(pushMessage(ms));
-				});
-				socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
-					if (!ms) return;
-					dispatch(pushMessage(ms));
-				});
-			}
+			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+			socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
 		}
+
 		if (type === SEND_MESSAGE) {
 			socket.emit('event://message', message);
 		}
