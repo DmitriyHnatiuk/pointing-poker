@@ -25,4 +25,5 @@ export interface InterfaceAvatar {
 	firstName: string | undefined;
 	lastName: string | undefined;
 	avatar: File | string;
+	style?: string;
 }

@@ -10,12 +10,14 @@ import {
 import {
 	modalActionType,
 	setModalDataActionCreation
-} from 'redux/reducer/modalReducer/index';
+} from 'redux/reducer/modalReducer';
+import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
 
 import { ENDPOINT } from 'constants/API';
 import { ThunkDispatch } from 'redux-thunk';
 import { dataTypes } from 'interfaces/thunk';
 import { ways } from 'constants/constRouter';
+import { interfaceChatMessage } from 'interfaces/commonChat';
 
 export const CHAT = 'CHAT';
 export const KICK = 'KICK';
@@ -43,7 +45,7 @@ const toLobby = (isAdmin: boolean | undefined) => {
 type dispatchTypes = ThunkDispatch<
 	RootState,
 	never,
-	ActionType | modalActionType
+	ActionType | modalActionType | chatActionType
 >;
 
 const socketCreator =
@@ -64,8 +66,7 @@ const socketCreator =
 				'event://connect_to_room',
 				usersData,
 				(res: { status: string }) =>
-					res.status === 'ok' ? console.log('done') : setExit()
-			);
+					res.status === 'ok' ? console.log('done') : setExit());
 
 			socket.onAny((event, ...args) => console.log(event, args));
 
@@ -182,8 +183,18 @@ const socketCreator =
 			// #chat parts
 			socket.on('event://message_from_user', (ms) => console.log('user', ms));
 			socket.on('event://message_from_admin', (ms) => console.log('admin', ms));
+			// #chat parts
+			if (type === CHAT) {
+				socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
+					if (!ms) return;
+					dispatch(pushMessage(ms));
+				});
+				socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
+					if (!ms) return;
+					dispatch(pushMessage(ms));
+				});
+			}
 		}
-
 		if (type === SEND_MESSAGE) {
 			socket.emit('event://message', message);
 		}

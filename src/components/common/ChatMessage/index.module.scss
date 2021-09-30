@@ -1,0 +1,106 @@
+@import 'assets/styles/_variables.scss';
+
+.message {
+  max-width: 75%;
+  position: relative;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-rows: min-content;
+  gap: 5px 5px;
+
+}
+
+.messageUser {
+  align-self: end;
+  grid-template-columns: 1fr 60px;
+  grid-template-areas:
+    "author avatar"
+    "text avatar"
+    "date avatar";
+
+  background-color: rgba(102, 219, 89, .7);
+}
+
+.messageOther {
+  align-self: start;
+  grid-template-columns: 60px 1fr;
+  grid-template-areas:
+    "avatar author"
+    "avatar text"
+    "avatar date";
+
+  background-color: rgba(208, 231, 106, .7);
+}
+
+.author {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  grid-area: author;
+}
+
+.userName {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 5px;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: $DistantBlue;
+  text-transform: capitalize;
+}
+
+.messageUser .userName {
+  justify-content: flex-end;
+  color: $white-color;
+}
+
+.avatar {
+  grid-area: avatar;
+  align-self: flex-start;
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.text {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  word-wrap: break-word;
+  line-height: 24px;
+  color: $Deep-Koamaru;
+}
+
+.date {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px;
+
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 20px;
+  color: $DistantBlue;
+}
+
+
+.messageUser .date {
+  justify-content: flex-end;
+  color: $white-color;
+}
+
