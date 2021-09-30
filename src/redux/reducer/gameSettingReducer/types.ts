@@ -7,6 +7,7 @@ export interface Game {
 	issues: Issue[];
 	scoreType: string;
 	cards: PlayingCard[];
+	playingCardsSet: string;
 	timer: TimerSettings;
 	isTimer: boolean;
 }
@@ -22,6 +23,12 @@ export interface PlayingCard {
 	isFirstCard?: boolean;
 }
 
+export enum PlayingCardSetEnum {
+	fibonacciNumbers = 'Fibonacci numbers',
+	degreeTwo = 'Degree two',
+	linearSequence = 'Linear sequence'
+}
+
 export interface Issue {
 	id: number;
 	title: string;
@@ -32,6 +39,8 @@ export enum SettingsActionEnum {
 	EDIT_PLAYING_CARD = 'EDIT_PLAYING_CARD',
 	DELETE_PLAYING_CARD = 'DELETE_PLAYING_CARD',
 	ADD_PLAYING_CARD = 'ADD_PLAYING_CARD',
+	SET_PLAYING_CARD_SET = 'SET_PLAYING_CARD_SET',
+	CHANGE_PLAYING_CARD_SET = 'CHANGE_PLAYING_CARD_SET',
 	SETTING_TIMER = 'SETTING_TIMER',
 	ADD_ISSUE = 'ADD_ISSUE',
 	DELETE_ISSUE = 'DELETE_ISSUE',
@@ -53,6 +62,16 @@ interface DeletePlayingCardAction {
 interface AddPlayingCardAction {
 	type: SettingsActionEnum.ADD_PLAYING_CARD;
 	payload: PlayingCard;
+}
+
+interface SetPlayingCardSetAction {
+	type: SettingsActionEnum.SET_PLAYING_CARD_SET;
+	payload: PlayingCard[];
+}
+
+interface ChangePlayingCardSetAction {
+	type: SettingsActionEnum.CHANGE_PLAYING_CARD_SET;
+	payload: string;
 }
 
 interface SettingTimerAction {
@@ -87,6 +106,8 @@ export type GameAction =
 	| EditPlayingCardAction
 	| DeletePlayingCardAction
 	| AddPlayingCardAction
+	| SetPlayingCardSetAction
+	| ChangePlayingCardSetAction
 	| SettingTimerAction
 	| AddIssueAction
 	| DeleteIssueAction
