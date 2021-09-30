@@ -1,17 +1,17 @@
 import React from 'react';
-import { Users } from 'redux/reducer/userReducer/types';
+import { Admin } from 'redux/reducer/userReducer/types';
 import PlayerCard from '../UserCard';
 
 import styles from './index.module.scss';
 
-const MasterCard: React.FC<{ user: Users; style?: string }> = ({
-	user,
+const MasterCard: React.FC<{ admin: Admin; style?: string }> = ({
+	admin,
 	style = ''
 }) => {
 	return (
 		<div className={styles.status}>
 			<span className={styles.titleStatus}>Scram master:</span>
-			<PlayerCard user={user} style={style} />
+			<PlayerCard user={admin} style={style} />
 		</div>
 	);
 };
