@@ -17,18 +17,32 @@ export interface User {
 	id: string;
 	login: boolean;
 	users: Users[];
+	admin: Admin;
 }
 
 export interface Users {
-	selectedCard?: string;
-	roomNumber?: string;
+	selectedCard: string;
+	roomNumber: string;
 	firstName: string;
 	lastName: string;
 	position: string;
 	avatar: string | File;
-	observer?: boolean;
+	observer: boolean;
 	isAdmin: boolean;
 	karma: number;
 	id: string;
 	login: boolean;
+	admin?: Admin;
+}
+
+export interface Admin {
+	roomNumber: string;
+	firstName: string;
+	lastName: string;
+	position: string;
+	avatar: string | File;
+	observer: boolean;
+	isAdmin: boolean;
+	karma: number;
+	id: string;
 }

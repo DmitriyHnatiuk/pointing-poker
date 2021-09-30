@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { getGame } from 'redux/reducer/selectors';
@@ -14,13 +14,14 @@ import { useTypedSelector } from 'hooks/useTypedSelector';
 
 import Switch from 'components/common/Switch';
 import PlayingCardComponent from 'components/common/PlayingCard';
+import InstallTimer from 'components/common/Timer/InstallTimer';
 
 import addCardImage from 'assets/images/PlayingCard/add_card.svg';
 
 import styles from './index.module.scss';
 
 const AdminMenu: React.FC = (): JSX.Element => {
-	const { cards, scoreType } = useTypedSelector<Game>(getGame);
+	const { cards, scoreType, isTimer } = useTypedSelector<Game>(getGame);
 
 	const dispatch = useDispatch();
 
@@ -56,6 +57,12 @@ const AdminMenu: React.FC = (): JSX.Element => {
 					<h3>Is timer needed:</h3>
 					<Switch setValue={onToggleIsTimer} />
 				</span>
+				{isTimer && (
+					<div className={styles.timerContent}>
+						<h3>Round time:</h3>
+						<InstallTimer />
+					</div>
+				)}
 				<span>
 					<h3>Score type:</h3>
 					<input

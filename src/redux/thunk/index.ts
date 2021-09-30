@@ -65,9 +65,8 @@ const socketCreator =
 			socket.emit(
 				'event://connect_to_room',
 				usersData,
-				(res: { status: string }) => {
-					return res.status === 'ok' ? console.log('done') : setExit();
-				}
+				(res: { status: string }) =>
+					res.status === 'ok' ? console.log('done') : setExit()
 			);
 
 			socket.onAny((event, ...args) => console.log(event, args));
@@ -78,12 +77,11 @@ const socketCreator =
 				toLobby(admin);
 			});
 
-			socket.on('event://your_room_data', (rooms) => {
-				if (!rooms) {
+			socket.on('event://your_room_data', (users) => {
+				if (!users) {
 					return setExit();
 				}
-
-				return dispatch(setUserDataActionCreation({ users: rooms.users }));
+				return dispatch(setUserDataActionCreation({ users }));
 			});
 
 			socket.on('event://your_game_data', (gameData, rooms) => {
@@ -92,7 +90,7 @@ const socketCreator =
 				}
 				dispatch(setUserDataActionCreation({ login: true }));
 				history.push(GAME);
-
+				dispatch(setUserDataActionCreation({ login: true }));
 				return console.log(gameData, rooms); // # dispatch gameData
 			});
 
@@ -182,22 +180,18 @@ const socketCreator =
 			socket.emit('event://admin_start_game', gameSettings);
 		}
 
+		// #chat parts
 		if (type === CHAT) {
-			// #chat parts
-			socket.on('event://message_from_user', (ms) => console.log('user', ms));
-			socket.on('event://message_from_admin', (ms) => console.log('admin', ms));
-			// #chat parts
-			if (type === CHAT) {
-				socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
-					if (!ms) return;
-					dispatch(pushMessage(ms));
-				});
-				socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
-					if (!ms) return;
-					dispatch(pushMessage(ms));
-				});
-			}
+			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+			socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
 		}
+
 		if (type === SEND_MESSAGE) {
 			socket.emit('event://message', message);
 		}

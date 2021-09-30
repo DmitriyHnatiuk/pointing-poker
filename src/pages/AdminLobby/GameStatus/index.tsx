@@ -3,9 +3,6 @@ import { useDispatch } from 'react-redux';
 
 import socketCreator, { UNSUBSCRIBE, SET_START } from 'redux/thunk';
 
-import history from 'utils/history';
-
-import { ways } from 'constants/constRouter';
 import { btnValue } from 'constants/commonComponents';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
@@ -17,7 +14,6 @@ import MasterCard from 'components/common/MasterCard';
 import MyButton from 'components/common/MyButton';
 import styles from './index.module.scss';
 
-const { HOME } = ways;
 const { START_GAME, CANCEL_GAME, COPY } = btnValue;
 
 const GameStatus: React.FC = (): JSX.Element => {
@@ -30,7 +26,6 @@ const GameStatus: React.FC = (): JSX.Element => {
 
 	const setExit = () => {
 		dispatch(socketCreator({ type: UNSUBSCRIBE }));
-		history.push(HOME);
 	};
 
 	const copyLink = () => navigator.clipboard.writeText(roomNumber);
@@ -44,7 +39,7 @@ const GameStatus: React.FC = (): JSX.Element => {
 	return (
 		<>
 			<h1 className={styles.planningTitle}>{planningTitle}</h1>
-			<MasterCard user={user} />
+			<MasterCard admin={user} />
 			<div className={styles.gameStatus}>
 				<label htmlFor="link" className={styles.titleLink}>
 					<p>Link to lobby:</p>
