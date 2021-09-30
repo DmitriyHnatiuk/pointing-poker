@@ -21,7 +21,9 @@ const initialStore: Game = {
 	scoreType: 'ST',
 	timer: {
 		min: '00',
-		sec: '00'
+		sec: '00',
+
+		isActive: false
 	},
 	isTimer: false,
 	cards: [
@@ -112,7 +114,14 @@ const reducer = (
 		case SettingsActionEnum.SETTING_TIMER: {
 			return {
 				...state,
-				timer: action.payload
+				timer: { ...state.timer, ...action.payload }
+			};
+		}
+
+		case SettingsActionEnum.IS_TIMER_ACTIVE: {
+			return {
+				...state,
+				timer: { ...state.timer, isActive: action.payload }
 			};
 		}
 
@@ -186,6 +195,11 @@ export const setIsAdminAsPlayerIsTimer = (): GameAction => ({
 export const setScoreType = (storyType: string): GameAction => ({
 	type: SettingsActionEnum.SET_SCORE_TYPE,
 	payload: storyType
+});
+
+export const setActiveTimer = (active: boolean): GameAction => ({
+	type: SettingsActionEnum.IS_TIMER_ACTIVE,
+	payload: active
 });
 
 export default reducer;

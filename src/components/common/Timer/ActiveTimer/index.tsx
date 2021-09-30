@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { TimerSettings } from 'redux/reducer/gameSettingReducer/types';
-import { setTimer } from 'redux/reducer/gameSettingReducer';
+import { setActiveTimer, setTimer } from 'redux/reducer/gameSettingReducer';
 import { getGame, getMembers } from 'redux/reducer/selectors';
 
 import { interval } from 'utils/timer';
@@ -17,16 +17,30 @@ const { RUN_ROUND, RESTART_ROUND, NEXT_ISSUE } = btnValue;
 
 const ActiveTimer: React.FC = () => {
 	const dispatch = useDispatch();
-
 	const { timer } = useTypedSelector(getGame);
 	const { isAdmin } = useTypedSelector(getMembers);
-
-	const timers = false;
+	const { isActive } = timer;
 
 	const updateTimer = (newTime: TimerSettings) => {
 		dispatch(setTimer(newTime));
 	};
-	const setInterval = () => interval(timer, updateTimer);
+
+	if (timer.min === '00' && timer.sec === '00') {
+		interval({ timer, updateTimer, onStopTimer: true });
+	}
+
+	const onTimer = () => {
+		dispatch(setActiveTimer(true));
+		interval({ timer, updateTimer });
+	};
+
+	const onRestartTimer = () =>
+		interval({ timer, updateTimer, onRestartTimer: true });
+
+	const onNextIssue = () => {
+		interval({ timer, updateTimer, onStopTimer: true });
+		// onTimer();
+	};
 
 	return (
 		<>
@@ -42,9 +56,13 @@ const ActiveTimer: React.FC = () => {
 			</div>
 			{isAdmin && (
 				<div className={styles.buttons}>
-					{!timers && <MyButton value={RUN_ROUND} onclick={setInterval} />}
-					{timers && <MyButton value={RESTART_ROUND} />}
-					{timers && <MyButton value={NEXT_ISSUE} />}
+					{!isActive && <MyButton value={RUN_ROUND} onclick={onTimer} />}
+					{isActive && (
+						<>
+							<MyButton value={RESTART_ROUND} onclick={onRestartTimer} />
+							<MyButton value={NEXT_ISSUE} onclick={onNextIssue} />
+						</>
+					)}
 				</div>
 			)}
 		</>
