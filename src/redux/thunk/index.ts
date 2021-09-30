@@ -12,6 +12,8 @@ import {
 	setModalDataActionCreation
 } from 'redux/reducer/modalReducer';
 import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
+import { setGameData } from 'redux/reducer/gameSettingReducer';
+import { GameAction } from 'redux/reducer/gameSettingReducer/types';
 
 import { ENDPOINT } from 'constants/API';
 import { ThunkDispatch } from 'redux-thunk';
@@ -45,7 +47,7 @@ const toLobby = (isAdmin: boolean | undefined) => {
 type dispatchTypes = ThunkDispatch<
 	RootState,
 	never,
-	ActionType | modalActionType | chatActionType
+	ActionType | modalActionType | chatActionType | GameAction
 >;
 
 const socketCreator =
@@ -84,14 +86,13 @@ const socketCreator =
 				return dispatch(setUserDataActionCreation({ users }));
 			});
 
-			socket.on('event://your_game_data', (gameData, rooms) => {
+			socket.on('event://your_game_data', (gameData) => {
 				if (!gameData) {
 					return setExit();
 				}
 				dispatch(setUserDataActionCreation({ login: true }));
 				history.push(GAME);
-				dispatch(setUserDataActionCreation({ login: true }));
-				return console.log(gameData, rooms); // # dispatch gameData
+				return dispatch(setGameData(gameData));
 			});
 
 			if (usersData?.isAdmin) {
