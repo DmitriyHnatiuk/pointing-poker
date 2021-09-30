@@ -16,6 +16,17 @@ const initialStore: User = {
 	karma: 0,
 	id: '',
 	login: false,
+	admin: {
+		firstName: 'Ann',
+		lastName: '',
+		position: '',
+		observer: false,
+		avatar: '',
+		isAdmin: true,
+		roomNumber: 'p77FCUh9tPEye7koAAAF10',
+		id: 'p77FCUh9tPEye7koAAAF',
+		karma: 0
+	},
 	users: [
 		{
 			selectedCard: '',

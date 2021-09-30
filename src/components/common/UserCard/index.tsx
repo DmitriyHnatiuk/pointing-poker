@@ -5,14 +5,14 @@ import { setModalDataActionCreation } from 'redux/reducer/modalReducer';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { getMembers } from 'redux/reducer/selectors';
 
-import { Users } from 'redux/reducer/userReducer/types';
+import { Users, Admin } from 'redux/reducer/userReducer/types';
 import socketCreator, { DELETE, KICK } from 'redux/thunk';
 
 import userDeleteImage from 'assets/images/CardPlayer/player-delete.svg';
 
 import styles from './index.module.scss';
 
-const PlayerCard: React.FC<{ user: Users; style?: string }> = ({
+const PlayerCard: React.FC<{ user: Users | Admin; style?: string }> = ({
 	user,
 	style = ''
 }) => {
@@ -20,6 +20,8 @@ const PlayerCard: React.FC<{ user: Users; style?: string }> = ({
 
 	const { firstName, lastName, position, isAdmin, id } = user;
 	const member = useTypedSelector(getMembers);
+	const self = member.id === id;
+	const buttonDelete = !isAdmin && !self;
 
 	const onDeleteUser = (event: React.MouseEvent<HTMLElement>) => {
 		const button = event.target as HTMLElement;
@@ -50,7 +52,7 @@ const PlayerCard: React.FC<{ user: Users; style?: string }> = ({
 					</div>
 				</div>
 				<div className={styles.delete}>
-					{!isAdmin && (
+					{buttonDelete && (
 						<div>
 							<img
 								id={id}

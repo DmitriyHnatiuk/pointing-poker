@@ -1,13 +1,7 @@
-@import 'assets/styles/_variables.scss';
-
-.block {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
+@import "assets/styles/_variables.scss";
 
 .timer {
+	max-width: 230px;
 	padding: 10px;
 	margin: 20px;
 	display: flex;
@@ -17,6 +11,13 @@
 	background-color: $white-color;
 	border-radius: 4px;
 	box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
+}
+
+.buttons {
+	padding-top: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 }
 
 .clockBlock {

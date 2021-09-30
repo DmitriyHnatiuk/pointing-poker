@@ -63,12 +63,8 @@ const socketCreator =
 			socket.emit(
 				'event://connect_to_room',
 				usersData,
-				(res: { status: string }) => {
-					const response =
-						res.status === 'ok' ? console.log('done') : setExit();
-
-					return response;
-				}
+				(res: { status: string }) =>
+					res.status === 'ok' ? console.log('done') : setExit()
 			);
 
 			socket.onAny((event, ...args) => console.log(event, args));
@@ -79,12 +75,11 @@ const socketCreator =
 				toLobby(admin);
 			});
 
-			socket.on('event://your_room_data', (rooms) => {
-				if (!rooms) {
+			socket.on('event://your_room_data', (users) => {
+				if (!users) {
 					return setExit();
 				}
-
-				return dispatch(setUserDataActionCreation({ users: rooms.users }));
+				return dispatch(setUserDataActionCreation({ users }));
 			});
 
 			socket.on('event://your_game_data', (gameData, rooms) => {
@@ -93,7 +88,7 @@ const socketCreator =
 				}
 				dispatch(setUserDataActionCreation({ login: true }));
 				history.push(GAME);
-
+				dispatch(setUserDataActionCreation({ login: true }));
 				return console.log(gameData, rooms); // # dispatch gameData
 			});
 
