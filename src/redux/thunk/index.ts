@@ -12,6 +12,8 @@ import {
 	setModalDataActionCreation
 } from 'redux/reducer/modalReducer';
 import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
+import { setGameData } from 'redux/reducer/gameSettingReducer';
+import { GameAction } from 'redux/reducer/gameSettingReducer/types';
 
 import { ENDPOINT } from 'constants/API';
 import { ThunkDispatch } from 'redux-thunk';
@@ -45,7 +47,7 @@ const toLobby = (isAdmin: boolean | undefined) => {
 type dispatchTypes = ThunkDispatch<
 	RootState,
 	never,
-	ActionType | modalActionType | chatActionType
+	ActionType | modalActionType | chatActionType | GameAction
 >;
 
 const socketCreator =
@@ -66,7 +68,8 @@ const socketCreator =
 				'event://connect_to_room',
 				usersData,
 				(res: { status: string }) =>
-					res.status === 'ok' ? console.log('done') : setExit());
+					res.status === 'ok' ? console.log('done') : setExit()
+			);
 
 			socket.onAny((event, ...args) => console.log(event, args));
 
@@ -83,14 +86,13 @@ const socketCreator =
 				return dispatch(setUserDataActionCreation({ users }));
 			});
 
-			socket.on('event://your_game_data', (gameData, rooms) => {
+			socket.on('event://your_game_data', (gameData) => {
 				if (!gameData) {
 					return setExit();
 				}
 				dispatch(setUserDataActionCreation({ login: true }));
 				history.push(GAME);
-				dispatch(setUserDataActionCreation({ login: true }));
-				return console.log(gameData, rooms); // # dispatch gameData
+				return dispatch(setGameData(gameData));
 			});
 
 			if (usersData?.isAdmin) {
@@ -179,22 +181,18 @@ const socketCreator =
 			socket.emit('event://admin_start_game', gameSettings);
 		}
 
+		// #chat parts
 		if (type === CHAT) {
-			// #chat parts
-			socket.on('event://message_from_user', (ms) => console.log('user', ms));
-			socket.on('event://message_from_admin', (ms) => console.log('admin', ms));
-			// #chat parts
-			if (type === CHAT) {
-				socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
-					if (!ms) return;
-					dispatch(pushMessage(ms));
-				});
-				socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
-					if (!ms) return;
-					dispatch(pushMessage(ms));
-				});
-			}
+			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+			socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
 		}
+
 		if (type === SEND_MESSAGE) {
 			socket.emit('event://message', message);
 		}
