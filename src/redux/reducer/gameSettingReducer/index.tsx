@@ -3,6 +3,7 @@ import {
 	GameAction,
 	Issue,
 	PlayingCard,
+	PlayingCardSetEnum,
 	SettingsActionEnum,
 	TimerSettings
 } from './types';
@@ -24,24 +25,8 @@ const initialStore: Game = {
 		sec: '00'
 	},
 	isTimer: false,
-	cards: [
-		{
-			id: 1,
-			score: 'unknown',
-			isFirstCard: true,
-			count: 0
-		},
-		{
-			id: 2,
-			score: '1',
-			count: 0
-		},
-		{
-			id: 3,
-			score: '11',
-			count: 0
-		}
-	],
+	cards: [],
+	playingCardsSet: PlayingCardSetEnum.linearSequence,
 	planningTitle: 'Title & Planes'
 };
 
@@ -93,6 +78,20 @@ const reducer = (
 						count: action.payload.count
 					}
 				]
+			};
+		}
+
+		case SettingsActionEnum.SET_PLAYING_CARD_SET: {
+			return {
+				...state,
+				cards: action.payload
+			};
+		}
+
+		case SettingsActionEnum.CHANGE_PLAYING_CARD_SET: {
+			return {
+				...state,
+				playingCardsSet: action.payload
 			};
 		}
 
@@ -185,6 +184,16 @@ export const deletePlayingCard = (card: PlayingCard): GameAction => ({
 export const addPlayingCard = (): GameAction => ({
 	type: SettingsActionEnum.ADD_PLAYING_CARD,
 	payload: { id: 5, score: '55', count: 0 }
+});
+
+export const setPlayingCardSet = (cardSet: PlayingCard[]): GameAction => ({
+	type: SettingsActionEnum.SET_PLAYING_CARD_SET,
+	payload: cardSet
+});
+
+export const changePlayingCardSet = (cardSet: string): GameAction => ({
+	type: SettingsActionEnum.CHANGE_PLAYING_CARD_SET,
+	payload: cardSet
 });
 
 export const setTimer = (timer: TimerSettings): GameAction => ({
