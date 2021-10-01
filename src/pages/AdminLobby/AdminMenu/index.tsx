@@ -19,13 +19,15 @@ import { useChangePlayingCardSet } from 'hooks/useChangePlayingCardSet';
 
 import Switch from 'components/common/Switch';
 import PlayingCardComponent from 'components/common/PlayingCard';
+import InstallTimer from 'components/common/Timer/InstallTimer';
 
 import addCardImage from 'assets/images/PlayingCard/add_card.svg';
 
 import styles from './index.module.scss';
 
 const AdminMenu: React.FC = (): JSX.Element => {
-	const { cards, scoreType, playingCardsSet } = useTypedSelector<Game>(getGame);
+	const { cards, scoreType, playingCardsSet, isTimer } =
+		useTypedSelector<Game>(getGame);
 	const { fibonacciNumbers, degreeTwo, linearSequence } = PlayingCardSetEnum;
 
 	useChangePlayingCardSet();
@@ -68,6 +70,12 @@ const AdminMenu: React.FC = (): JSX.Element => {
 					<h3>Is timer needed:</h3>
 					<Switch setValue={onToggleIsTimer} />
 				</span>
+				{isTimer && (
+					<div className={styles.timerContent}>
+						<h3>Round time:</h3>
+						<InstallTimer />
+					</div>
+				)}
 				<span>
 					<h3>Which set of cards:</h3>
 					<select

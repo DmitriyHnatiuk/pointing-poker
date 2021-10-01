@@ -18,7 +18,7 @@ const initialStore: Game = {
 	isAdmin: false,
 	isAdminAsPlayer: false,
 	room: '',
-	issues: [{ id: 1, title: 'Issue_1', priority: 'LOW priority' }],
+	issues: [{ id: 1, title: 'Issue_1', priority: 'low priority', link: '' }],
 	scoreType: 'ST',
 	timer: {
 		min: '00',
@@ -37,6 +37,13 @@ const reducer = (
 	action: GameAction
 ): StateType => {
 	switch (action.type) {
+		case SettingsActionEnum.SET_GAME_DATA: {
+			return {
+				...state,
+				...action.payload
+			};
+		}
+
 		case SettingsActionEnum.EDIT_PLAYING_CARD: {
 			return {
 				...state,
@@ -67,7 +74,8 @@ const reducer = (
 							state.cards.length === 0
 								? 1
 								: state.cards[state.cards.length - 1].id + 1,
-						score: action.payload.score
+						score: action.payload.score,
+						count: action.payload.count
 					}
 				]
 			};
@@ -98,7 +106,8 @@ const reducer = (
 								? 1
 								: state.issues[state.issues.length - 1].id + 1,
 						title: action.payload.title,
-						priority: action.payload.priority
+						priority: action.payload.priority,
+						link: action.payload.link
 					}
 				]
 			};
@@ -144,9 +153,14 @@ const reducer = (
 	}
 };
 
-export const addIssue = (): GameAction => ({
+export const setGameData = (state: Game): GameAction => ({
+	type: SettingsActionEnum.SET_GAME_DATA,
+	payload: state
+});
+
+export const addIssue = (values: Issue): GameAction => ({
 	type: SettingsActionEnum.ADD_ISSUE,
-	payload: { id: 3, title: 'Issue_3', priority: 'LOW priority' }
+	payload: values
 });
 
 export const deleteIssue = (issue: Issue): GameAction => ({
@@ -169,7 +183,7 @@ export const deletePlayingCard = (card: PlayingCard): GameAction => ({
 
 export const addPlayingCard = (): GameAction => ({
 	type: SettingsActionEnum.ADD_PLAYING_CARD,
-	payload: { id: 5, score: '55' }
+	payload: { id: 5, score: '55', count: 0 }
 });
 
 export const setPlayingCardSet = (cardSet: PlayingCard[]): GameAction => ({
