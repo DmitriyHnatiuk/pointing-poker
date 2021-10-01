@@ -1,3 +1,4 @@
+import { ThunkDispatch } from 'redux-thunk';
 import { io } from 'socket.io-client';
 import history from 'utils/history';
 
@@ -12,11 +13,12 @@ import {
 	setModalDataActionCreation
 } from 'redux/reducer/modalReducer';
 import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
+import { setDataActionCreation } from 'redux/reducer/gameSettingReducer';
+import { GameAction } from 'redux/reducer/gameSettingReducer/types';
 
 import { ENDPOINT } from 'constants/API';
-import { ThunkDispatch } from 'redux-thunk';
-import { dataTypes } from 'interfaces/thunk';
 import { ways } from 'constants/constRouter';
+import { dataTypes } from 'interfaces/thunk';
 import { interfaceChatMessage } from 'interfaces/commonChat';
 
 export const CHAT = 'CHAT';
@@ -27,6 +29,7 @@ export const DELETE = 'DELETE';
 export const MESSAGE = 'MESSAGE';
 export const SUBSCRIBE = 'SUBSCRIBE';
 export const SET_START = 'SET_START';
+export const RESET_GAME = 'RESET_GAME';
 export const UNSUBSCRIBE = 'UNSUBSCRIBE';
 export const ADMIN_AGREE = 'ADMIN_AGREE';
 export const USER_CONNECT = 'USER_CONNECT';
@@ -45,7 +48,7 @@ const toLobby = (isAdmin: boolean | undefined) => {
 type dispatchTypes = ThunkDispatch<
 	RootState,
 	never,
-	ActionType | modalActionType | chatActionType
+	ActionType | modalActionType | chatActionType | GameAction
 >;
 
 const socketCreator =
@@ -66,7 +69,8 @@ const socketCreator =
 				'event://connect_to_room',
 				usersData,
 				(res: { status: string }) =>
-					res.status === 'ok' ? console.log('done') : setExit());
+					res.status === 'ok' ? console.log('done') : setExit()
+			);
 
 			socket.onAny((event, ...args) => console.log(event, args));
 
@@ -83,14 +87,13 @@ const socketCreator =
 				return dispatch(setUserDataActionCreation({ users }));
 			});
 
-			socket.on('event://your_game_data', (gameData, rooms) => {
+			socket.on('event://your_game_data', (gameData) => {
 				if (!gameData) {
 					return setExit();
 				}
+				dispatch(setDataActionCreation({ ...gameData }));
 				dispatch(setUserDataActionCreation({ login: true }));
-				history.push(GAME);
-				dispatch(setUserDataActionCreation({ login: true }));
-				return console.log(gameData, rooms); // # dispatch gameData
+				return history.push(GAME);
 			});
 
 			if (usersData?.isAdmin) {
@@ -158,7 +161,6 @@ const socketCreator =
 			});
 		}
 		// admin agree connect user
-
 		if (type === ADMIN_AGREE) {
 			socket.emit('event://confirm_connect', id);
 		}
@@ -177,6 +179,10 @@ const socketCreator =
 
 		if (type === SET_START) {
 			socket.emit('event://admin_start_game', gameSettings);
+		}
+
+		if (type === RESET_GAME) {
+			socket.emit('event://admin_reset_game', gameSettings);
 		}
 
 		if (type === CHAT) {

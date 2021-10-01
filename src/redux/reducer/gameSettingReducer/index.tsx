@@ -2,6 +2,7 @@ import {
 	Game,
 	GameAction,
 	Issue,
+	obj,
 	PlayingCard,
 	SettingsActionEnum,
 	TimerSettings
@@ -145,7 +146,12 @@ const reducer = (
 				scoreType: action.payload
 			};
 		}
-
+		case SettingsActionEnum.SET_DATA: {
+			return {
+				...state,
+				...action.payload
+			};
+		}
 		default:
 			return state;
 	}
@@ -199,6 +205,11 @@ export const setScoreType = (storyType: string): GameAction => ({
 
 export const setActiveTimer = (active: boolean): GameAction => ({
 	type: SettingsActionEnum.IS_TIMER_ACTIVE,
+	payload: active
+});
+
+export const setDataActionCreation = (active: obj): GameAction => ({
+	type: SettingsActionEnum.SET_DATA,
 	payload: active
 });
 
