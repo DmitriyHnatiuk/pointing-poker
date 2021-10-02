@@ -6,7 +6,7 @@ import { useTypedSelector } from 'hooks/useTypedSelector';
 import { getMembers } from 'redux/reducer/selectors';
 import { PlayingCard } from 'redux/reducer/gameSettingReducer/types';
 import {
-	activePlayingCard,
+	activePlayingCardAction,
 	deletePlayingCard,
 	editPlayingCard
 } from 'redux/reducer/gameSettingReducer';
@@ -38,7 +38,7 @@ const PlayingCardComponent: React.FC<{
 
 	const onActiveCard = () => {
 		if (activeCard) {
-			return dispatch(activePlayingCard(card));
+			return dispatch(activePlayingCardAction(card));
 		}
 		return null;
 	};

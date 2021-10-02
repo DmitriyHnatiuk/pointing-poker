@@ -15,8 +15,6 @@ import {
 import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
 import { setGameData } from 'redux/reducer/gameSettingReducer';
 import { GameAction } from 'redux/reducer/gameSettingReducer/types';
-import { setDataActionCreation } from 'redux/reducer/gameSettingReducer';
-import { GameAction } from 'redux/reducer/gameSettingReducer/types';
 
 import { ENDPOINT } from 'constants/API';
 import { ways } from 'constants/constRouter';
@@ -43,7 +41,6 @@ const { HOME, ADMIN, USER, GAME } = ways;
 
 const toLobby = (isAdmin: boolean | undefined) => {
 	const path = isAdmin ? ADMIN : USER;
-
 	return history.push(path);
 };
 
@@ -93,11 +90,9 @@ const socketCreator =
 				if (!gameData) {
 					return setExit();
 				}
-				dispatch(setDataActionCreation({ ...gameData }));
+				dispatch(setGameData({ ...gameData }));
 				dispatch(setUserDataActionCreation({ login: true }));
 				return history.push(GAME);
-				history.push(GAME);
-				return dispatch(setGameData(gameData));
 			});
 
 			if (usersData?.isAdmin) {

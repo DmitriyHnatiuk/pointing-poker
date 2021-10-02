@@ -232,45 +232,47 @@ export const deletePlayingCard = (card: PlayingCard): GameAction => ({
 	payload: card
 });
 
-export const activePlayingCard = (card: PlayingCard): GameAction => ({
+export const activePlayingCardAction = (card: PlayingCard): GameAction => ({
 	type: SettingsActionEnum.ACTIVE_PLAYING_CARD,
 	payload: card
 });
 
-export const addPlayingCard = (): GameAction => ({
+export const addPlayingCardAction = (): GameAction => ({
 	type: SettingsActionEnum.ADD_PLAYING_CARD,
 	payload: { id: 5, score: '55', count: 0 }
 });
 
-export const setPlayingCardSet = (cardSet: PlayingCard[]): GameAction => ({
+export const setPlayingCardSetAction = (
+	cardSet: PlayingCard[]
+): GameAction => ({
 	type: SettingsActionEnum.SET_PLAYING_CARD_SET,
 	payload: cardSet
 });
 
-export const changePlayingCardSet = (cardSet: string): GameAction => ({
+export const changePlayingCardSetAction = (cardSet: string): GameAction => ({
 	type: SettingsActionEnum.CHANGE_PLAYING_CARD_SET,
 	payload: cardSet
 });
 
-export const setTimer = (timer: TimerSettings): GameAction => ({
+export const SetTimer = (timer: TimerSettings): GameAction => ({
 	type: SettingsActionEnum.SETTING_TIMER,
 	payload: timer
 });
 
-export const setIsTimer = (): GameAction => ({
+export const SetIsTimer = (): GameAction => ({
 	type: SettingsActionEnum.TOGGLE_IS_TIMER
 });
 
-export const setIsAdminAsPlayerIsTimer = (): GameAction => ({
+export const SetIsAdminAsPlayerIsTimer = (): GameAction => ({
 	type: SettingsActionEnum.TOGGLE_IS_ADMIN_PLAYER
 });
 
-export const setScoreType = (storyType: string): GameAction => ({
+export const SetScoreType = (storyType: string): GameAction => ({
 	type: SettingsActionEnum.SET_SCORE_TYPE,
 	payload: storyType
 });
 
-export const setActiveTimer = (active: boolean): GameAction => ({
+export const SetActiveTimer = (active: boolean): GameAction => ({
 	type: SettingsActionEnum.IS_TIMER_ACTIVE,
 	payload: active
 });
