@@ -61,7 +61,7 @@ const PlayingCardComponent: React.FC<{
 						value={score}
 						onChange={onEditScore}
 					/>
-					{isActive && !login && (
+					{!login && (
 						<img
 							src={deleteCard}
 							alt="pencil"
