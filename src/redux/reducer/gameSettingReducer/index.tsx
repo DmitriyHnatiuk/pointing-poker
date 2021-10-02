@@ -18,7 +18,15 @@ const initialStore: Game = {
 	isAdmin: false,
 	isAdminAsPlayer: false,
 	room: '',
-	issues: [{ id: 1, title: 'Issue_1', priority: 'low priority', link: '' }],
+	issues: [
+		{
+			id: 1,
+			title: 'Issue_1',
+			priority: 'low priority',
+			link: '',
+			active: false
+		}
+	],
 	scoreType: 'ST',
 	timer: {
 		min: '00',
@@ -61,6 +69,17 @@ const reducer = (
 			return {
 				...state,
 				cards: state.cards.filter((card) => card.id !== action.payload.id)
+			};
+		}
+
+		case SettingsActionEnum.ACTIVE_PLAYING_CARD: {
+			return {
+				...state,
+				cards: state.cards.map((card) => {
+					const element = card;
+					element.active = element === action.payload;
+					return element;
+				})
 			};
 		}
 
@@ -107,6 +126,7 @@ const reducer = (
 								: state.issues[state.issues.length - 1].id + 1,
 						title: action.payload.title,
 						priority: action.payload.priority,
+						active: action.payload.active,
 						link: action.payload.link
 					}
 				]
@@ -117,6 +137,17 @@ const reducer = (
 			return {
 				...state,
 				issues: state.issues.filter((issue) => issue.id !== action.payload.id)
+			};
+		}
+
+		case SettingsActionEnum.ACTIVE_ISSUE: {
+			return {
+				...state,
+				issues: state.issues.map((issue) => {
+					const element = issue;
+					element.active = element === action.payload;
+					return element;
+				})
 			};
 		}
 
@@ -163,6 +194,11 @@ export const addIssue = (values: Issue): GameAction => ({
 	payload: values
 });
 
+export const activeIssue = (issue: Issue): GameAction => ({
+	type: SettingsActionEnum.ACTIVE_ISSUE,
+	payload: issue
+});
+
 export const deleteIssue = (issue: Issue): GameAction => ({
 	type: SettingsActionEnum.DELETE_ISSUE,
 	payload: issue
@@ -178,6 +214,11 @@ export const editPlayingCard = (
 
 export const deletePlayingCard = (card: PlayingCard): GameAction => ({
 	type: SettingsActionEnum.DELETE_PLAYING_CARD,
+	payload: card
+});
+
+export const activePlayingCard = (card: PlayingCard): GameAction => ({
+	type: SettingsActionEnum.ACTIVE_PLAYING_CARD,
 	payload: card
 });
 

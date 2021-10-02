@@ -10,7 +10,7 @@
 	padding-left: 10px;
 	border: 1px solid $TextDark;
 	border-bottom-left-radius: 10px;
-	font-family: Roboto;
+	font-family: Roboto,sans-serif;
 	font-style: normal;
 	font-weight: 300;
 	font-size: 24px;
@@ -37,7 +37,7 @@
 }
 
 .settings h3 {
-	font-family: Ruda;
+	font-family: Ruda,sans-serif;
 	font-style: normal;
 	font-weight: bold;
 	color: #000000;
@@ -59,8 +59,9 @@
 	padding: 5px;
 	border: 1px solid $Deep-Koamaru;
 	border-radius: 5px;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 	transition: all 0.5s;
+  box-sizing: border-box;
 }
 
 .card:hover {

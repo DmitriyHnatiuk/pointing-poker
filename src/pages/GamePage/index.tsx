@@ -8,6 +8,8 @@ import { useTypedSelector } from 'hooks/useTypedSelector';
 import ActiveTimer from 'components/common/Timer/ActiveTimer';
 import MasterCard from 'components/common/MasterCard';
 import MyButton from 'components/common/MyButton';
+import UsersScore from 'pages/GamePage/UsersScore';
+import Statistics from 'pages/GamePage/Statistics';
 import Issues from 'pages/AdminLobby/Issues';
 
 import Modals from 'components/common/Modals';
@@ -20,17 +22,13 @@ import { User } from 'redux/reducer/userReducer/types';
 
 import styles from './index.module.scss';
 
-import UsersScore from './UsersScore';
-import Statistics from './Statistics';
-
 const { STOP_GAME, EXIT } = btnValue;
 
 const GamePage: React.FC = (): JSX.Element => {
 	const dispatch = useDispatch();
 
 	const { openModal } = useTypedSelector<Modal>(getModal);
-	const { isAdmin } = useTypedSelector<User>(getMembers);
-	const { admin } = useTypedSelector<User>(getMembers);
+	const { isAdmin, admin } = useTypedSelector<User>(getMembers);
 	const setExit = () => dispatch(socketCreator({ type: UNSUBSCRIBE }));
 
 	return (

@@ -21,7 +21,7 @@ const AdminLobby: React.FC = (): JSX.Element => {
 		<div className={styles.adminLobby}>
 			<GameStatus />
 			<Members />
-			<Issues />
+			<Issues admin />
 			{/* <InstallTimer /> */}
 			<AdminMenu />
 			{openModal && <Modals />}

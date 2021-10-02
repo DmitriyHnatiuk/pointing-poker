@@ -21,6 +21,7 @@ export interface PlayingCard {
 	id: number;
 	score: string;
 	isFirstCard?: boolean;
+	active?: boolean;
 	count: number;
 }
 
@@ -34,6 +35,7 @@ export interface Issue {
 	id: number;
 	title: string;
 	priority: string;
+	active?: boolean;
 	link: string;
 }
 
@@ -49,6 +51,8 @@ export enum SettingsActionEnum {
 	TOGGLE_IS_TIMER = 'TOGGLE_IS_TIMER',
 	TOGGLE_IS_ADMIN_PLAYER = 'TOGGLE_IS_ADMIN_PLAYER',
 	SET_SCORE_TYPE = 'SET_SCORE_TYPE',
+	ACTIVE_ISSUE = 'ACTIVE_ISSUE',
+	ACTIVE_PLAYING_CARD = 'ACTIVE_PLAYING_CARD',
 	SET_GAME_DATA = 'SET_GAME_DATA'
 }
 
@@ -59,6 +63,11 @@ interface EditPlayingCardAction {
 
 interface DeletePlayingCardAction {
 	type: SettingsActionEnum.DELETE_PLAYING_CARD;
+	payload: PlayingCard;
+}
+
+interface ActivePlayingCardAction {
+	type: SettingsActionEnum.ACTIVE_PLAYING_CARD;
 	payload: PlayingCard;
 }
 
@@ -84,6 +93,11 @@ interface SettingTimerAction {
 
 interface AddIssueAction {
 	type: SettingsActionEnum.ADD_ISSUE;
+	payload: Issue;
+}
+
+interface ActiveIssueAction {
+	type: SettingsActionEnum.ACTIVE_ISSUE;
 	payload: Issue;
 }
 
@@ -121,5 +135,7 @@ export type GameAction =
 	| DeleteIssueAction
 	| ToggleIsTimerAction
 	| ToggleIsAdminAsPlayerAction
+	| ActiveIssueAction
+	| ActivePlayingCardAction
 	| SetScoreType
 	| SetGameData;
