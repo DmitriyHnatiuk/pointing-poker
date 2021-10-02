@@ -55,16 +55,20 @@ const PlayingCardComponent: React.FC<{
 			)}
 			<div className={styles.content}>
 				<div className={styles.top}>
-					<input
-						className={styles.input}
-						type="text"
-						value={score}
-						onChange={onEditScore}
-					/>
+					{inStatistics ? (
+						<span className={styles.input}>{score}</span>
+					) : (
+						<input
+							className={styles.input}
+							type="text"
+							value={score}
+							onChange={onEditScore}
+						/>
+					)}
 					{!login && (
 						<img
 							src={deleteCard}
-							alt="pencil"
+							alt="Delete card"
 							aria-hidden="true"
 							title="Delete card"
 							onClick={onDeleteCard}
