@@ -6,7 +6,7 @@ import { useTypedSelector } from 'hooks/useTypedSelector';
 import { getMembers } from 'redux/reducer/selectors';
 import { PlayingCard } from 'redux/reducer/gameSettingReducer/types';
 import {
-	activePlayingCard,
+	activePlayingCardAction,
 	deletePlayingCard,
 	editPlayingCard
 } from 'redux/reducer/gameSettingReducer';
@@ -38,7 +38,7 @@ const PlayingCardComponent: React.FC<{
 
 	const onActiveCard = () => {
 		if (activeCard) {
-			return dispatch(activePlayingCard(card));
+			return dispatch(activePlayingCardAction(card));
 		}
 		return null;
 	};
@@ -55,16 +55,20 @@ const PlayingCardComponent: React.FC<{
 			)}
 			<div className={styles.content}>
 				<div className={styles.top}>
-					<input
-						className={styles.input}
-						type="text"
-						value={score}
-						onChange={onEditScore}
-					/>
-					{isActive && !login && (
+					{inStatistics ? (
+						<span className={styles.input}>{score}</span>
+					) : (
+						<input
+							className={styles.input}
+							type="text"
+							value={score}
+							onChange={onEditScore}
+						/>
+					)}
+					{!login && (
 						<img
 							src={deleteCard}
-							alt="pencil"
+							alt="Delete card"
 							aria-hidden="true"
 							title="Delete card"
 							onClick={onDeleteCard}

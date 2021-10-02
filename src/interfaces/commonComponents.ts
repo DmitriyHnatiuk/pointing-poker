@@ -1,4 +1,5 @@
 import { Users } from 'redux/reducer/userReducer/types';
+import { TimerSettings } from '../redux/reducer/gameSettingReducer/types';
 
 export interface IGitHubItems {
 	id: number;
@@ -26,4 +27,12 @@ export interface InterfaceAvatar {
 	lastName: string | undefined;
 	avatar: File | string;
 	style?: string;
+}
+
+export interface intervalTimer {
+	timer: TimerSettings;
+	updateTimer: (props: TimerSettings) => void;
+	onStopTimer?: boolean;
+	onRestartTimer?: boolean;
+	onStartTimer?: boolean;
 }

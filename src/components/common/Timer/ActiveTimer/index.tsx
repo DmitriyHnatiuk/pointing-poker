@@ -1,12 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import { useInterval } from 'hooks/useInterval';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { TimerSettings } from 'redux/reducer/gameSettingReducer/types';
-import { setTimer } from 'redux/reducer/gameSettingReducer';
-import { getGame, getMembers } from 'redux/reducer/selectors';
 
-import { interval } from 'utils/timer';
+import socketCreator, { RESET_GAME } from 'redux/thunk';
+
+import { TimerSettings } from 'redux/reducer/gameSettingReducer/types';
+import { SetActiveTimer, SetTimer } from 'redux/reducer/gameSettingReducer';
+import { getGame, getMembers } from 'redux/reducer/selectors';
 
 import { btnValue } from 'constants/commonComponents';
 import MyButton from 'components/common/MyButton';
@@ -17,16 +19,43 @@ const { RUN_ROUND, RESTART_ROUND, NEXT_ISSUE } = btnValue;
 
 const ActiveTimer: React.FC = () => {
 	const dispatch = useDispatch();
-
 	const { timer } = useTypedSelector(getGame);
 	const { isAdmin } = useTypedSelector(getMembers);
-
-	const timers = false;
+	const { isActive } = useTypedSelector(getGame).timer;
 
 	const updateTimer = (newTime: TimerSettings) => {
-		dispatch(setTimer(newTime));
+		dispatch(SetTimer(newTime));
 	};
-	const setInterval = () => interval(timer, updateTimer);
+
+	useInterval({
+		callback: () => {
+			let minNum = Number(timer.min);
+			let secNum = Number(timer.sec);
+			if (minNum >= 0) {
+				if (secNum === 0 && minNum > 0) {
+					minNum -= 1;
+					secNum = 59;
+				} else if (secNum > 0 && minNum >= 0) {
+					secNum -= 1;
+				} else {
+					dispatch(SetActiveTimer(false));
+				}
+			}
+			const minString: string = minNum < 10 ? `0${minNum}` : `${minNum}`;
+			const secString: string = secNum < 10 ? `0${secNum}` : `${secNum}`;
+
+			return updateTimer({ min: minString, sec: secString });
+		},
+		delay: isActive ? 1000 : null
+	});
+
+	const onTimer = () => {
+		dispatch(SetActiveTimer(true));
+	};
+
+	const onRestartTimer = () => dispatch(socketCreator({ type: RESET_GAME }));
+
+	const onNextIssue = () => dispatch(SetActiveTimer(false));
 
 	return (
 		<>
@@ -42,9 +71,13 @@ const ActiveTimer: React.FC = () => {
 			</div>
 			{isAdmin && (
 				<div className={styles.buttons}>
-					{!timers && <MyButton value={RUN_ROUND} onclick={setInterval} />}
-					{timers && <MyButton value={RESTART_ROUND} />}
-					{timers && <MyButton value={NEXT_ISSUE} />}
+					{!isActive && <MyButton value={RUN_ROUND} onclick={onTimer} />}
+					{isActive && (
+						<>
+							<MyButton value={RESTART_ROUND} onclick={onRestartTimer} />
+							<MyButton value={NEXT_ISSUE} onclick={onNextIssue} />
+						</>
+					)}
 				</div>
 			)}
 		</>

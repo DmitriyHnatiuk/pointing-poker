@@ -15,6 +15,7 @@ export interface Game {
 export interface TimerSettings {
 	min: string;
 	sec: string;
+	isActive?: boolean;
 }
 
 export interface PlayingCard {
@@ -51,6 +52,8 @@ export enum SettingsActionEnum {
 	TOGGLE_IS_TIMER = 'TOGGLE_IS_TIMER',
 	TOGGLE_IS_ADMIN_PLAYER = 'TOGGLE_IS_ADMIN_PLAYER',
 	SET_SCORE_TYPE = 'SET_SCORE_TYPE',
+	IS_TIMER_ACTIVE = 'IS_TIMER_ACTIVE',
+	SET_DATA = 'SET_DATA',
 	ACTIVE_ISSUE = 'ACTIVE_ISSUE',
 	ACTIVE_PLAYING_CARD = 'ACTIVE_PLAYING_CARD',
 	SET_GAME_DATA = 'SET_GAME_DATA'
@@ -79,6 +82,10 @@ interface AddPlayingCardAction {
 interface SetPlayingCardSetAction {
 	type: SettingsActionEnum.SET_PLAYING_CARD_SET;
 	payload: PlayingCard[];
+}
+
+interface SetIsTimer {
+	type: SettingsActionEnum.TOGGLE_IS_TIMER;
 }
 
 interface ChangePlayingCardSetAction {
@@ -124,6 +131,33 @@ interface SetGameData {
 	payload: Game;
 }
 
+interface IsTimerAction {
+	type: SettingsActionEnum.IS_TIMER_ACTIVE;
+	payload: boolean;
+}
+
+export interface obj {
+	userName?: string;
+	isAdmin?: boolean;
+	isAdminAsPlayer?: boolean;
+	room?: string;
+	planningTitle?: string;
+	issues?: Issue[];
+	scoreType?: string;
+	cards?: PlayingCard[];
+	timer?: TimerSettings;
+	isTimer?: boolean;
+}
+
+interface setDataActionCreation {
+	type: SettingsActionEnum.SET_DATA;
+	payload: obj;
+}
+
+interface SetIsAdminAsPlayerIsTimer {
+	type: SettingsActionEnum.TOGGLE_IS_ADMIN_PLAYER;
+}
+
 export type GameAction =
 	| EditPlayingCardAction
 	| DeletePlayingCardAction
@@ -135,7 +169,11 @@ export type GameAction =
 	| DeleteIssueAction
 	| ToggleIsTimerAction
 	| ToggleIsAdminAsPlayerAction
+	| IsTimerAction
+	| setDataActionCreation
 	| ActiveIssueAction
 	| ActivePlayingCardAction
 	| SetScoreType
+	| SetIsTimer
+	| SetIsAdminAsPlayerIsTimer
 	| SetGameData;

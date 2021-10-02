@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { TimerSettings } from 'redux/reducer/gameSettingReducer/types';
-import { setTimer } from 'redux/reducer/gameSettingReducer';
+import { SetTimer } from 'redux/reducer/gameSettingReducer';
 
 import styles from './index.module.scss';
 
@@ -13,7 +13,7 @@ const InstallTimer: React.FC = () => {
 	const { min, sec } = timer;
 
 	const updateTimer = (newTime: TimerSettings) => {
-		dispatch(setTimer(newTime));
+		dispatch(SetTimer(newTime));
 	};
 
 	const validateInput = (e: ChangeEvent<HTMLInputElement>) => {

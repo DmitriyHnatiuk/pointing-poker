@@ -1,3 +1,4 @@
+import { ThunkDispatch } from 'redux-thunk';
 import { io } from 'socket.io-client';
 import history from 'utils/history';
 
@@ -16,9 +17,8 @@ import { setGameData } from 'redux/reducer/gameSettingReducer';
 import { GameAction } from 'redux/reducer/gameSettingReducer/types';
 
 import { ENDPOINT } from 'constants/API';
-import { ThunkDispatch } from 'redux-thunk';
-import { dataTypes } from 'interfaces/thunk';
 import { ways } from 'constants/constRouter';
+import { dataTypes } from 'interfaces/thunk';
 import { interfaceChatMessage } from 'interfaces/commonChat';
 
 export const CHAT = 'CHAT';
@@ -29,6 +29,7 @@ export const DELETE = 'DELETE';
 export const MESSAGE = 'MESSAGE';
 export const SUBSCRIBE = 'SUBSCRIBE';
 export const SET_START = 'SET_START';
+export const RESET_GAME = 'RESET_GAME';
 export const UNSUBSCRIBE = 'UNSUBSCRIBE';
 export const ADMIN_AGREE = 'ADMIN_AGREE';
 export const USER_CONNECT = 'USER_CONNECT';
@@ -40,7 +41,6 @@ const { HOME, ADMIN, USER, GAME } = ways;
 
 const toLobby = (isAdmin: boolean | undefined) => {
 	const path = isAdmin ? ADMIN : USER;
-
 	return history.push(path);
 };
 
@@ -90,9 +90,9 @@ const socketCreator =
 				if (!gameData) {
 					return setExit();
 				}
+				dispatch(setGameData({ ...gameData }));
 				dispatch(setUserDataActionCreation({ login: true }));
-				history.push(GAME);
-				return dispatch(setGameData(gameData));
+				return history.push(GAME);
 			});
 
 			if (usersData?.isAdmin) {
@@ -160,7 +160,6 @@ const socketCreator =
 			});
 		}
 		// admin agree connect user
-
 		if (type === ADMIN_AGREE) {
 			socket.emit('event://confirm_connect', id);
 		}
@@ -181,7 +180,10 @@ const socketCreator =
 			socket.emit('event://admin_start_game', gameSettings);
 		}
 
-		// #chat parts
+		if (type === RESET_GAME) {
+			socket.emit('event://admin_reset_game', gameSettings);
+		}
+
 		if (type === CHAT) {
 			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
 				if (!ms) return;

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setPlayingCardSet } from 'redux/reducer/gameSettingReducer';
+import { setPlayingCardSetAction } from 'redux/reducer/gameSettingReducer';
 import {
 	Game,
 	PlayingCardSetEnum
@@ -24,17 +24,17 @@ export const useChangePlayingCardSet = (): void => {
 	useEffect(() => {
 		switch (playingCardsSet) {
 			case fibonacciNumbers: {
-				dispatch(setPlayingCardSet(fibonacciNumbersCards));
+				dispatch(setPlayingCardSetAction(fibonacciNumbersCards));
 				break;
 			}
 
 			case degreeTwo: {
-				dispatch(setPlayingCardSet(degreeTwoCards));
+				dispatch(setPlayingCardSetAction(degreeTwoCards));
 				break;
 			}
 
 			case linearSequence: {
-				dispatch(setPlayingCardSet(linearSequenceCards));
+				dispatch(setPlayingCardSetAction(linearSequenceCards));
 				break;
 			}
 

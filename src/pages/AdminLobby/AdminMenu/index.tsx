@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 
 import { getGame } from 'redux/reducer/selectors';
 import {
-	addPlayingCard,
-	setIsAdminAsPlayerIsTimer,
-	setIsTimer,
-	setScoreType,
-	changePlayingCardSet
+	addPlayingCardAction,
+	SetIsAdminAsPlayerIsTimer,
+	SetIsTimer,
+	SetScoreType,
+	changePlayingCardSetAction
 } from 'redux/reducer/gameSettingReducer';
 import {
 	Game,
@@ -35,23 +35,23 @@ const AdminMenu: React.FC = (): JSX.Element => {
 	const dispatch = useDispatch();
 
 	const onAddCard = () => {
-		dispatch(addPlayingCard());
+		dispatch(addPlayingCardAction());
 	};
 
 	const onToggleIsMasterAsPlayer = (): void => {
-		dispatch(setIsAdminAsPlayerIsTimer());
+		dispatch(SetIsAdminAsPlayerIsTimer());
 	};
 
 	const onToggleIsTimer = (): void => {
-		dispatch(setIsTimer());
+		dispatch(SetIsTimer());
 	};
 
 	const onChangeScoreType = (e: React.ChangeEvent<HTMLInputElement>) => {
-		dispatch(setScoreType(e.target.value.trim().toUpperCase().slice(0, 2)));
+		dispatch(SetScoreType(e.target.value.trim().toUpperCase().slice(0, 2)));
 	};
 
 	const onChangeSetOfCards = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		dispatch(changePlayingCardSet(e.target.value));
+		dispatch(changePlayingCardSetAction(e.target.value));
 	};
 
 	return (
