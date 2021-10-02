@@ -1,6 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import { useTypedSelector } from 'hooks/useTypedSelector';
+
+import { getMembers } from 'redux/reducer/selectors';
 import { PlayingCard } from 'redux/reducer/gameSettingReducer/types';
 import {
 	activePlayingCard,
@@ -19,6 +22,7 @@ const PlayingCardComponent: React.FC<{ card: PlayingCard; scoreType: string }> =
 		const { score, isFirstCard, active } = card;
 
 		const dispatch = useDispatch();
+		const { login } = useTypedSelector(getMembers);
 
 		const onEditScore = (e: React.ChangeEvent<HTMLInputElement>): void => {
 			dispatch(editPlayingCard(card, e.target.value));
@@ -50,13 +54,15 @@ const PlayingCardComponent: React.FC<{ card: PlayingCard; scoreType: string }> =
 							value={score}
 							onChange={onEditScore}
 						/>
-						<img
-							src={deleteCard}
-							alt="pencil"
-							aria-hidden="true"
-							title="Delete card"
-							onClick={onDeleteCard}
-						/>
+						{!login && (
+							<img
+								src={deleteCard}
+								alt="pencil"
+								aria-hidden="true"
+								title="Delete card"
+								onClick={onDeleteCard}
+							/>
+						)}
 					</div>
 					<div className={styles.type}>
 						{isFirstCard ? <img src={cup} alt="Cup" /> : scoreType}

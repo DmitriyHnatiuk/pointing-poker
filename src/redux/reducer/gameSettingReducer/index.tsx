@@ -1,11 +1,4 @@
-import {
-	Game,
-	GameAction,
-	Issue,
-	PlayingCard,
-	SettingsActionEnum,
-	TimerSettings
-} from './types';
+import { Game, GameAction, Issue, PlayingCard, SettingsActionEnum, TimerSettings } from './types';
 
 export const SET_DATA = 'SET_DATA';
 export const SET_NAME = 'SET_NAME';
@@ -18,7 +11,13 @@ const initialStore: Game = {
 	isAdminAsPlayer: false,
 	room: '',
 	issues: [
-		{ id: 1, title: 'Issue_1', priority: 'LOW priority', active: false }
+		{
+			id: 1,
+			title: 'Issue_1',
+			priority: 'low priority',
+			link: '',
+			active: false
+		}
 	],
 	scoreType: 'ST',
 	timer: {
@@ -26,21 +25,8 @@ const initialStore: Game = {
 		sec: '00'
 	},
 	isTimer: false,
-	cards: [
-		{
-			id: 1,
-			score: 'unknown',
-			isFirstCard: true
-		},
-		{
-			id: 2,
-			score: '1'
-		},
-		{
-			id: 3,
-			score: '11'
-		}
-	],
+	cards: [],
+	playingCardsSet: PlayingCardSetEnum.linearSequence,
 	planningTitle: 'Title & Planes'
 };
 
@@ -51,6 +37,13 @@ const reducer = (
 	action: GameAction
 ): StateType => {
 	switch (action.type) {
+		case SettingsActionEnum.SET_GAME_DATA: {
+			return {
+				...state,
+				...action.payload
+			};
+		}
+
 		case SettingsActionEnum.EDIT_PLAYING_CARD: {
 			return {
 				...state,
@@ -92,9 +85,24 @@ const reducer = (
 							state.cards.length === 0
 								? 1
 								: state.cards[state.cards.length - 1].id + 1,
-						score: action.payload.score
+						score: action.payload.score,
+						count: action.payload.count
 					}
 				]
+			};
+		}
+
+		case SettingsActionEnum.SET_PLAYING_CARD_SET: {
+			return {
+				...state,
+				cards: action.payload
+			};
+		}
+
+		case SettingsActionEnum.CHANGE_PLAYING_CARD_SET: {
+			return {
+				...state,
+				playingCardsSet: action.payload
 			};
 		}
 
@@ -111,6 +119,7 @@ const reducer = (
 						title: action.payload.title,
 						priority: action.payload.priority,
 						active: action.payload.active
+						link: action.payload.link
 					}
 				]
 			};
@@ -167,9 +176,14 @@ const reducer = (
 	}
 };
 
-export const addIssue = (): GameAction => ({
+export const setGameData = (state: Game): GameAction => ({
+	type: SettingsActionEnum.SET_GAME_DATA,
+	payload: state
+});
+
+export const addIssue = (values: Issue): GameAction => ({
 	type: SettingsActionEnum.ADD_ISSUE,
-	payload: { id: 3, title: 'Issue_3', priority: 'LOW priority', active: false }
+	payload: values
 });
 
 export const activeIssue = (issue: Issue): GameAction => ({
@@ -202,7 +216,17 @@ export const activePlayingCard = (card: PlayingCard): GameAction => ({
 
 export const addPlayingCard = (): GameAction => ({
 	type: SettingsActionEnum.ADD_PLAYING_CARD,
-	payload: { id: 5, score: '55' }
+	payload: { id: 5, score: '55', count: 0 }
+});
+
+export const setPlayingCardSet = (cardSet: PlayingCard[]): GameAction => ({
+	type: SettingsActionEnum.SET_PLAYING_CARD_SET,
+	payload: cardSet
+});
+
+export const changePlayingCardSet = (cardSet: string): GameAction => ({
+	type: SettingsActionEnum.CHANGE_PLAYING_CARD_SET,
+	payload: cardSet
 });
 
 export const setTimer = (timer: TimerSettings): GameAction => ({

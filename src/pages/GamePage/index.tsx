@@ -1,8 +1,11 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import socketCreator, { UNSUBSCRIBE } from 'redux/thunk';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
-import InstallTimer from 'components/common/Timer/InstallTimer';
+import ActiveTimer from 'components/common/Timer/ActiveTimer';
 import MasterCard from 'components/common/MasterCard';
 import MyButton from 'components/common/MyButton';
 import Issues from 'pages/AdminLobby/Issues';
@@ -21,23 +24,24 @@ import UsersScore from './UsersScore';
 import Statistics from './Statistics';
 import ActiveTimer from '../../components/common/Timer/ActiveTimer';
 
-const { STOP_GAME, RUN_ROUND, RESTART_ROUND, NEXT_ISSUE, EXIT } = btnValue;
+const { STOP_GAME, EXIT } = btnValue;
 
 const GamePage: React.FC = (): JSX.Element => {
+	const dispatch = useDispatch();
+
 	const { openModal } = useTypedSelector<Modal>(getModal);
 	const { isAdmin } = useTypedSelector<User>(getMembers);
-	const user = useTypedSelector<User>(getMembers);
-
-	const timer = true;
+	const { admin } = useTypedSelector<User>(getMembers);
+	const setExit = () => dispatch(socketCreator({ type: UNSUBSCRIBE }));
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.menuField}>
 				<h1>Issues string</h1>
 				<div className={styles.menu}>
-					<MasterCard user={user} style={styles.masterCard} />
+					<MasterCard admin={admin} style={styles.masterCard} />
 					{isAdmin && <MyButton value={STOP_GAME} />}
-					{!isAdmin && <MyButton value={EXIT} />}
+					{!isAdmin && <MyButton value={EXIT} onclick={setExit} />}
 				</div>
 				<div className={styles.settings}>
 					<ul className={styles.issues}>
@@ -47,14 +51,7 @@ const GamePage: React.FC = (): JSX.Element => {
 					</ul>
 					{isAdmin && (
 						<div className={styles.settingsControl}>
-							<div className={styles.timer}>
-								<InstallTimer />
-							</div>
-							<div className={styles.buttons}>
-								{timer && <MyButton value={RUN_ROUND} />}
-								{!timer && <MyButton value={RESTART_ROUND} />}
-								{!timer && <MyButton value={NEXT_ISSUE} />}
-							</div>
+							<ActiveTimer />
 						</div>
 					)}
 				</div>

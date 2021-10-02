@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
-import history from 'utils/history';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
 import socketCreator, { UNSUBSCRIBE } from 'redux/thunk';
@@ -9,7 +8,6 @@ import { getMembers, getModal } from 'redux/reducer/selectors';
 import { User } from 'redux/reducer/userReducer/types';
 import { Modal } from 'redux/reducer/modalReducer/types';
 
-import { ways } from 'constants/constRouter';
 import { btnValue } from 'constants/commonComponents';
 
 import PlayerCard from 'components/common/UserCard';
@@ -18,18 +16,13 @@ import Modals from 'components/common/Modals';
 
 import styles from './index.module.scss';
 
-const { HOME } = ways;
-
 const TeamMembers: React.FC = () => {
 	const dispatch = useDispatch();
 
-	const setExit = () => {
-		dispatch(socketCreator({ type: UNSUBSCRIBE }));
-		history.push(HOME);
-	};
-
 	const { users } = useTypedSelector<User>(getMembers);
 	const { openModal } = useTypedSelector<Modal>(getModal);
+
+	const setExit = () => dispatch(socketCreator({ type: UNSUBSCRIBE }));
 
 	const admin = useMemo(() => {
 		return users.find((user) => user.isAdmin === true);

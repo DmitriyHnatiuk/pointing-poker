@@ -1,6 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import { useTypedSelector } from 'hooks/useTypedSelector';
+
+import { getMembers } from 'redux/reducer/selectors';
 import { Issue } from 'redux/reducer/gameSettingReducer/types';
 import { activeIssue, deleteIssue } from 'redux/reducer/gameSettingReducer';
 
@@ -12,6 +15,7 @@ const IssueCard: React.FC<{ issue: Issue }> = ({ issue }) => {
 	const { title, priority, active } = issue;
 
 	const dispatch = useDispatch();
+	const { isAdmin } = useTypedSelector(getMembers);
 
 	const onDeleteIssue = () => {
 		dispatch(deleteIssue(issue));
@@ -28,6 +32,17 @@ const IssueCard: React.FC<{ issue: Issue }> = ({ issue }) => {
 				<div className={styles.title}>
 					<span className={styles.issue}>{title}</span>
 					<span className={styles.priority}>{priority}</span>
+				</div>
+				<div className={styles.delete}>
+					{isAdmin && (
+						<img
+							src={deleteImage}
+							alt="delete"
+							title="Delete issue"
+							onClick={onDeleteIssue}
+							aria-hidden="true"
+						/>
+					)}
 				</div>
 				{!active && (
 					<div className={styles.delete}>

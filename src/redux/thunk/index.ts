@@ -10,12 +10,16 @@ import {
 import {
 	modalActionType,
 	setModalDataActionCreation
-} from 'redux/reducer/modalReducer/index';
+} from 'redux/reducer/modalReducer';
+import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
+import { setGameData } from 'redux/reducer/gameSettingReducer';
+import { GameAction } from 'redux/reducer/gameSettingReducer/types';
 
 import { ENDPOINT } from 'constants/API';
 import { ThunkDispatch } from 'redux-thunk';
 import { dataTypes } from 'interfaces/thunk';
 import { ways } from 'constants/constRouter';
+import { interfaceChatMessage } from 'interfaces/commonChat';
 
 export const CHAT = 'CHAT';
 export const KICK = 'KICK';
@@ -43,7 +47,7 @@ const toLobby = (isAdmin: boolean | undefined) => {
 type dispatchTypes = ThunkDispatch<
 	RootState,
 	never,
-	ActionType | modalActionType
+	ActionType | modalActionType | chatActionType | GameAction
 >;
 
 const socketCreator =
@@ -63,12 +67,8 @@ const socketCreator =
 			socket.emit(
 				'event://connect_to_room',
 				usersData,
-				(res: { status: string }) => {
-					const response =
-						res.status === 'ok' ? console.log('done') : setExit();
-
-					return response;
-				}
+				(res: { status: string }) =>
+					res.status === 'ok' ? console.log('done') : setExit()
 			);
 
 			socket.onAny((event, ...args) => console.log(event, args));
@@ -79,22 +79,20 @@ const socketCreator =
 				toLobby(admin);
 			});
 
-			socket.on('event://your_room_data', (rooms) => {
-				if (!rooms) {
+			socket.on('event://your_room_data', (users) => {
+				if (!users) {
 					return setExit();
 				}
-
-				return dispatch(setUserDataActionCreation({ users: rooms.users }));
+				return dispatch(setUserDataActionCreation({ users }));
 			});
 
-			socket.on('event://your_game_data', (gameData, rooms) => {
+			socket.on('event://your_game_data', (gameData) => {
 				if (!gameData) {
 					return setExit();
 				}
 				dispatch(setUserDataActionCreation({ login: true }));
 				history.push(GAME);
-
-				return console.log(gameData, rooms); // # dispatch gameData
+				return dispatch(setGameData(gameData));
 			});
 
 			if (usersData?.isAdmin) {
@@ -183,10 +181,16 @@ const socketCreator =
 			socket.emit('event://admin_start_game', gameSettings);
 		}
 
+		// #chat parts
 		if (type === CHAT) {
-			// #chat parts
-			socket.on('event://message_from_user', (ms) => console.log('user', ms));
-			socket.on('event://message_from_admin', (ms) => console.log('admin', ms));
+			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+			socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
 		}
 
 		if (type === SEND_MESSAGE) {

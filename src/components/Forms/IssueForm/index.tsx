@@ -24,8 +24,10 @@ const optionsPriority: InterfaceOptions[] = [
 ];
 
 const IssueForm: React.FC<InterfaceModals> = ({ close }) => {
+	const submit = useSubmitFormIssues();
+
 	return (
-		<Formik initialValues={initialIssues} onSubmit={useSubmitFormIssues}>
+		<Formik initialValues={initialIssues} onSubmit={submit}>
 			{() => (
 				<Form className={styles.form}>
 					<h1 className={styles.title}>Create Issue</h1>

@@ -24,9 +24,11 @@
   justify-content: space-between;
   width: 100%;
 }
+
 .masterCard {
   width: 200px;
 }
+
 .settings {
   padding: 50px;
   display: flex;
@@ -35,17 +37,8 @@
 .issues {
   width: 30%;
 }
-.timer {
-  max-width: 230px;
-}
+
 .settingsControl {
   padding: 20px;
   width: 100%;
-}
-
-.buttons {
-  padding-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }

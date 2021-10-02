@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux';
 import { getGame, getMembers } from 'redux/reducer/selectors';
 import { Game } from 'redux/reducer/gameSettingReducer/types';
 import { User } from 'redux/reducer/userReducer/types';
-
-import { addIssue } from 'redux/reducer/gameSettingReducer';
+import { setModalDataActionCreation } from 'redux/reducer/modalReducer';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
+
+import { TypeModalsOpen } from 'interfaces/modals';
 
 import IssueCard from 'components/common/IssueCard';
 
@@ -22,7 +23,12 @@ const Issues: React.FC = (): JSX.Element => {
 	const dispatch = useDispatch();
 
 	const onAddIssue = () => {
-		dispatch(addIssue());
+		return dispatch(
+			setModalDataActionCreation({
+				openModal: true,
+				type: TypeModalsOpen.issue
+			})
+		);
 	};
 
 	return (

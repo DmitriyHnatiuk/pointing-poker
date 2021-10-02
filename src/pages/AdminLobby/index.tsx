@@ -6,7 +6,7 @@ import { Modal } from 'redux/reducer/modalReducer/types';
 
 import Modals from 'components/common/Modals';
 
-import InstallTimer from 'components/common/Timer/InstallTimer';
+// import InstallTimer from 'components/common/Timer/InstallTimer';
 import Members from './Members';
 import GameStatus from './GameStatus';
 import Issues from './Issues';
@@ -22,7 +22,7 @@ const AdminLobby: React.FC = (): JSX.Element => {
 			<GameStatus />
 			<Members />
 			<Issues />
-			<InstallTimer />
+			{/* <InstallTimer /> */}
 			<AdminMenu />
 			{openModal && <Modals />}
 		</div>
