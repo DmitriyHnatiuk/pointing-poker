@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux';
 import { getGame, getMembers } from 'redux/reducer/selectors';
 import { Game } from 'redux/reducer/gameSettingReducer/types';
 import { User } from 'redux/reducer/userReducer/types';
-
-import { addIssue } from 'redux/reducer/gameSettingReducer';
+import { setModalDataActionCreation } from 'redux/reducer/modalReducer';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
+
+import { TypeModalsOpen } from 'interfaces/modals';
 
 import IssueCard from 'components/common/IssueCard';
 
@@ -15,14 +16,23 @@ import addIssueImage from 'assets/images/PlayingCard/add_card.svg';
 
 import styles from './index.module.scss';
 
-const Issues: React.FC = (): JSX.Element => {
+interface IssueList {
+	admin?: boolean;
+}
+
+const Issues: React.FC<IssueList> = ({ admin }) => {
 	const { isAdmin } = useTypedSelector<User>(getMembers);
 	const { issues } = useTypedSelector<Game>(getGame);
 
 	const dispatch = useDispatch();
 
 	const onAddIssue = () => {
-		dispatch(addIssue());
+		return dispatch(
+			setModalDataActionCreation({
+				openModal: true,
+				type: TypeModalsOpen.issue
+			})
+		);
 	};
 
 	return (
@@ -30,7 +40,7 @@ const Issues: React.FC = (): JSX.Element => {
 			<h3 className={styles.title}>Issues:</h3>
 			<div className={styles.issues}>
 				{issues.map((issue) => (
-					<IssueCard issue={issue} key={issue.id} />
+					<IssueCard issue={issue} key={issue.id} isActive={!admin} />
 				))}
 				{isAdmin && (
 					<div className={styles.new}>

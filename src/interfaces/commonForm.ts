@@ -44,12 +44,6 @@ export interface FieldRegistry {
 	avatar: File | string;
 }
 
-export interface FieldIssues {
-	title: string;
-	link: string;
-	priority: string;
-}
-
 export enum TypeInputFormikControl {
 	input = 'input',
 	select = 'select',

@@ -4,6 +4,7 @@ import {
 	Issue,
 	obj,
 	PlayingCard,
+	PlayingCardSetEnum,
 	SettingsActionEnum,
 	TimerSettings
 } from './types';
@@ -18,7 +19,15 @@ const initialStore: Game = {
 	isAdmin: false,
 	isAdminAsPlayer: false,
 	room: '',
-	issues: [{ id: 1, title: 'Issue_1', priority: 'LOW priority' }],
+	issues: [
+		{
+			id: 1,
+			title: 'Issue_1',
+			priority: 'low priority',
+			link: '',
+			active: false
+		}
+	],
 	scoreType: 'ST',
 	timer: {
 		min: '00',
@@ -27,21 +36,8 @@ const initialStore: Game = {
 		isActive: false
 	},
 	isTimer: false,
-	cards: [
-		{
-			id: 1,
-			score: 'unknown',
-			isFirstCard: true
-		},
-		{
-			id: 2,
-			score: '1'
-		},
-		{
-			id: 3,
-			score: '11'
-		}
-	],
+	cards: [],
+	playingCardsSet: PlayingCardSetEnum.linearSequence,
 	planningTitle: 'Title & Planes'
 };
 
@@ -52,6 +48,13 @@ const reducer = (
 	action: GameAction
 ): StateType => {
 	switch (action.type) {
+		case SettingsActionEnum.SET_GAME_DATA: {
+			return {
+				...state,
+				...action.payload
+			};
+		}
+
 		case SettingsActionEnum.EDIT_PLAYING_CARD: {
 			return {
 				...state,
@@ -72,6 +75,17 @@ const reducer = (
 			};
 		}
 
+		case SettingsActionEnum.ACTIVE_PLAYING_CARD: {
+			return {
+				...state,
+				cards: state.cards.map((card) => {
+					const element = card;
+					element.active = element === action.payload;
+					return element;
+				})
+			};
+		}
+
 		case SettingsActionEnum.ADD_PLAYING_CARD: {
 			return {
 				...state,
@@ -82,9 +96,24 @@ const reducer = (
 							state.cards.length === 0
 								? 1
 								: state.cards[state.cards.length - 1].id + 1,
-						score: action.payload.score
+						score: action.payload.score,
+						count: action.payload.count
 					}
 				]
+			};
+		}
+
+		case SettingsActionEnum.SET_PLAYING_CARD_SET: {
+			return {
+				...state,
+				cards: action.payload
+			};
+		}
+
+		case SettingsActionEnum.CHANGE_PLAYING_CARD_SET: {
+			return {
+				...state,
+				playingCardsSet: action.payload
 			};
 		}
 
@@ -99,7 +128,9 @@ const reducer = (
 								? 1
 								: state.issues[state.issues.length - 1].id + 1,
 						title: action.payload.title,
-						priority: action.payload.priority
+						priority: action.payload.priority,
+						active: action.payload.active,
+						link: action.payload.link
 					}
 				]
 			};
@@ -109,6 +140,17 @@ const reducer = (
 			return {
 				...state,
 				issues: state.issues.filter((issue) => issue.id !== action.payload.id)
+			};
+		}
+
+		case SettingsActionEnum.ACTIVE_ISSUE: {
+			return {
+				...state,
+				issues: state.issues.map((issue) => {
+					const element = issue;
+					element.active = element === action.payload;
+					return element;
+				})
 			};
 		}
 
@@ -157,9 +199,19 @@ const reducer = (
 	}
 };
 
-export const addIssue = (): GameAction => ({
+export const setGameData = (state: Game): GameAction => ({
+	type: SettingsActionEnum.SET_GAME_DATA,
+	payload: state
+});
+
+export const addIssue = (values: Issue): GameAction => ({
 	type: SettingsActionEnum.ADD_ISSUE,
-	payload: { id: 3, title: 'Issue_3', priority: 'LOW priority' }
+	payload: values
+});
+
+export const activeIssue = (issue: Issue): GameAction => ({
+	type: SettingsActionEnum.ACTIVE_ISSUE,
+	payload: issue
 });
 
 export const deleteIssue = (issue: Issue): GameAction => ({
@@ -180,9 +232,24 @@ export const deletePlayingCard = (card: PlayingCard): GameAction => ({
 	payload: card
 });
 
+export const activePlayingCard = (card: PlayingCard): GameAction => ({
+	type: SettingsActionEnum.ACTIVE_PLAYING_CARD,
+	payload: card
+});
+
 export const addPlayingCard = (): GameAction => ({
 	type: SettingsActionEnum.ADD_PLAYING_CARD,
-	payload: { id: 5, score: '55' }
+	payload: { id: 5, score: '55', count: 0 }
+});
+
+export const setPlayingCardSet = (cardSet: PlayingCard[]): GameAction => ({
+	type: SettingsActionEnum.SET_PLAYING_CARD_SET,
+	payload: cardSet
+});
+
+export const changePlayingCardSet = (cardSet: string): GameAction => ({
+	type: SettingsActionEnum.CHANGE_PLAYING_CARD_SET,
+	payload: cardSet
 });
 
 export const setTimer = (timer: TimerSettings): GameAction => ({

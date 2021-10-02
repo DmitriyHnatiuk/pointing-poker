@@ -13,6 +13,8 @@ import {
 	setModalDataActionCreation
 } from 'redux/reducer/modalReducer';
 import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
+import { setGameData } from 'redux/reducer/gameSettingReducer';
+import { GameAction } from 'redux/reducer/gameSettingReducer/types';
 import { setDataActionCreation } from 'redux/reducer/gameSettingReducer';
 import { GameAction } from 'redux/reducer/gameSettingReducer/types';
 
@@ -94,6 +96,8 @@ const socketCreator =
 				dispatch(setDataActionCreation({ ...gameData }));
 				dispatch(setUserDataActionCreation({ login: true }));
 				return history.push(GAME);
+				history.push(GAME);
+				return dispatch(setGameData(gameData));
 			});
 
 			if (usersData?.isAdmin) {
