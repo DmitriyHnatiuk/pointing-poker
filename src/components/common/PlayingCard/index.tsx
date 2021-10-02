@@ -3,18 +3,20 @@ import { useDispatch } from 'react-redux';
 
 import { PlayingCard } from 'redux/reducer/gameSettingReducer/types';
 import {
-	editPlayingCard,
-	deletePlayingCard
+	activePlayingCard,
+	deletePlayingCard,
+	editPlayingCard
 } from 'redux/reducer/gameSettingReducer';
 
 import deleteCard from 'assets/images/CardPlayer/player-delete.svg';
 import cup from 'assets/images/PlayingCard/cup.svg';
+import activeCard from 'assets/images/PlayingCard/active_card.svg';
 
 import styles from './index.module.scss';
 
 const PlayingCardComponent: React.FC<{ card: PlayingCard; scoreType: string }> =
 	({ card, scoreType }) => {
-		const { score, isFirstCard } = card;
+		const { score, isFirstCard, active } = card;
 
 		const dispatch = useDispatch();
 
@@ -26,8 +28,20 @@ const PlayingCardComponent: React.FC<{ card: PlayingCard; scoreType: string }> =
 			dispatch(deletePlayingCard(card));
 		};
 
+		const onActiveCard = () => {
+			dispatch(activePlayingCard(card));
+		};
+
 		return (
-			<section className={styles.card}>
+			<section
+				className={styles.card}
+				aria-hidden="true"
+				onClick={onActiveCard}>
+				{active && (
+					<div className={styles.activeCard}>
+						<img width="40" height="40" src={activeCard} alt="Active card" />
+					</div>
+				)}
 				<div className={styles.content}>
 					<div className={styles.top}>
 						<input

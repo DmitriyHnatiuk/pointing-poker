@@ -17,7 +17,9 @@ const initialStore: Game = {
 	isAdmin: false,
 	isAdminAsPlayer: false,
 	room: '',
-	issues: [{ id: 1, title: 'Issue_1', priority: 'LOW priority' }],
+	issues: [
+		{ id: 1, title: 'Issue_1', priority: 'LOW priority', active: false }
+	],
 	scoreType: 'ST',
 	timer: {
 		min: '00',
@@ -69,6 +71,17 @@ const reducer = (
 			};
 		}
 
+		case SettingsActionEnum.ACTIVE_PLAYING_CARD: {
+			return {
+				...state,
+				cards: state.cards.map((card) => {
+					const element = card;
+					element.active = element === action.payload;
+					return element;
+				})
+			};
+		}
+
 		case SettingsActionEnum.ADD_PLAYING_CARD: {
 			return {
 				...state,
@@ -96,7 +109,8 @@ const reducer = (
 								? 1
 								: state.issues[state.issues.length - 1].id + 1,
 						title: action.payload.title,
-						priority: action.payload.priority
+						priority: action.payload.priority,
+						active: action.payload.active
 					}
 				]
 			};
@@ -106,6 +120,17 @@ const reducer = (
 			return {
 				...state,
 				issues: state.issues.filter((issue) => issue.id !== action.payload.id)
+			};
+		}
+
+		case SettingsActionEnum.ACTIVE_ISSUE: {
+			return {
+				...state,
+				issues: state.issues.map((issue) => {
+					const element = issue;
+					element.active = element === action.payload;
+					return element;
+				})
 			};
 		}
 
@@ -144,7 +169,12 @@ const reducer = (
 
 export const addIssue = (): GameAction => ({
 	type: SettingsActionEnum.ADD_ISSUE,
-	payload: { id: 3, title: 'Issue_3', priority: 'LOW priority' }
+	payload: { id: 3, title: 'Issue_3', priority: 'LOW priority', active: false }
+});
+
+export const activeIssue = (issue: Issue): GameAction => ({
+	type: SettingsActionEnum.ACTIVE_ISSUE,
+	payload: issue
 });
 
 export const deleteIssue = (issue: Issue): GameAction => ({
@@ -162,6 +192,11 @@ export const editPlayingCard = (
 
 export const deletePlayingCard = (card: PlayingCard): GameAction => ({
 	type: SettingsActionEnum.DELETE_PLAYING_CARD,
+	payload: card
+});
+
+export const activePlayingCard = (card: PlayingCard): GameAction => ({
+	type: SettingsActionEnum.ACTIVE_PLAYING_CARD,
 	payload: card
 });
 

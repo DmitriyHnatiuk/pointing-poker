@@ -10,6 +10,7 @@ import styles from './index.module.scss';
 const Statistics: React.FC = (): JSX.Element => {
 	const { cards, scoreType } = useTypedSelector<Game>(getGame);
 	const count = '20%';
+
 	return (
 		<div className={styles.statistics}>
 			<h3>Statistics:</h3>

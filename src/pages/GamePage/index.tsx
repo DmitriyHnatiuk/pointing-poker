@@ -19,6 +19,7 @@ import styles from './index.module.scss';
 
 import UsersScore from './UsersScore';
 import Statistics from './Statistics';
+import ActiveTimer from '../../components/common/Timer/ActiveTimer';
 
 const { STOP_GAME, RUN_ROUND, RESTART_ROUND, NEXT_ISSUE, EXIT } = btnValue;
 
