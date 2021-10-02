@@ -16,7 +16,11 @@ import addIssueImage from 'assets/images/PlayingCard/add_card.svg';
 
 import styles from './index.module.scss';
 
-const Issues: React.FC = (): JSX.Element => {
+interface IssueList {
+	admin?: boolean;
+}
+
+const Issues: React.FC<IssueList> = ({ admin }) => {
 	const { isAdmin } = useTypedSelector<User>(getMembers);
 	const { issues } = useTypedSelector<Game>(getGame);
 
@@ -36,7 +40,7 @@ const Issues: React.FC = (): JSX.Element => {
 			<h3 className={styles.title}>Issues:</h3>
 			<div className={styles.issues}>
 				{issues.map((issue) => (
-					<IssueCard issue={issue} key={issue.id} />
+					<IssueCard issue={issue} key={issue.id} isActive={!admin} />
 				))}
 				{isAdmin && (
 					<div className={styles.new}>

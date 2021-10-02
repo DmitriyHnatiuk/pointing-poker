@@ -13,5 +13,6 @@ export const initialIssues: Issue = {
 	id: 1,
 	title: '',
 	link: '',
+	active: false,
 	priority: 'Low'
 };

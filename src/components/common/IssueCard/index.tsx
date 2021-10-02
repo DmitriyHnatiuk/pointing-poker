@@ -11,7 +11,10 @@ import deleteImage from 'assets/images/CardPlayer/player-delete.svg';
 
 import styles from './index.module.scss';
 
-const IssueCard: React.FC<{ issue: Issue }> = ({ issue }) => {
+const IssueCard: React.FC<{ issue: Issue; isActive?: boolean }> = ({
+	issue,
+	isActive
+}) => {
 	const { title, priority, active } = issue;
 
 	const dispatch = useDispatch();
@@ -22,19 +25,21 @@ const IssueCard: React.FC<{ issue: Issue }> = ({ issue }) => {
 	};
 
 	const onActiveIssue = () => {
-		dispatch(activeIssue(issue));
+		if (isActive) {
+			dispatch(activeIssue(issue));
+		}
 	};
 
 	return (
 		<section aria-hidden="true" className={styles.card} onClick={onActiveIssue}>
-			{active && <div className={styles.active} />}
+			{isActive && active && <div className={styles.active} />}
 			<div className={styles.content}>
 				<div className={styles.title}>
 					<span className={styles.issue}>{title}</span>
 					<span className={styles.priority}>{priority}</span>
 				</div>
 				<div className={styles.delete}>
-					{isAdmin && (
+					{!active && isAdmin && (
 						<img
 							src={deleteImage}
 							alt="delete"
@@ -44,17 +49,6 @@ const IssueCard: React.FC<{ issue: Issue }> = ({ issue }) => {
 						/>
 					)}
 				</div>
-				{!active && (
-					<div className={styles.delete}>
-						<img
-							src={deleteImage}
-							alt="delete"
-							title="Delete issue"
-							onClick={onDeleteIssue}
-							aria-hidden="true"
-						/>
-					</div>
-				)}
 			</div>
 		</section>
 	);

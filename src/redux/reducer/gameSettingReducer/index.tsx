@@ -1,4 +1,12 @@
-import { Game, GameAction, Issue, PlayingCard, SettingsActionEnum, TimerSettings } from './types';
+import {
+	Game,
+	GameAction,
+	Issue,
+	PlayingCard,
+	PlayingCardSetEnum,
+	SettingsActionEnum,
+	TimerSettings
+} from './types';
 
 export const SET_DATA = 'SET_DATA';
 export const SET_NAME = 'SET_NAME';
@@ -118,7 +126,7 @@ const reducer = (
 								: state.issues[state.issues.length - 1].id + 1,
 						title: action.payload.title,
 						priority: action.payload.priority,
-						active: action.payload.active
+						active: action.payload.active,
 						link: action.payload.link
 					}
 				]

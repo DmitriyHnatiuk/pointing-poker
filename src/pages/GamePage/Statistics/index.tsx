@@ -17,7 +17,11 @@ const Statistics: React.FC = (): JSX.Element => {
 			<ul className={styles.cards}>
 				{cards.map((card) => (
 					<li key={card.id} className={styles.card}>
-						<PlayingCardComponent card={card} scoreType={scoreType} />
+						<PlayingCardComponent
+							card={card}
+							scoreType={scoreType}
+							inStatistics
+						/>
 						<span>{count}</span>
 					</li>
 				))}

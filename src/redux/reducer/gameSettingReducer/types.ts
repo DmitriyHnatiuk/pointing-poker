@@ -35,7 +35,7 @@ export interface Issue {
 	id: number;
 	title: string;
 	priority: string;
-	active: boolean;
+	active?: boolean;
 	link: string;
 }
 
