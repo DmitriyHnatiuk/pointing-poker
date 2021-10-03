@@ -23,10 +23,11 @@ const PlayingCardComponent: React.FC<{
 	activeCard?: boolean;
 	inStatistics?: boolean;
 }> = ({ card, scoreType, activeCard, inStatistics }) => {
+	const dispatch = useDispatch();
+
+	const { login } = useTypedSelector(getMembers);
 	const { score, isFirstCard, active } = card;
 	const isActive = activeCard && active;
-	const dispatch = useDispatch();
-	const { login } = useTypedSelector(getMembers);
 
 	const onEditScore = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		dispatch(editPlayingCard(card, e.target.value));
@@ -44,43 +45,51 @@ const PlayingCardComponent: React.FC<{
 	};
 
 	return (
-		<section
-			className={`${styles.card} ${inStatistics && styles.statisticsCard}`}
-			aria-hidden="true"
-			onClick={onActiveCard}>
-			{isActive && (
-				<div className={styles.activeCard}>
-					<img width="40" height="40" src={iconActiveCard} alt="Active card" />
-				</div>
-			)}
-			<div className={styles.content}>
-				<div className={styles.top}>
-					{inStatistics ? (
-						<span className={styles.input}>{score}</span>
-					) : (
-						<input
-							className={styles.input}
-							type="text"
-							value={score}
-							onChange={onEditScore}
-						/>
-					)}
-					{!login && (
+		<>
+			<section
+				className={`${styles.card} ${inStatistics && styles.statisticsCard}`}
+				aria-hidden="true"
+				onClick={onActiveCard}>
+				{isActive && (
+					<div className={styles.activeCard}>
 						<img
-							src={deleteCard}
-							alt="Delete card"
-							aria-hidden="true"
-							title="Delete card"
-							onClick={onDeleteCard}
+							width="40"
+							height="40"
+							src={iconActiveCard}
+							alt="Active card"
 						/>
-					)}
+					</div>
+				)}
+				<div className={styles.content}>
+					<div className={styles.top}>
+						{inStatistics ? (
+							<span className={styles.input}>{score}</span>
+						) : (
+							<input
+								className={styles.input}
+								type="text"
+								value={score}
+								onChange={onEditScore}
+							/>
+						)}
+						{!login && (
+							<img
+								src={deleteCard}
+								alt="Delete card"
+								aria-hidden="true"
+								title="Delete card"
+								onClick={onDeleteCard}
+							/>
+						)}
+					</div>
+					<div className={styles.type}>
+						{isFirstCard ? <img src={cup} alt="Cup" /> : scoreType}
+					</div>
+					<span className={styles.bottom}>{score}</span>
 				</div>
-				<div className={styles.type}>
-					{isFirstCard ? <img src={cup} alt="Cup" /> : scoreType}
-				</div>
-				<span className={styles.bottom}>{score}</span>
-			</div>
-		</section>
+			</section>
+			{!activeCard && login && <span>{card.count}</span>}
+		</>
 	);
 };
 

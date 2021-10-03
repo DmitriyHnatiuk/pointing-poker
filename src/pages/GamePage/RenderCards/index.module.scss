@@ -1,0 +1,12 @@
+@import "/src/assets/styles/variables";
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  height: 90%;
+  align-content: flex-end;
+  justify-content: center;
+}
+.card {
+  text-align: center;
+}

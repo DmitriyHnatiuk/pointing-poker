@@ -1,11 +1,14 @@
-@import '/src/assets/styles/_variables.scss';
+@import "/src/assets/styles/_variables.scss";
 
 .switch {
-	content: '';
+	content: "";
 	position: relative;
-	display: inline-block;
-	width: 25px;
-	height: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 16px;
+	margin-bottom: 10px;
 }
 
 .switch input {
@@ -15,7 +18,7 @@
 }
 
 .slider {
-	min-width: 26px;
+	min-width: 30px;
 	position: absolute;
 	cursor: pointer;
 	top: 0;
@@ -27,10 +30,10 @@
 }
 
 .slider:before {
-	content: '';
+	content: "";
 	position: absolute;
 	height: 12px;
-	width: 10px;
+	width: 12px;
 	left: 2px;
 	bottom: 2px;
 	background-color: $white-color;
@@ -42,7 +45,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-	transform: translateX(12px);
+	transform: translateX(14px);
 }
 
 .slider.round {

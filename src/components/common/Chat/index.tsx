@@ -57,7 +57,6 @@ const Chat: React.FC = (): JSX.Element => {
 		() =>
 			messageList.map((item) => {
 				const { author, textMessage, date, id } = item;
-				console.log(id);
 				return (
 					<ChatMessage
 						author={author}

@@ -1,9 +1,11 @@
-@import '/src/assets/styles/variables';
+@import "/src/assets/styles/variables";
 
 .main_page {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 90%;
+  height: 100%;
 }
 
 .container {

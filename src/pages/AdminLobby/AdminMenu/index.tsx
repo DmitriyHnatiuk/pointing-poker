@@ -1,14 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { getGame } from 'redux/reducer/selectors';
+import { getGame, getMembers } from 'redux/reducer/selectors';
 import {
 	addPlayingCardAction,
-	SetIsAdminAsPlayerIsTimer,
+	SetIsAdminAsPlayer,
 	SetIsTimer,
 	SetScoreType,
 	changePlayingCardSetAction
 } from 'redux/reducer/gameSettingReducer';
+import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 import {
 	Game,
 	PlayingCardSetEnum
@@ -26,20 +27,22 @@ import addCardImage from 'assets/images/PlayingCard/add_card.svg';
 import styles from './index.module.scss';
 
 const AdminMenu: React.FC = (): JSX.Element => {
+	const dispatch = useDispatch();
+
+	const { observer } = useTypedSelector(getMembers);
 	const { cards, scoreType, playingCardsSet, isTimer } =
 		useTypedSelector<Game>(getGame);
 	const { fibonacciNumbers, degreeTwo, linearSequence } = PlayingCardSetEnum;
 
 	useChangePlayingCardSet();
 
-	const dispatch = useDispatch();
-
 	const onAddCard = () => {
 		dispatch(addPlayingCardAction());
 	};
 
 	const onToggleIsMasterAsPlayer = (): void => {
-		dispatch(SetIsAdminAsPlayerIsTimer());
+		dispatch(SetIsAdminAsPlayer(!observer));
+		dispatch(setUserDataActionCreation({ observer: !observer }));
 	};
 
 	const onToggleIsTimer = (): void => {
@@ -60,7 +63,7 @@ const AdminMenu: React.FC = (): JSX.Element => {
 			<div className={styles.settings}>
 				<span>
 					<h3>Scram master as player:</h3>
-					<Switch setValue={onToggleIsMasterAsPlayer} />
+					<Switch setValue={onToggleIsMasterAsPlayer} value={!observer} />
 				</span>
 				<span>
 					<h3>Changing card in round end:</h3>
@@ -70,12 +73,6 @@ const AdminMenu: React.FC = (): JSX.Element => {
 					<h3>Is timer needed:</h3>
 					<Switch setValue={onToggleIsTimer} />
 				</span>
-				{isTimer && (
-					<div className={styles.timerContent}>
-						<h3>Round time:</h3>
-						<InstallTimer />
-					</div>
-				)}
 				<span>
 					<h3>Which set of cards:</h3>
 					<select
@@ -97,9 +94,15 @@ const AdminMenu: React.FC = (): JSX.Element => {
 						maxLength={10}
 					/>
 				</span>
-				<span>
-					<h3>Round time:</h3>
-				</span>
+
+				<div className={styles.timerContent}>
+					{isTimer && (
+						<>
+							<h3>Round time:</h3>
+							<InstallTimer />
+						</>
+					)}
+				</div>
 			</div>
 			<div className={styles.cardsWrapper}>
 				<h2>Add card values:</h2>

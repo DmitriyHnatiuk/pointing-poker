@@ -1,8 +1,5 @@
 export interface Game {
-	userName: string;
-	isAdmin: boolean;
 	isAdminAsPlayer: boolean;
-	room: string;
 	planningTitle: string;
 	issues: Issue[];
 	scoreType: string;
@@ -10,6 +7,17 @@ export interface Game {
 	playingCardsSet: string;
 	timer: TimerSettings;
 	isTimer: boolean;
+}
+
+export interface GameData {
+	isAdminAsPlayer?: boolean;
+	planningTitle?: string;
+	issues?: Issue[];
+	scoreType?: string;
+	cards?: PlayingCard[];
+	playingCardsSet?: string;
+	timer?: TimerSettings;
+	isTimer?: boolean;
 }
 
 export interface TimerSettings {
@@ -36,7 +44,7 @@ export interface Issue {
 	id: number;
 	title: string;
 	priority: string;
-	active?: boolean;
+	active: boolean;
 	link: string;
 }
 
@@ -53,7 +61,6 @@ export enum SettingsActionEnum {
 	TOGGLE_IS_ADMIN_PLAYER = 'TOGGLE_IS_ADMIN_PLAYER',
 	SET_SCORE_TYPE = 'SET_SCORE_TYPE',
 	IS_TIMER_ACTIVE = 'IS_TIMER_ACTIVE',
-	SET_DATA = 'SET_DATA',
 	ACTIVE_ISSUE = 'ACTIVE_ISSUE',
 	ACTIVE_PLAYING_CARD = 'ACTIVE_PLAYING_CARD',
 	SET_GAME_DATA = 'SET_GAME_DATA'
@@ -117,8 +124,9 @@ interface ToggleIsTimerAction {
 	type: SettingsActionEnum.TOGGLE_IS_TIMER;
 }
 
-interface ToggleIsAdminAsPlayerAction {
+interface SetIsAdminAsPlayer {
 	type: SettingsActionEnum.TOGGLE_IS_ADMIN_PLAYER;
+	payload: boolean;
 }
 
 interface SetScoreType {
@@ -128,34 +136,12 @@ interface SetScoreType {
 
 interface SetGameData {
 	type: SettingsActionEnum.SET_GAME_DATA;
-	payload: Game;
+	payload: GameData;
 }
 
 interface IsTimerAction {
 	type: SettingsActionEnum.IS_TIMER_ACTIVE;
 	payload: boolean;
-}
-
-export interface obj {
-	userName?: string;
-	isAdmin?: boolean;
-	isAdminAsPlayer?: boolean;
-	room?: string;
-	planningTitle?: string;
-	issues?: Issue[];
-	scoreType?: string;
-	cards?: PlayingCard[];
-	timer?: TimerSettings;
-	isTimer?: boolean;
-}
-
-interface setDataActionCreation {
-	type: SettingsActionEnum.SET_DATA;
-	payload: obj;
-}
-
-interface SetIsAdminAsPlayerIsTimer {
-	type: SettingsActionEnum.TOGGLE_IS_ADMIN_PLAYER;
 }
 
 export type GameAction =
@@ -168,12 +154,10 @@ export type GameAction =
 	| AddIssueAction
 	| DeleteIssueAction
 	| ToggleIsTimerAction
-	| ToggleIsAdminAsPlayerAction
 	| IsTimerAction
-	| setDataActionCreation
 	| ActiveIssueAction
 	| ActivePlayingCardAction
 	| SetScoreType
 	| SetIsTimer
-	| SetIsAdminAsPlayerIsTimer
+	| SetIsAdminAsPlayer
 	| SetGameData;

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import socketCreator, { UNSUBSCRIBE } from 'redux/thunk';
 import logo from 'assets/images/Header/header-logo.svg';
 import chat from 'assets/images/Header/chat-icon.svg';
 
@@ -13,13 +14,17 @@ import { onOpenChat } from 'redux/reducer/chatReducer';
 import styles from './index.module.scss';
 
 const Header: React.FC = (): JSX.Element => {
-	const pathName = useLocation().pathname;
 	const dispatch = useDispatch();
+
+	const pathName = useLocation().pathname;
 	const visibleChat = useTypedSelector(getChat).open;
 
-	const onVisibleChat = () => {
-		dispatch(onOpenChat(!visibleChat));
-	};
+	const onVisibleChat = () => dispatch(onOpenChat(!visibleChat));
+
+	const logotype = document.getElementById('logo');
+	if (logotype) {
+		logotype.onclick = () => dispatch(socketCreator({ type: UNSUBSCRIBE }));
+	}
 
 	const Chatroom = () => {
 		if (pathName.includes(ways.ADMIN) || pathName.includes(ways.USER)) {
@@ -36,9 +41,7 @@ const Header: React.FC = (): JSX.Element => {
 		<header className={styles.header}>
 			<div className={styles.line_one}>Line</div>
 			<div className={styles.line_two}>Line</div>
-			<Link to={ways.HOME}>
-				<img className={styles.logo} src={logo} alt="logo" />
-			</Link>
+			<img id="logo" className={styles.logo} src={logo} alt="logo" />
 			<Chatroom />
 		</header>
 	);

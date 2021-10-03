@@ -56,9 +56,10 @@ const socketCreator =
 		const { usersData, type, message, id, gameSettings } = data;
 
 		const setExit = () => {
-			history.push(HOME);
+			dispatch(resetUserDataActionCreation());
 			socket.offAny();
 			socket.disconnect();
+			history.push(HOME);
 		};
 
 		socket.connect();
@@ -181,7 +182,7 @@ const socketCreator =
 		}
 
 		if (type === RESET_GAME) {
-			socket.emit('event://admin_reset_game', gameSettings);
+			socket.emit('event://admin_reset_round', gameSettings);
 		}
 
 		if (type === CHAT) {
@@ -200,7 +201,6 @@ const socketCreator =
 		}
 
 		if (type === UNSUBSCRIBE) {
-			dispatch(resetUserDataActionCreation());
 			setExit();
 		}
 	};
