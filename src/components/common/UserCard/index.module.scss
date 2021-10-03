@@ -27,25 +27,15 @@
 	flex-wrap: wrap;
 }
 
-.avatar img,
-.avatar div {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 55px;
-	height: 55px;
+.avatarBlock {
+  width: 40px;
+  height: 40px;
+
 }
 
-.avatar img {
-	border: 1px solid $Deep-Koamaru;
-	border-radius: 50%;
-}
-
-.avatar div {
-	font-size: 24px;
-	border-radius: 50%;
-	color: $Deep-Koamaru;
-	background-color: $Medium-Aquamarine;
+.avatarText {
+  font-size: 20px;
+  line-height: 18px;
 }
 
 .player {

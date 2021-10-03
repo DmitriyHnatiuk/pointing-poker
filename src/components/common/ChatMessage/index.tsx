@@ -24,7 +24,8 @@ const ChatMessage: React.FC<interfaceChatMessage> = (props) => {
 					firstName={firstName}
 					lastName={lastName}
 					avatar={icon}
-					style={styles.avatar}
+					blockStyle={styles.avatarBlock}
+					textStyle={styles.avatarText}
 				/>
 				<div className={styles.author}>
 					<span className={styles.userName}>
