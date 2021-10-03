@@ -1,62 +1,61 @@
 @import 'assets/styles/_variables.scss';
 
 .kickModal {
-	position: relative;
-	top: 100px;
-	padding: 20px;
-	margin: 0 auto;
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
-	flex-direction: column;
-	background-color: $white-color;
-	min-width: 600px;
-	max-width: 900px;
+  position: relative;
+  padding: 20px;
+  margin: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: $white-color;
+  min-width: 600px;
+  max-width: 900px;
 }
 
 .title {
-	font-family: Roboto, sans-serif;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 64px;
-	line-height: 75px;
-	margin: 50px 0;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 75px;
+  margin: 50px 0;
 }
 
 .content {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	margin: 0 auto 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto 50px;
 }
 
 .text {
-	font-family: Ruda, sans-serif;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 24px;
-	line-height: 30px;
+  font-family: Ruda, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
 }
 
 .player {
-	color: $DistantBlue;
+  color: $DistantBlue;
 }
 
 .buttons {
-	padding-top: 20px;
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	margin-bottom: 50px;
+  padding-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 50px;
 }
 
 .cancel {
-	background: $white-color;
-	color: $Deep-Koamaru;
+  background: $white-color;
+  color: $Deep-Koamaru;
 }
 
 .cancel:hover {
-	background-color: $Deep-Koamaru;
-	color: $white-color;
+  background-color: $Deep-Koamaru;
+  color: $white-color;
 }
