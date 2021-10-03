@@ -1,11 +1,17 @@
 @import 'assets/styles/_variables.scss';
 
-.planningTitle {
+.heading {
+	font-size: 0;
+}
+.planningTitle input {
+	width: 100%;
 	font-weight: bold;
 	font-family: Ruda, sans-serif;
 	font-size: 24px;
 	text-align: center;
 	color: $TextDark;
+	border: none;
+	text-align: center;
 }
 
 .status {

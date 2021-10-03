@@ -181,6 +181,13 @@ const reducer = (
 			};
 		}
 
+		case SettingsActionEnum.CHANGE_TITLE: {
+			return {
+				...state,
+				planningTitle: action.payload
+			};
+		}
+
 		default:
 			return state;
 	}
@@ -265,6 +272,11 @@ export const SetScoreType = (storyType: string): GameAction => ({
 export const SetActiveTimer = (active: boolean): GameAction => ({
 	type: SettingsActionEnum.IS_TIMER_ACTIVE,
 	payload: active
+});
+
+export const setChangeTitle = (title: string): GameAction => ({
+	type: SettingsActionEnum.CHANGE_TITLE,
+	payload: title
 });
 
 export default reducer;

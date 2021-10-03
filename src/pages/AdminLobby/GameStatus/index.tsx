@@ -6,6 +6,7 @@ import socketCreator, { UNSUBSCRIBE, SET_START } from 'redux/thunk';
 import { btnValue } from 'constants/commonComponents';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
+import { setChangeTitle } from 'redux/reducer/gameSettingReducer';
 import { Game } from 'redux/reducer/gameSettingReducer/types';
 import { User } from 'redux/reducer/userReducer/types';
 import { getGame, getMembers } from 'redux/reducer/selectors';
@@ -31,9 +32,15 @@ const GameStatus: React.FC = (): JSX.Element => {
 	const setStart = () =>
 		dispatch(socketCreator({ type: SET_START, gameSettings }));
 
+	const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+		dispatch(setChangeTitle(e.target.value));
+	};
 	return (
 		<>
-			<h1 className={styles.planningTitle}>{planningTitle}</h1>
+			<div className={styles.planningTitle}>
+				<h1 className={styles.heading}>Poker Planning</h1>
+				<input type="text" value={planningTitle} onChange={onChangeTitle} />
+			</div>
 			<MasterCard admin={user} />
 			<div className={styles.gameStatus}>
 				<label htmlFor="link" className={styles.titleLink}>

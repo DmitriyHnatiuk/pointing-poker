@@ -63,7 +63,8 @@ export enum SettingsActionEnum {
 	IS_TIMER_ACTIVE = 'IS_TIMER_ACTIVE',
 	ACTIVE_ISSUE = 'ACTIVE_ISSUE',
 	ACTIVE_PLAYING_CARD = 'ACTIVE_PLAYING_CARD',
-	SET_GAME_DATA = 'SET_GAME_DATA'
+	SET_GAME_DATA = 'SET_GAME_DATA',
+	CHANGE_TITLE = 'CHANGE_TITLE'
 }
 
 interface EditPlayingCardAction {
@@ -144,6 +145,11 @@ interface IsTimerAction {
 	payload: boolean;
 }
 
+interface ChangeTitle {
+	type: SettingsActionEnum.CHANGE_TITLE;
+	payload: string;
+}
+
 export type GameAction =
 	| EditPlayingCardAction
 	| DeletePlayingCardAction
@@ -160,4 +166,5 @@ export type GameAction =
 	| SetScoreType
 	| SetIsTimer
 	| SetIsAdminAsPlayer
-	| SetGameData;
+	| SetGameData
+	| ChangeTitle;
