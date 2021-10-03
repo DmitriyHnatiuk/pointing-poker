@@ -31,9 +31,6 @@ const GameStatus: React.FC = (): JSX.Element => {
 	const setStart = () =>
 		dispatch(socketCreator({ type: SET_START, gameSettings }));
 
-	const changeLink = (event: React.ChangeEvent<HTMLInputElement>) =>
-		console.log(event.target.value); // #
-
 	return (
 		<>
 			<h1 className={styles.planningTitle}>{planningTitle}</h1>
@@ -46,7 +43,6 @@ const GameStatus: React.FC = (): JSX.Element => {
 						type="text"
 						name="link"
 						value={roomNumber}
-						onChange={changeLink}
 					/>
 					<MyButton
 						style={styles.buttonCopy}
