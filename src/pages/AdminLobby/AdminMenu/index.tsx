@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux';
 import { getGame, getMembers } from 'redux/reducer/selectors';
 import {
 	addPlayingCardAction,
+	changePlayingCardSetAction,
 	SetIsAdminAsPlayer,
 	SetIsTimer,
-	SetScoreType,
-	changePlayingCardSetAction
+	SetScoreType
 } from 'redux/reducer/gameSettingReducer';
 import { setUserDataActionCreation } from 'redux/reducer/userReducer';
 import {
@@ -21,6 +21,7 @@ import { useChangePlayingCardSet } from 'hooks/useChangePlayingCardSet';
 import Switch from 'components/common/Switch';
 import PlayingCardComponent from 'components/common/PlayingCard';
 import InstallTimer from 'components/common/Timer/InstallTimer';
+import CardBackList from 'components/CardBack';
 
 import addCardImage from 'assets/images/PlayingCard/add_card.svg';
 
@@ -62,15 +63,15 @@ const AdminMenu: React.FC = (): JSX.Element => {
 			<h2 className={styles.SettingsTitle}>Game settings:</h2>
 			<div className={styles.settings}>
 				<span>
-					<h3>Scram master as player:</h3>
+					<h3 className={styles.title}>Scram master as player:</h3>
 					<Switch setValue={onToggleIsMasterAsPlayer} value={!observer} />
 				</span>
 				<span>
-					<h3>Changing card in round end:</h3>
+					<h3 className={styles.title}>Changing card in round end:</h3>
 					<Switch />
 				</span>
 				<span>
-					<h3>Is timer needed:</h3>
+					<h3 className={styles.title}>Is timer needed:</h3>
 					<Switch setValue={onToggleIsTimer} />
 				</span>
 				<span>
@@ -85,7 +86,7 @@ const AdminMenu: React.FC = (): JSX.Element => {
 					</select>
 				</span>
 				<span>
-					<h3>Score type (Short):</h3>
+					<h3 className={styles.title}>Score type (Short):</h3>
 					<input
 						className={styles.scoreInput}
 						type="text"
@@ -94,18 +95,17 @@ const AdminMenu: React.FC = (): JSX.Element => {
 						maxLength={10}
 					/>
 				</span>
-
-				<div className={styles.timerContent}>
-					{isTimer && (
-						<>
-							<h3>Round time:</h3>
-							<InstallTimer />
-						</>
-					)}
-				</div>
+				{isTimer && (
+					<div className={styles.timerContent}>
+						<h3>Round time:</h3>
+						<InstallTimer />
+					</div>
+				)}
 			</div>
 			<div className={styles.cardsWrapper}>
-				<h2>Add card values:</h2>
+				<h2 className={styles.title}>Select cover:</h2>
+				<CardBackList />
+				<h2 className={styles.title}>Add card values:</h2>
 				<div className={styles.cards}>
 					{cards.map((card) => {
 						return (

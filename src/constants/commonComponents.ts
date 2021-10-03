@@ -1,4 +1,11 @@
 import { IGitHubItems } from 'interfaces/commonComponents';
+import cardBack1 from 'assets/images/CardBack/card_back_1.jpg';
+import cardBack2 from 'assets/images/CardBack/card_back_2.jpg';
+import cardBack3 from 'assets/images/CardBack/card_back_3.jpg';
+import cardBack4 from 'assets/images/CardBack/card_back_4.jpg';
+import cardBack5 from 'assets/images/CardBack/card_back_5.jpg';
+import cardBack6 from 'assets/images/CardBack/card_back_6.jpg';
+import cardBack7 from 'assets/images/CardBack/card_back_7.jpg';
 
 export const RSS_HREF = 'https://rs.school';
 
@@ -38,3 +45,13 @@ export const typeMessage = {
 	ERROR: 'Error:',
 	MESSAGE: 'Message:'
 };
+
+export const imagesCardBack = [
+	cardBack1,
+	cardBack2,
+	cardBack3,
+	cardBack4,
+	cardBack5,
+	cardBack6,
+	cardBack7
+];
