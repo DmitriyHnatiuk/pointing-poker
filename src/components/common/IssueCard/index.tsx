@@ -19,7 +19,6 @@ const IssueCard: React.FC<{ issue: Issue; isActive?: boolean }> = ({
 
 	const dispatch = useDispatch();
 	const { isAdmin } = useTypedSelector(getMembers);
-
 	const onDeleteIssue = () => {
 		dispatch(deleteIssue(issue));
 	};

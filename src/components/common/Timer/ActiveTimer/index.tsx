@@ -22,32 +22,36 @@ const ActiveTimer: React.FC = () => {
 	const { timer } = useTypedSelector(getGame);
 	const { isAdmin } = useTypedSelector(getMembers);
 	const { isActive } = useTypedSelector(getGame).timer;
+	const { isTimer } = useTypedSelector(getGame);
 
 	const updateTimer = (newTime: TimerSettings) => {
 		dispatch(SetTimer(newTime));
 	};
 
-	useInterval({
-		callback: () => {
-			let minNum = Number(timer.min);
-			let secNum = Number(timer.sec);
-			if (minNum >= 0) {
-				if (secNum === 0 && minNum > 0) {
-					minNum -= 1;
-					secNum = 59;
-				} else if (secNum > 0 && minNum >= 0) {
-					secNum -= 1;
-				} else {
-					dispatch(SetActiveTimer(false));
+	if (isTimer) {
+		useInterval({
+			callback: () => {
+				let minNum = Number(timer.min);
+				let secNum = Number(timer.sec);
+				if (minNum >= 0) {
+					if (secNum === 0 && minNum > 0) {
+						minNum -= 1;
+						secNum = 59;
+					} else if (secNum > 0 && minNum >= 0) {
+						secNum -= 1;
+					} else {
+						dispatch(SetActiveTimer(false));
+					}
 				}
-			}
-			const minString: string = minNum < 10 ? `0${minNum}` : `${minNum}`;
-			const secString: string = secNum < 10 ? `0${secNum}` : `${secNum}`;
 
-			return updateTimer({ min: minString, sec: secString });
-		},
-		delay: isActive ? 1000 : null
-	});
+				const minString: string = minNum < 10 ? `0${minNum}` : `${minNum}`;
+				const secString: string = secNum < 10 ? `0${secNum}` : `${secNum}`;
+
+				return updateTimer({ min: minString, sec: secString });
+			},
+			delay: isActive ? 1000 : null
+		});
+	}
 
 	const onTimer = () => {
 		dispatch(SetActiveTimer(true));
@@ -59,16 +63,18 @@ const ActiveTimer: React.FC = () => {
 
 	return (
 		<>
-			<div className={styles.timer}>
-				<div className={styles.clockBlock}>
-					<span className={styles.clockName}>Minutes</span>
-					<div className={styles.clockView}>{timer.min}</div>
+			{isTimer && (
+				<div className={styles.timer}>
+					<div className={styles.clockBlock}>
+						<span className={styles.clockName}>Minutes</span>
+						<div className={styles.clockView}>{timer.min}</div>
+					</div>
+					<div className={styles.clockBlock}>
+						<span className={styles.clockName}>Seconds</span>
+						<div className={styles.clockView}>{timer.sec}</div>
+					</div>
 				</div>
-				<div className={styles.clockBlock}>
-					<span className={styles.clockName}>Seconds</span>
-					<div className={styles.clockView}>{timer.sec}</div>
-				</div>
-			</div>
+			)}
 			{isAdmin && (
 				<div className={styles.buttons}>
 					{!isActive && <MyButton value={RUN_ROUND} onclick={onTimer} />}

@@ -11,9 +11,8 @@ import { User } from 'redux/reducer/userReducer/types';
 import styles from './index.module.scss';
 
 const UsersScore: React.FC = (): JSX.Element => {
-	const user = useTypedSelector<User>(getMembers);
-
-	const player = user.users.filter((member) => !member.isAdmin);
+	const { users } = useTypedSelector<User>(getMembers);
+	const players = users.filter((user) => !user.observer);
 
 	return (
 		<div className={styles.users}>
@@ -22,7 +21,7 @@ const UsersScore: React.FC = (): JSX.Element => {
 				<h2>Players:</h2>
 			</div>
 			<ul className={styles.scoreList}>
-				{player.map((member) => (
+				{players.map((member) => (
 					<li className={styles.memberScore} key={member.id}>
 						<ScoreCard selectedCard={member.selectedCard} />
 						<PlayerCard user={member} style={styles.userCard} />

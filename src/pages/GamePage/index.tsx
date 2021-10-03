@@ -21,6 +21,7 @@ import { getMembers, getModal } from 'redux/reducer/selectors';
 import { User } from 'redux/reducer/userReducer/types';
 
 import styles from './index.module.scss';
+import RenderCards from './RenderCards';
 
 const { STOP_GAME, EXIT } = btnValue;
 
@@ -29,6 +30,7 @@ const GamePage: React.FC = (): JSX.Element => {
 
 	const { openModal } = useTypedSelector<Modal>(getModal);
 	const { isAdmin, admin } = useTypedSelector<User>(getMembers);
+
 	const setExit = () => dispatch(socketCreator({ type: UNSUBSCRIBE }));
 
 	return (
@@ -38,19 +40,25 @@ const GamePage: React.FC = (): JSX.Element => {
 				<div className={styles.menu}>
 					<MasterCard admin={admin} style={styles.masterCard} />
 					{isAdmin && <MyButton value={STOP_GAME} />}
-					{!isAdmin && <MyButton value={EXIT} onclick={setExit} />}
+					{!isAdmin && (
+						<>
+							<ActiveTimer />
+							<MyButton value={EXIT} onclick={setExit} />
+						</>
+					)}
 				</div>
 				<div className={styles.settings}>
-					<ul className={styles.issues}>
-						<li>
-							<Issues />
-						</li>
-					</ul>
+					<div className={styles.issues}>
+						<Issues />
+					</div>
 					{isAdmin && (
 						<div className={styles.settingsControl}>
 							<ActiveTimer />
 						</div>
 					)}
+				</div>
+				<div className={styles.cardContainer}>
+					<RenderCards />
 				</div>
 				{isAdmin && <Statistics />}
 			</div>
