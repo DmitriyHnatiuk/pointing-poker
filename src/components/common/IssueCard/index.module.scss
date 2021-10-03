@@ -1,4 +1,4 @@
-@import '/src/assets/styles/variables';
+@import "/src/assets/styles/variables";
 
 .card {
   position: relative;
@@ -14,6 +14,7 @@
   border-radius: 5px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.5s;
+  cursor: pointer;
 
   &:hover {
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);

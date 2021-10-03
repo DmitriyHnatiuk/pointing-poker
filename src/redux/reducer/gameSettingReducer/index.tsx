@@ -1,24 +1,16 @@
 import {
 	Game,
 	GameAction,
+	GameData,
 	Issue,
-	obj,
 	PlayingCard,
 	PlayingCardSetEnum,
 	SettingsActionEnum,
 	TimerSettings
 } from './types';
 
-export const SET_DATA = 'SET_DATA';
-export const SET_NAME = 'SET_NAME';
-export const SET_ROOM = 'SET_ROOM';
-export const SET_ADMIN = 'SET_ADMIN';
-
 const initialStore: Game = {
-	userName: '',
-	isAdmin: false,
 	isAdminAsPlayer: false,
-	room: '',
 	issues: [
 		{
 			id: 1,
@@ -178,7 +170,7 @@ const reducer = (
 		case SettingsActionEnum.TOGGLE_IS_ADMIN_PLAYER: {
 			return {
 				...state,
-				isAdminAsPlayer: !state.isAdminAsPlayer
+				isAdminAsPlayer: action.payload
 			};
 		}
 
@@ -188,18 +180,13 @@ const reducer = (
 				scoreType: action.payload
 			};
 		}
-		case SettingsActionEnum.SET_DATA: {
-			return {
-				...state,
-				...action.payload
-			};
-		}
+
 		default:
 			return state;
 	}
 };
 
-export const setGameData = (state: Game): GameAction => ({
+export const setGameData = (state: GameData): GameAction => ({
 	type: SettingsActionEnum.SET_GAME_DATA,
 	payload: state
 });
@@ -263,8 +250,9 @@ export const SetIsTimer = (): GameAction => ({
 	type: SettingsActionEnum.TOGGLE_IS_TIMER
 });
 
-export const SetIsAdminAsPlayerIsTimer = (): GameAction => ({
-	type: SettingsActionEnum.TOGGLE_IS_ADMIN_PLAYER
+export const SetIsAdminAsPlayer = (value: boolean): GameAction => ({
+	type: SettingsActionEnum.TOGGLE_IS_ADMIN_PLAYER,
+	payload: value
 });
 
 export const SetScoreType = (storyType: string): GameAction => ({
@@ -274,11 +262,6 @@ export const SetScoreType = (storyType: string): GameAction => ({
 
 export const SetActiveTimer = (active: boolean): GameAction => ({
 	type: SettingsActionEnum.IS_TIMER_ACTIVE,
-	payload: active
-});
-
-export const setDataActionCreation = (active: obj): GameAction => ({
-	type: SettingsActionEnum.SET_DATA,
 	payload: active
 });
 

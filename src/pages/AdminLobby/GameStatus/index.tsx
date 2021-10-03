@@ -24,9 +24,7 @@ const GameStatus: React.FC = (): JSX.Element => {
 	const { roomNumber } = useTypedSelector<User>(getMembers);
 	const { planningTitle } = useTypedSelector<Game>(getGame);
 
-	const setExit = () => {
-		dispatch(socketCreator({ type: UNSUBSCRIBE }));
-	};
+	const setExit = () => dispatch(socketCreator({ type: UNSUBSCRIBE }));
 
 	const copyLink = () => navigator.clipboard.writeText(roomNumber);
 
