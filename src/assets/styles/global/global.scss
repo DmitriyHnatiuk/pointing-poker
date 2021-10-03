@@ -2,6 +2,19 @@
 @import '/src/assets/styles/_variables';
 
 body {
-	font-family: 'Roboto', sans-serif;
-	font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}
+
+*::-webkit-scrollbar {
+  width: 12px; /* ширина для вертикального скролла */
+  height: 8px; /* высота для горизонтального скролла */
+  background-color: $Deep-Koamaru;
+}
+
+*::-webkit-scrollbar-thumb {
+  width:20px;
+  background-color: $Topaz;
+  border-radius: 10px;
+  top: 10px;
 }

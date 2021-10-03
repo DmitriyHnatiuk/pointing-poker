@@ -1,41 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useTypedSelector } from 'hooks/useTypedSelector';
+
+import { setModalDataActionCreation } from 'redux/reducer/modalReducer';
 import { setUserDataActionCreation } from 'redux/reducer/userReducer';
+import { getMembers, getModal } from 'redux/reducer/selectors';
+import { User } from 'redux/reducer/userReducer/types';
 
-import { RootState } from 'redux/store';
+import { btnValue } from 'constants/commonComponents';
 
-import { btn } from 'constants/commonComponents';
-import MyButton from 'components/common/MyButton/MyButton';
-import MyInput from 'components/common/MyInput/MyInput';
-import MyForm from 'components/common/MyForm';
+import Modals from 'components/common/Modals';
+import MyButton from 'components/common/MyButton';
+import MyInput from 'components/common/MyInput';
 
 import pokerPlanningImage from 'assets/images/MainPage/poker-planning.jpg';
 
 import styles from './index.module.scss';
 
-const { START, CONNECT } = btn;
-
 const MainPage: React.FC = (): JSX.Element => {
-	const [form, setForm] = useState(false);
 	const dispatch = useDispatch();
 
-	const room = useSelector((state: RootState) => state.userReducer.roomNumber);
+	const { openModal } = useTypedSelector(getModal);
+	const { roomNumber } = useTypedSelector<User>(getMembers);
 
 	const connectToRoom = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		const obj = { roomNumber: event.target.value };
-		dispatch(setUserDataActionCreation(obj));
+		dispatch(setUserDataActionCreation({ roomNumber: event.target.value }));
 	};
 
 	const setAdmin = () => {
-		const obj = { isAdmin: true };
-		dispatch(setUserDataActionCreation(obj));
-		return setForm(true);
+		dispatch(setModalDataActionCreation({ openModal: true }));
+		dispatch(setUserDataActionCreation({ isAdmin: true }));
 	};
 
 	const setUser = () => {
-		if (room) {
-			setForm(true);
+		if (roomNumber) {
+			dispatch(setModalDataActionCreation({ openModal: true }));
+			dispatch(setUserDataActionCreation({ isAdmin: false }));
 		}
 		return null;
 	};
@@ -50,19 +51,19 @@ const MainPage: React.FC = (): JSX.Element => {
 					<div className={styles.start}>
 						<h3>Start your planning:</h3>
 						<span>Create session:</span>
-						<MyButton onclick={setAdmin} value={START} />
+						<MyButton onclick={setAdmin} value={btnValue.START} />
 					</div>
 					<div className={styles.or}>
 						<h3>OR:</h3>
 						<span>Connect to lobby:</span>
 						<form>
-							<MyInput value={room} onchange={connectToRoom} />
-							<MyButton value={CONNECT} onclick={setUser} />
+							<MyInput value={roomNumber} onchange={connectToRoom} />
+							<MyButton value={btnValue.CONNECT} onclick={setUser} />
 						</form>
 					</div>
 				</section>
+				{openModal && <Modals />}
 			</div>
-			{form && <MyForm />}
 		</div>
 	);
 };

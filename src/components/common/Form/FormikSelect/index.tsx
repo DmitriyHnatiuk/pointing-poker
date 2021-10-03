@@ -9,6 +9,7 @@ import styles from './index.module.scss';
 const SelectFormik: React.FC<InterfaceFormikSelect> = ({
 	label,
 	options,
+	style,
 	...props
 }) => {
 	const [field, meta] = useField(props);
@@ -16,7 +17,7 @@ const SelectFormik: React.FC<InterfaceFormikSelect> = ({
 	const isError = meta.touched && meta.error;
 
 	return (
-		<div className={styles.formControl}>
+		<div className={`${styles.formControl} ${style}`}>
 			<label className={styles.label} htmlFor="name">
 				{label}
 			</label>

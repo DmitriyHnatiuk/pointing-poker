@@ -1,31 +1,37 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import socketCreator, { UNSUBSCRIBE, SET_START } from 'redux/thunk';
 
-import { ways } from 'constants/constRouter';
-import { RootState } from 'redux/store';
-import { btn } from 'constants/commonComponents';
+import { btnValue } from 'constants/commonComponents';
 
-import PlayerCard from 'components/common/PlayerCard/PlayerCard';
-import MyButton from 'components/common/MyButton/MyButton';
+import { useTypedSelector } from 'hooks/useTypedSelector';
+import { Game } from 'redux/reducer/gameSettingReducer/types';
+import { User } from 'redux/reducer/userReducer/types';
+import { getGame, getMembers } from 'redux/reducer/selectors';
+
+import MasterCard from 'components/common/MasterCard';
+import MyButton from 'components/common/MyButton';
 import styles from './index.module.scss';
 
-const { HOME } = ways;
-const { START_GAME, CANCEL_GAME } = btn;
-
-const set = () => console.log('set-set'); // #
+const { START_GAME, CANCEL_GAME, COPY } = btnValue;
 
 const GameStatus: React.FC = (): JSX.Element => {
-	const user = useSelector((state: RootState) => state.userReducer);
-	const planningTitle = useSelector(
-		(state: RootState) => state.gameSettings.planningTitle
-	);
-	const roomNumber = useSelector(
-		(state: RootState) => state.userReducer.roomNumber
-	);
-	const history = useHistory();
-	const toHome = () => history.push(HOME);
+	const dispatch = useDispatch();
+
+	const gameSettings = useTypedSelector(getGame);
+	const user = useTypedSelector<User>(getMembers);
+	const { roomNumber } = useTypedSelector<User>(getMembers);
+	const { planningTitle } = useTypedSelector<Game>(getGame);
+
+	const setExit = () => {
+		dispatch(socketCreator({ type: UNSUBSCRIBE }));
+	};
+
+	const copyLink = () => navigator.clipboard.writeText(roomNumber);
+
+	const setStart = () =>
+		dispatch(socketCreator({ type: SET_START, gameSettings }));
 
 	const changeLink = (event: React.ChangeEvent<HTMLInputElement>) =>
 		console.log(event.target.value); // #
@@ -33,10 +39,7 @@ const GameStatus: React.FC = (): JSX.Element => {
 	return (
 		<>
 			<h1 className={styles.planningTitle}>{planningTitle}</h1>
-			<div className={styles.status}>
-				<span className={styles.titleStatus}>Scram master:</span>
-				<PlayerCard user={user} />
-			</div>
+			<MasterCard admin={user} />
 			<div className={styles.gameStatus}>
 				<label htmlFor="link" className={styles.titleLink}>
 					<p>Link to lobby:</p>
@@ -47,12 +50,17 @@ const GameStatus: React.FC = (): JSX.Element => {
 						value={roomNumber}
 						onChange={changeLink}
 					/>
-					<input className={styles.buttonCopy} type="submit" value="Copy" />
-				</label>
-				<div className={styles.buttonGame}>
-					<MyButton onclick={set} value={START_GAME} />
 					<MyButton
-						onclick={toHome}
+						style={styles.buttonCopy}
+						type="button"
+						value={COPY}
+						onclick={copyLink}
+					/>
+				</label>
+				<div className={styles.buttons}>
+					<MyButton onclick={setStart} value={START_GAME} />
+					<MyButton
+						onclick={setExit}
 						value={CANCEL_GAME}
 						style={styles.cancel}
 					/>

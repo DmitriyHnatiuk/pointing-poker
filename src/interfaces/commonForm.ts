@@ -4,6 +4,7 @@ export interface InterfaceFormikControl {
 	control: string;
 	name: string;
 	label: string;
+	style?: string;
 	data?: TypeData;
 	onChange?: (e: ChangeEvent) => void;
 	children?: (errorMessage: string) => React.ReactNode;
@@ -14,16 +15,19 @@ type TypeData = InterfaceOptions[];
 export interface InterfaceFormikInput {
 	name: string;
 	label: string;
+	style?: string;
 }
 
 export interface InterfaceImagesFormik {
 	name: string;
 	label: string;
+	style?: string;
 }
 
 export interface InterfaceFormikSelect {
 	name: string;
 	label: string;
+	style?: string;
 	options: InterfaceOptions[];
 }
 
@@ -35,15 +39,9 @@ export interface InterfaceOptions {
 export interface FieldRegistry {
 	firstName: string;
 	lastName: string;
-	jobPosition: string;
+	position: string;
 	observer: boolean;
-	image: string | File;
-}
-
-export interface FieldIssues {
-	title: string;
-	link: string;
-	priority: string;
+	avatar: File | string;
 }
 
 export enum TypeInputFormikControl {

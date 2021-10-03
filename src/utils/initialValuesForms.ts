@@ -1,15 +1,18 @@
-import { FieldIssues, FieldRegistry } from '../interfaces/commonForm';
+import { FieldRegistry } from 'interfaces/commonForm';
+import { Issue } from 'redux/reducer/gameSettingReducer/types';
 
 export const initialValuesRegistration: FieldRegistry = {
 	firstName: '',
 	lastName: '',
-	jobPosition: '',
+	position: '',
 	observer: false,
-	image: ''
+	avatar: ''
 };
 
-export const initialIssues: FieldIssues = {
+export const initialIssues: Issue = {
+	id: 1,
 	title: '',
 	link: '',
-	priority: ''
+	active: false,
+	priority: 'Low'
 };

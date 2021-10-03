@@ -1,77 +1,60 @@
-@import "assets/styles/_variables.scss";
+@import 'assets/styles/_variables.scss';
 
-.issues {
-  text-align: center;
+.container {
+	text-align: center;
 }
 
 .title {
-  font-size: 24px;
+	font-size: 24px;
 }
 
-.issueList {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+.issues {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
-.box {
-  border: 1px solid $Dark-Electric-Blue;
-  border-top: none;
-  margin-right: 10px;
-  box-shadow: 0 8px 6px -6px $Dark-Electric-Blue;
-  padding: 0 10px;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 200px;
-  max-height: 50px;
-  position: relative;
-  overflow: hidden;
+.new {
+	display: flex;
+	align-items: center;
+	width: 200px;
+	min-height: 50px;
+	height: 100%;
+	padding: 5px;
+	margin: 10px;
+	box-sizing: border-box;
+	border: 1px solid $Deep-Koamaru;
+	border-radius: 5px;
+	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+	transition: all 0.5s;
 }
 
-.nameIssues {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 26px;
-  line-height: 56px;
+.new:hover {
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
-.description {
-  font-size: 10px;
-  color: $Dark-Electric-Blue;
-  position: absolute;
-  left: 10px;
-  bottom: 2px;
+.newContent {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
 }
 
-.newOne {
-  border: 1px solid $Dark-Electric-Blue;
-  border-left: none;
-  box-shadow: 0 8px 6px -6px $Dark-Electric-Blue;
-  padding: 0 10px;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 200px;
+.new:hover {
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
-.plus,
-.wastebasket,
-.pen {
-  font-size: 40px;
-  font-weight: 300;
-  cursor: pointer;
-  color: $Dark-Electric-Blue;
+.new img {
+	width: 25px;
+	height: 25px;
+	transition: all 0.5s;
 }
 
-.wastebasket {
-  color: $Ferrari-Red;
+.new img:hover {
+	cursor: pointer;
+	transform: scale(1.1);
 }
 
-.box:hover,
-.newOne:hover {
-  box-shadow: 1px 1px 1px 1px $Sage;
+.new img:active {
+	transform: scale(1.2);
 }

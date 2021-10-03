@@ -1,53 +1,88 @@
-import React from 'react';
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import style from './index.module.scss';
+import ChatMessage from 'components/common/ChatMessage';
+
+import { useTypedSelector } from 'hooks/useTypedSelector';
+import { getChat, getMembers } from 'redux/reducer/selectors';
+import socketCreator, { CHAT, SEND_MESSAGE } from 'redux/thunk';
+
+import styles from './index.module.scss';
 
 const Chat: React.FC = (): JSX.Element => {
-	function setDate() {
-		const d = new Date();
-		if (d.getMinutes()) {
-			const min = d.getMinutes();
-			return (
-				<div className={style.timestamp}>
-					{d.getHours()}:{min}
-				</div>
-			);
-		}
-		return null;
-	}
+	const dispatch = useDispatch();
+	const messageList = useTypedSelector(getChat).messages;
+	const { firstName, lastName, avatar } = useTypedSelector(getMembers);
+	const [textValue, setTextValue] = useState('');
+	const time = new Date();
+
+	useEffect(() => {
+		dispatch(socketCreator({ type: CHAT }));
+	}, []);
+
+	const minutes =
+		String(time.getUTCMinutes()).length < 2
+			? `0${String(time.getUTCMinutes())}`
+			: String(time.getUTCMinutes());
+
+	const hours =
+		String(time.getUTCHours()).length < 2
+			? `0${String(time.getUTCHours())}`
+			: String(time.getUTCHours());
+
+	const getMessage = () => {
+		if (!textValue) return;
+		setTextValue('');
+		dispatch(
+			socketCreator({
+				type: SEND_MESSAGE,
+				message: {
+					author: {
+						firstName: `${firstName}`,
+						lastName: `${lastName}`,
+						icon: avatar
+					},
+					textMessage: textValue,
+					date: `${hours}:${minutes}`
+				}
+			})
+		);
+	};
+
+	const textareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+		setTextValue(e.target.value);
+	};
+
+	const MessageList = useMemo(
+		() =>
+			messageList.map((item) => {
+				const { author, textMessage, date, id } = item;
+				console.log(id);
+				return (
+					<ChatMessage
+						author={author}
+						textMessage={textMessage}
+						date={date}
+						key={`${id}`}
+					/>
+				);
+			}),
+		[messageList]
+	);
 
 	return (
-		<div className={style.chat}>
-			<div className={style.chatTitle}>
-				<h1>Alberico</h1>
-				<h2>Admin</h2>
-
-				<figure className={style.avatar}>
-					<img src="#" alt="avatar" />
-				</figure>
-			</div>
-			<div className={style.messages}>
-				<ul className={style.messagesContent}>
-					<li className={style.message}>
-						<figure className={style.avatar}>
-							<img src="#" alt="img.jpg" />
-						</figure>
-						Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde eum
-						commodi sed harum voluptas. Laboriosam maiores consequuntur ipsa
-						{setDate()}
-					</li>
-					<li className={`${style.message} ${style.personal}`}>
-						Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo
-						dolorum accusamus asperiores. Vel laboriosam odio sed! Eos rerum,
-						aliquid ex fugiat voluptatem nihil, delectus nesciunt facilis
-						accusantium eligendi necessitatibus repellat.
-						{setDate()}
-					</li>
-				</ul>
-			</div>
-			<div className={style.box}>
-				<textarea className={style.input} placeholder="Add message..." />
-				<input type="submit" className={style.submit} value="Send" />
+		<div className={styles.chat}>
+			<div className={styles.messageList}>{MessageList}</div>
+			<div className={styles.box}>
+				<textarea
+					className={styles.input}
+					value={textValue}
+					placeholder="Add message..."
+					onChange={textareaChange}
+				/>
+				<button type="submit" className={styles.submit} onClick={getMessage}>
+					Send
+				</button>
 			</div>
 		</div>
 	);

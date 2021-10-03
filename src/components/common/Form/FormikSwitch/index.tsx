@@ -6,13 +6,17 @@ import { InterfaceFormikInput } from 'interfaces/commonForm';
 
 import styles from './index.module.scss';
 
-const FormikSwitch: React.FC<InterfaceFormikInput> = ({ label, ...props }) => {
+const FormikSwitch: React.FC<InterfaceFormikInput> = ({
+	label,
+	style,
+	...props
+}) => {
 	const [field, meta] = useField(props);
 
 	const isError = meta.touched && meta.error;
 
 	return (
-		<div className={styles.formControl}>
+		<div className={`${styles.formControl} ${style}`}>
 			<label className={styles.label} htmlFor="name">
 				{label}
 			</label>

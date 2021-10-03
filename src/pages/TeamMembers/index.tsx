@@ -1,51 +1,62 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 
-import PlayerCard from "components/common/PlayerCard/PlayerCard";
-import MyButton from "components/common/MyButton/MyButton";
+import { useTypedSelector } from 'hooks/useTypedSelector';
 
-import { IUser, IUsersState, RolesUsersEnum } from "redux/reducer/membersReducer/types";
-import { getMembers } from "redux/reducer/selectors";
+import socketCreator, { UNSUBSCRIBE } from 'redux/thunk';
+import { getMembers, getModal } from 'redux/reducer/selectors';
+import { User } from 'redux/reducer/userReducer/types';
+import { Modal } from 'redux/reducer/modalReducer/types';
 
-import { useTypedSelector } from "hooks/useTypedSelector";
+import { btnValue } from 'constants/commonComponents';
+
+import PlayerCard from 'components/common/UserCard';
+import MyButton from 'components/common/MyButton';
+import Modals from 'components/common/Modals';
 
 import styles from './index.module.scss';
 
 const TeamMembers: React.FC = () => {
-  const { members } = useTypedSelector<IUsersState>(getMembers);
+	const dispatch = useDispatch();
 
-  const admin = useMemo<IUser | undefined>(() => {
-    return members.find((member) => member.role === RolesUsersEnum.ADMIN)
-  }, [members]);
+	const { users } = useTypedSelector<User>(getMembers);
+	const { openModal } = useTypedSelector<Modal>(getModal);
 
-  const users = useMemo<IUser[]>(() => {
-    return members.filter((member) => member.role === RolesUsersEnum.REGULAR)
-  }, [members]);
-  
-  return (
-		<section className={styles.section}>
-      <h3>
-        Spring planning:
-      </h3>
-			<div className={styles.scram}>
-				<span>Scram master:</span>
-        <PlayerCard user={admin!} />
-			</div>
-      <div className={styles.exit}>
-        <MyButton value='Exit' />
-      </div>
-      <div className={styles.team}>
-        <h3>Members:</h3>
-        <div className={styles.members}>
-          { users.length !== 0 
-            ? users.map(user => {
-              return <PlayerCard user={user} key={user.id} />
-              })
-            : <h4>Waiting for team members...</h4>
-          }
-        </div>
-      </div>
-		</section>
-  )
-}
+	const setExit = () => dispatch(socketCreator({ type: UNSUBSCRIBE }));
+
+	const admin = useMemo(() => {
+		return users.find((user) => user.isAdmin === true);
+	}, [users]);
+
+	const isUsers = useMemo(() => {
+		return users.filter((user) => user.isAdmin === false);
+	}, [users]);
+
+	return (
+		<>
+			<section className={styles.section}>
+				<h3>Spring planning:</h3>
+				<div className={styles.scram}>
+					<span>Scram master:</span>
+					{admin && <PlayerCard user={admin} />}
+				</div>
+				<div className={styles.exit}>
+					<MyButton value={btnValue.EXIT} onclick={setExit} />
+				</div>
+				<div className={styles.team}>
+					<h3>Members:</h3>
+					<div className={styles.members}>
+						{isUsers.length !== 0 ? (
+							isUsers.map((user) => <PlayerCard user={user} key={user.id} />)
+						) : (
+							<h4>Waiting for team members...</h4>
+						)}
+					</div>
+				</div>
+				{openModal && <Modals />}
+			</section>
+		</>
+	);
+};
 
 export default TeamMembers;

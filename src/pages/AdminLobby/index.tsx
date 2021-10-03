@@ -1,63 +1,30 @@
-import React, { useEffect } from 'react';
-import { io } from 'socket.io-client';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 
-import { setUserDataActionCreation } from 'redux/reducer/userReducer';
-import { RootState } from 'redux/store';
-import { URL } from 'constants/API';
+import { getModal } from 'redux/reducer/selectors';
+import { useTypedSelector } from 'hooks/useTypedSelector';
+import { Modal } from 'redux/reducer/modalReducer/types';
 
+import Modals from 'components/common/Modals';
+
+// import InstallTimer from 'components/common/Timer/InstallTimer';
+import Members from './Members';
 import GameStatus from './GameStatus';
 import Issues from './Issues';
-import Members from './Members';
 import AdminMenu from './AdminMenu';
 
 import styles from './index.module.scss';
 
-const socket = io(URL, { autoConnect: false });
-
 const AdminLobby: React.FC = (): JSX.Element => {
-	const history = useHistory();
-	const user = useSelector<RootState>((state) => state.userReducer);
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		socket.connect();
-
-		socket.emit(
-			'event://user connect without members data',
-			user,
-			(res: { status: string }) => {
-				const response = res.status
-					? console.log('done')
-					: console.log('error');
-				return response;
-			}
-		);
-
-		socket.on('event://your room name', (roomName) => {
-			console.log(roomName);
-			const obj = { roomNumber: roomName };
-			return dispatch(setUserDataActionCreation(obj));
-		});
-
-		socket.on('event://message', (ms, obj) => {
-			socket.emit('clientMessage', 'socketConnect');
-			console.log(ms, obj);
-		});
-	}, []);
-
-	socket.on('event://error', (err) => {
-		console.log(err);
-		history.push('/');
-	});
+	const { openModal } = useTypedSelector<Modal>(getModal);
 
 	return (
 		<div className={styles.adminLobby}>
 			<GameStatus />
 			<Members />
-			<Issues />
+			<Issues admin />
+			{/* <InstallTimer /> */}
 			<AdminMenu />
+			{openModal && <Modals />}
 		</div>
 	);
 };

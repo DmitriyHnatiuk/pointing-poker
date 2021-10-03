@@ -1,8 +1,11 @@
+@import 'assets/styles/_variables.scss';
+
 .form {
 	width: 50%;
-	min-height: 500px;
+	max-width: 800px;
 	margin: 50px auto;
 	padding: 60px;
+	top: 200px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -10,11 +13,38 @@
 	justify-content: flex-start;
 	align-items: center;
 	border: 3px solid #3162ac;
+	background-color: #fff;
 }
 
 .title {
 	font-family: Roboto, sans-serif;
 	font-size: 64px;
 	font-weight: 700;
-	margin-bottom: 30px;
+	margin-bottom: 60px;
+}
+
+.field {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.cancel {
+	background: $white-color;
+	color: $Deep-Koamaru;
+}
+
+.cancel:hover {
+	background-color: $Deep-Koamaru;
+	color: $white-color;
+}
+
+.buttons {
+	padding-top: 20px;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-self: stretch;
 }
