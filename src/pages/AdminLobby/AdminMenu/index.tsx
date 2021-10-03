@@ -16,7 +16,10 @@ import {
 } from 'redux/reducer/gameSettingReducer/types';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { useChangePlayingCardSet } from 'hooks/useChangePlayingCardSet';
+import {
+	getNewPlayingCard,
+	useChangePlayingCardSet
+} from 'hooks/useChangePlayingCardSet';
 
 import Switch from 'components/common/Switch';
 import PlayingCardComponent from 'components/common/PlayingCard';
@@ -36,8 +39,10 @@ const AdminMenu: React.FC = (): JSX.Element => {
 
 	useChangePlayingCardSet();
 
+	const newPlayingCard = getNewPlayingCard();
+
 	const onAddCard = () => {
-		dispatch(addPlayingCardAction());
+		dispatch(addPlayingCardAction(newPlayingCard));
 	};
 
 	const onToggleIsMasterAsPlayer = (): void => {

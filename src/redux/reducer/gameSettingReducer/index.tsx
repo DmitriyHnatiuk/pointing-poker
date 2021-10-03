@@ -224,9 +224,11 @@ export const activePlayingCardAction = (card: PlayingCard): GameAction => ({
 	payload: card
 });
 
-export const addPlayingCardAction = (): GameAction => ({
+export const addPlayingCardAction = (
+	newPlayingCard: PlayingCard
+): GameAction => ({
 	type: SettingsActionEnum.ADD_PLAYING_CARD,
-	payload: { id: 5, score: '55', count: 0 }
+	payload: newPlayingCard
 });
 
 export const setPlayingCardSetAction = (
