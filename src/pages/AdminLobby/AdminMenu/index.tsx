@@ -16,10 +16,9 @@ import {
 } from 'redux/reducer/gameSettingReducer/types';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import {
-	getNewPlayingCard,
-	useChangePlayingCardSet
-} from 'hooks/useChangePlayingCardSet';
+import { useChangePlayingCardSet } from 'hooks/useChangePlayingCardSet';
+
+import { getNewPlayingCard } from 'utils/getPlayingCards';
 
 import Switch from 'components/common/Switch';
 import PlayingCardComponent from 'components/common/PlayingCard';

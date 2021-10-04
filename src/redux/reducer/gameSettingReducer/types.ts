@@ -5,6 +5,7 @@ export interface Game {
 	scoreType: string;
 	cards: PlayingCard[];
 	typeCards: number;
+	amountCard: number;
 	playingCardsSet: string;
 	timer: TimerSettings;
 	isTimer: boolean;

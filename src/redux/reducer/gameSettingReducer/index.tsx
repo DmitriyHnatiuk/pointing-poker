@@ -30,6 +30,7 @@ const initialStore: Game = {
 	isTimer: false,
 	cards: [],
 	typeCards: 0,
+	amountCard: 5,
 	playingCardsSet: PlayingCardSetEnum.linearSequence,
 	planningTitle: 'Title & Planes'
 };
@@ -64,7 +65,8 @@ const reducer = (
 		case SettingsActionEnum.DELETE_PLAYING_CARD: {
 			return {
 				...state,
-				cards: state.cards.filter((card) => card.id !== action.payload.id)
+				cards: state.cards.filter((card) => card.id !== action.payload.id),
+				amountCard: state.amountCard - 1
 			};
 		}
 
@@ -92,7 +94,8 @@ const reducer = (
 						score: action.payload.score,
 						count: action.payload.count
 					}
-				]
+				],
+				amountCard: state.amountCard + 1
 			};
 		}
 
