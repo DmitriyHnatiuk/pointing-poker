@@ -4,6 +4,7 @@ export interface Game {
 	issues: Issue[];
 	scoreType: string;
 	cards: PlayingCard[];
+	typeCards: number;
 	playingCardsSet: string;
 	timer: TimerSettings;
 	isTimer: boolean;
@@ -64,7 +65,8 @@ export enum SettingsActionEnum {
 	ACTIVE_ISSUE = 'ACTIVE_ISSUE',
 	ACTIVE_PLAYING_CARD = 'ACTIVE_PLAYING_CARD',
 	SET_GAME_DATA = 'SET_GAME_DATA',
-	CHANGE_TITLE = 'CHANGE_TITLE'
+	CHANGE_TITLE = 'CHANGE_TITLE',
+	SELECT_CARD_BACK = 'SELECT_CARD_BACK'
 }
 
 interface EditPlayingCardAction {
@@ -149,6 +151,10 @@ interface ChangeTitle {
 	type: SettingsActionEnum.CHANGE_TITLE;
 	payload: string;
 }
+interface SelectCardBackAction {
+	type: SettingsActionEnum.SELECT_CARD_BACK;
+	payload: number;
+}
 
 export type GameAction =
 	| EditPlayingCardAction
@@ -167,4 +173,5 @@ export type GameAction =
 	| SetIsTimer
 	| SetIsAdminAsPlayer
 	| SetGameData
-	| ChangeTitle;
+	| ChangeTitle
+	| SelectCardBackAction;
