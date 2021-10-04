@@ -29,6 +29,7 @@ const initialStore: Game = {
 	},
 	isTimer: false,
 	cards: [],
+	typeCards: 0,
 	playingCardsSet: PlayingCardSetEnum.linearSequence,
 	planningTitle: 'Title & Planes'
 };
@@ -181,6 +182,13 @@ const reducer = (
 			};
 		}
 
+		case SettingsActionEnum.SELECT_CARD_BACK: {
+			return {
+				...state,
+				typeCards: action.payload
+			};
+		}
+
 		default:
 			return state;
 	}
@@ -258,6 +266,11 @@ export const SetIsAdminAsPlayer = (value: boolean): GameAction => ({
 export const SetScoreType = (storyType: string): GameAction => ({
 	type: SettingsActionEnum.SET_SCORE_TYPE,
 	payload: storyType
+});
+
+export const SetSelectCardBack = (selectedCard: number): GameAction => ({
+	type: SettingsActionEnum.SELECT_CARD_BACK,
+	payload: selectedCard
 });
 
 export const SetActiveTimer = (active: boolean): GameAction => ({
