@@ -182,6 +182,13 @@ const reducer = (
 			};
 		}
 
+		case SettingsActionEnum.CHANGE_TITLE: {
+			return {
+				...state,
+				planningTitle: action.payload
+			};
+		}
+
 		case SettingsActionEnum.SELECT_CARD_BACK: {
 			return {
 				...state,
@@ -232,9 +239,11 @@ export const activePlayingCardAction = (card: PlayingCard): GameAction => ({
 	payload: card
 });
 
-export const addPlayingCardAction = (): GameAction => ({
+export const addPlayingCardAction = (
+	newPlayingCard: PlayingCard
+): GameAction => ({
 	type: SettingsActionEnum.ADD_PLAYING_CARD,
-	payload: { id: 5, score: '55', count: 0 }
+	payload: newPlayingCard
 });
 
 export const setPlayingCardSetAction = (
@@ -276,6 +285,11 @@ export const SetSelectCardBack = (selectedCard: number): GameAction => ({
 export const SetActiveTimer = (active: boolean): GameAction => ({
 	type: SettingsActionEnum.IS_TIMER_ACTIVE,
 	payload: active
+});
+
+export const setChangeTitle = (title: string): GameAction => ({
+	type: SettingsActionEnum.CHANGE_TITLE,
+	payload: title
 });
 
 export default reducer;

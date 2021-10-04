@@ -65,6 +65,7 @@ export enum SettingsActionEnum {
 	ACTIVE_ISSUE = 'ACTIVE_ISSUE',
 	ACTIVE_PLAYING_CARD = 'ACTIVE_PLAYING_CARD',
 	SET_GAME_DATA = 'SET_GAME_DATA',
+	CHANGE_TITLE = 'CHANGE_TITLE',
 	SELECT_CARD_BACK = 'SELECT_CARD_BACK'
 }
 
@@ -146,6 +147,10 @@ interface IsTimerAction {
 	payload: boolean;
 }
 
+interface ChangeTitle {
+	type: SettingsActionEnum.CHANGE_TITLE;
+	payload: string;
+}
 interface SelectCardBackAction {
 	type: SettingsActionEnum.SELECT_CARD_BACK;
 	payload: number;
@@ -168,4 +173,5 @@ export type GameAction =
 	| SetIsTimer
 	| SetIsAdminAsPlayer
 	| SetGameData
+	| ChangeTitle
 	| SelectCardBackAction;
