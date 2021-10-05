@@ -14,27 +14,31 @@ import AdminLobby from 'pages/AdminLobby';
 import TeamMembers from 'pages/TeamMembers';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
+import Loading from '../../components/Loading';
 
 const { HOME, ADMIN, USER, GAME, ERROR } = ways;
 
 const Routers: React.FC = (): JSX.Element => {
-	const { login } = useTypedSelector<User>(getMembers);
+	const { login, loading } = useTypedSelector<User>(getMembers);
 	const { isAdmin } = useTypedSelector<User>(getMembers);
 	const { roomNumber } = useTypedSelector<User>(getMembers);
-
 	return (
 		<>
 			<Header />
 			<Main>
-				<Switch>
-					<Route exact path={HOME} component={MainPage} />
-					{isAdmin && <Route path={ADMIN} component={AdminLobby} />}
-					{!isAdmin && roomNumber && (
-						<Route exact path={USER} component={TeamMembers} />
-					)}
-					{login && <Route exact path={GAME} component={GamePage} />}
-					<Route path={ERROR} component={Error404} />
-				</Switch>
+				{loading ? (
+					<Loading />
+				) : (
+					<Switch>
+						<Route exact path={HOME} component={MainPage} />
+						{isAdmin && <Route path={ADMIN} component={AdminLobby} />}
+						{!isAdmin && roomNumber && (
+							<Route exact path={USER} component={TeamMembers} />
+						)}
+						{login && <Route exact path={GAME} component={GamePage} />}
+						<Route path={ERROR} component={Error404} />
+					</Switch>
+				)}
 			</Main>
 			<Footer />
 		</>
