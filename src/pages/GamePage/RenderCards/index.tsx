@@ -3,7 +3,7 @@ import React from 'react';
 import PlayingCardComponent from 'components/common/PlayingCard';
 import { Game } from 'redux/reducer/gameSettingReducer/types';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { getGame } from 'redux/reducer/selectors';
+import { getGame, getMembers } from 'redux/reducer/selectors';
 
 import styles from './index.module.scss';
 
@@ -11,6 +11,7 @@ const RenderCards: React.FC<{ inStatistics?: boolean }> = ({
 	inStatistics
 }): JSX.Element => {
 	const { cards, scoreType } = useTypedSelector<Game>(getGame);
+	const { observer } = useTypedSelector(getMembers);
 
 	let newCards = cards;
 
@@ -29,12 +30,14 @@ const RenderCards: React.FC<{ inStatistics?: boolean }> = ({
 							inStatistics
 						/>
 					) : (
-						<PlayingCardComponent
-							card={card}
-							scoreType={scoreType}
-							inStatistics
-							activeCard
-						/>
+						!observer && (
+							<PlayingCardComponent
+								card={card}
+								scoreType={scoreType}
+								inStatistics
+								activeCard
+							/>
+						)
 					)}
 				</li>
 			))}

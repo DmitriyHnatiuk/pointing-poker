@@ -3,6 +3,7 @@ import {
 	GameAction,
 	GameData,
 	Issue,
+	IssueAction,
 	PlayingCard,
 	PlayingCardSetEnum,
 	SettingsActionEnum,
@@ -11,6 +12,7 @@ import {
 
 const initialStore: Game = {
 	isAdminAsPlayer: false,
+	runRound: false,
 	issues: [
 		{
 			id: 1,
@@ -32,7 +34,7 @@ const initialStore: Game = {
 	typeCards: 0,
 	amountCard: 5,
 	playingCardsSet: PlayingCardSetEnum.linearSequence,
-	planningTitle: 'Title & Planes'
+	planningTitle: 'Add Planes'
 };
 
 type StateType = typeof initialStore;
@@ -231,7 +233,7 @@ export const activeIssue = (issue: Issue): GameAction => ({
 	payload: issue
 });
 
-export const deleteIssue = (issue: Issue): GameAction => ({
+export const deleteIssue = (issue: IssueAction): GameAction => ({
 	type: SettingsActionEnum.DELETE_ISSUE,
 	payload: issue
 });

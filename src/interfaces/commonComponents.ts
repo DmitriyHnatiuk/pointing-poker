@@ -20,6 +20,7 @@ export interface ActionCreationArguments {
 	users?: Users[];
 	id?: string;
 	login?: boolean;
+	loading?: boolean;
 }
 
 export interface InterfaceAvatar {

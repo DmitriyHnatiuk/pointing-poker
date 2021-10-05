@@ -2,8 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
+import socketCreator, { SELECT_CARD } from 'redux/thunk';
 
-import { getMembers } from 'redux/reducer/selectors';
+import { getMembers, getGame } from 'redux/reducer/selectors';
 import { PlayingCard } from 'redux/reducer/gameSettingReducer/types';
 import {
 	activePlayingCardAction,
@@ -26,7 +27,9 @@ const PlayingCardComponent: React.FC<{
 	const dispatch = useDispatch();
 
 	const { login } = useTypedSelector(getMembers);
-	const { score, isFirstCard, active } = card;
+	const { runRound } = useTypedSelector(getGame);
+	const { score, isFirstCard, active, id } = card;
+	const cardId = id.toString();
 	const isActive = activeCard && active;
 
 	const onEditScore = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -37,18 +40,20 @@ const PlayingCardComponent: React.FC<{
 		dispatch(deletePlayingCard(card));
 	};
 
-	const onActiveCard = () => {
-		if (activeCard) {
+	const onActiveCard = (event: React.MouseEvent<HTMLElement>) => {
+		if (activeCard && runRound) {
+			const selectCardId = (event.currentTarget as HTMLElement).id;
+			dispatch(socketCreator({ type: SELECT_CARD, id: selectCardId }));
 			return dispatch(activePlayingCardAction(card));
 		}
 		return null;
 	};
-
 	return (
 		<>
 			<section
 				className={`${styles.card} ${inStatistics && styles.statisticsCard}`}
 				aria-hidden="true"
+				id={cardId}
 				onClick={onActiveCard}>
 				{isActive && (
 					<div className={styles.activeCard}>
@@ -77,7 +82,6 @@ const PlayingCardComponent: React.FC<{
 								src={deleteCard}
 								alt="Delete card"
 								aria-hidden="true"
-								title="Delete card"
 								onClick={onDeleteCard}
 							/>
 						)}
@@ -88,7 +92,7 @@ const PlayingCardComponent: React.FC<{
 					<span className={styles.bottom}>{score}</span>
 				</div>
 			</section>
-			{!activeCard && login && <span>{card.count}</span>}
+			{!activeCard && login && <span>{card.count} %</span>}
 		</>
 	);
 };

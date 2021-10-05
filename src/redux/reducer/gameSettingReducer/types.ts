@@ -9,6 +9,7 @@ export interface Game {
 	playingCardsSet: string;
 	timer: TimerSettings;
 	isTimer: boolean;
+	runRound: boolean;
 }
 
 export interface GameData {
@@ -20,6 +21,7 @@ export interface GameData {
 	playingCardsSet?: string;
 	timer?: TimerSettings;
 	isTimer?: boolean;
+	runRound?: boolean;
 }
 
 export interface TimerSettings {
@@ -48,6 +50,10 @@ export interface Issue {
 	priority: string;
 	active: boolean;
 	link: string;
+}
+
+export interface IssueAction {
+	id: number;
 }
 
 export enum SettingsActionEnum {
@@ -122,7 +128,7 @@ interface ActiveIssueAction {
 
 interface DeleteIssueAction {
 	type: SettingsActionEnum.DELETE_ISSUE;
-	payload: Issue;
+	payload: IssueAction;
 }
 
 interface ToggleIsTimerAction {

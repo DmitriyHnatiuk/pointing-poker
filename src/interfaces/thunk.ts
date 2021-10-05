@@ -1,4 +1,4 @@
-import { Game } from 'redux/reducer/gameSettingReducer/types';
+import { Game, Issue } from 'redux/reducer/gameSettingReducer/types';
 
 import { interfaceChatMessage } from './commonChat';
 
@@ -18,4 +18,5 @@ export interface dataTypes {
 	message?: string | interfaceChatMessage;
 	id?: string;
 	gameSettings?: Game;
+	issue?: Issue;
 }

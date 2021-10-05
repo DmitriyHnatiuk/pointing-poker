@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
+import socketCreator, { DELETE_ISSUE, SELECT_ISSUE } from 'redux/thunk';
 
-import { getMembers } from 'redux/reducer/selectors';
+import { getGame, getMembers } from 'redux/reducer/selectors';
 import { Issue } from 'redux/reducer/gameSettingReducer/types';
-import { activeIssue, deleteIssue } from 'redux/reducer/gameSettingReducer';
+import { activeIssue } from 'redux/reducer/gameSettingReducer';
 
 import deleteImage from 'assets/images/CardPlayer/player-delete.svg';
 
@@ -19,13 +20,23 @@ const IssueCard: React.FC<{ issue: Issue; isActive?: boolean }> = ({
 
 	const dispatch = useDispatch();
 	const { isAdmin } = useTypedSelector(getMembers);
-	const onDeleteIssue = () => {
-		dispatch(deleteIssue(issue));
+	const gameData = useTypedSelector(getGame);
+	const onDeleteIssue = (event: MouseEvent) => {
+		event.stopPropagation();
+		dispatch(socketCreator({ type: DELETE_ISSUE, issue: { ...issue } }));
 	};
 
 	const onActiveIssue = () => {
-		if (isActive) {
-			dispatch(activeIssue(issue));
+		if (isAdmin) {
+			if (isActive) {
+				dispatch(activeIssue(issue));
+				dispatch(
+					socketCreator({
+						type: SELECT_ISSUE,
+						gameSettings: gameData
+					})
+				);
+			}
 		}
 	};
 
