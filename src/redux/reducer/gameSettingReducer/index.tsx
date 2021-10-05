@@ -30,6 +30,7 @@ const initialStore: Game = {
 	isTimer: false,
 	cards: [],
 	typeCards: 0,
+	amountCard: 5,
 	playingCardsSet: PlayingCardSetEnum.linearSequence,
 	planningTitle: 'Title & Planes'
 };
@@ -42,6 +43,13 @@ const reducer = (
 ): StateType => {
 	switch (action.type) {
 		case SettingsActionEnum.SET_GAME_DATA: {
+			return {
+				...state,
+				...action.payload
+			};
+		}
+
+		case SettingsActionEnum.RESET_GAME_DATA: {
 			return {
 				...state,
 				...action.payload
@@ -64,7 +72,8 @@ const reducer = (
 		case SettingsActionEnum.DELETE_PLAYING_CARD: {
 			return {
 				...state,
-				cards: state.cards.filter((card) => card.id !== action.payload.id)
+				cards: state.cards.filter((card) => card.id !== action.payload.id),
+				amountCard: state.amountCard - 1
 			};
 		}
 
@@ -92,7 +101,8 @@ const reducer = (
 						score: action.payload.score,
 						count: action.payload.count
 					}
-				]
+				],
+				amountCard: state.amountCard + 1
 			};
 		}
 
@@ -200,6 +210,11 @@ const reducer = (
 			return state;
 	}
 };
+
+export const resetGameData = (): GameAction => ({
+	type: SettingsActionEnum.RESET_GAME_DATA,
+	payload: initialStore
+});
 
 export const setGameData = (state: GameData): GameAction => ({
 	type: SettingsActionEnum.SET_GAME_DATA,

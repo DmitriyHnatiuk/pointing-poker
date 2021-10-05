@@ -13,7 +13,7 @@ import {
 	setModalDataActionCreation
 } from 'redux/reducer/modalReducer';
 import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
-import { setGameData } from 'redux/reducer/gameSettingReducer';
+import { resetGameData, setGameData } from 'redux/reducer/gameSettingReducer';
 import { GameAction } from 'redux/reducer/gameSettingReducer/types';
 
 import { ENDPOINT } from 'constants/API';
@@ -57,6 +57,7 @@ const socketCreator =
 
 		const setExit = () => {
 			dispatch(resetUserDataActionCreation());
+			dispatch(resetGameData());
 			socket.offAny();
 			socket.disconnect();
 			history.push(HOME);
