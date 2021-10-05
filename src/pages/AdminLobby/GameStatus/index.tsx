@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import socketCreator, { UNSUBSCRIBE, SET_START } from 'redux/thunk';
+import socketCreator, { SET_START, UNSUBSCRIBE } from 'redux/thunk';
 
 import { btnValue } from 'constants/commonComponents';
 
@@ -13,6 +13,7 @@ import { getGame, getMembers } from 'redux/reducer/selectors';
 
 import MasterCard from 'components/common/MasterCard';
 import MyButton from 'components/common/MyButton';
+
 import styles from './index.module.scss';
 
 const { START_GAME, CANCEL_GAME, COPY } = btnValue;
@@ -43,27 +44,29 @@ const GameStatus: React.FC = (): JSX.Element => {
 			</div>
 			<MasterCard admin={user} />
 			<div className={styles.gameStatus}>
-				<label htmlFor="link" className={styles.titleLink}>
-					<p>Link to lobby:</p>
-					<input
-						className={styles.inputLink}
-						type="text"
-						name="link"
-						value={roomNumber}
-					/>
-					<MyButton
-						style={styles.buttonCopy}
-						type="button"
-						value={COPY}
-						onclick={copyLink}
-					/>
+				<label htmlFor="link" className={styles.linkBlock}>
+					<p className={styles.linkTitle}>Link to lobby:</p>
+					<div className={styles.linkInputBlock}>
+						<input
+							className={styles.inputLink}
+							type="text"
+							name="link"
+							value={roomNumber}
+						/>
+						<MyButton
+							style={styles.buttonCopy}
+							type="button"
+							value={COPY}
+							onclick={copyLink}
+						/>
+					</div>
 				</label>
-				<div className={styles.buttons}>
-					<MyButton onclick={setStart} value={START_GAME} />
+				<div className={styles.buttonsBlock}>
+					<MyButton style={styles.btn} onclick={setStart} value={START_GAME} />
 					<MyButton
 						onclick={setExit}
 						value={CANCEL_GAME}
-						style={styles.cancel}
+						style={`${styles.cancel} ${styles.btn}`}
 					/>
 				</div>
 			</div>
