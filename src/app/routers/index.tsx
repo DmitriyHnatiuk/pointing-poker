@@ -14,8 +14,9 @@ import AdminLobby from 'pages/AdminLobby';
 import TeamMembers from 'pages/TeamMembers';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
+import ResultPage from 'pages/ResultPage';
 
-const { HOME, ADMIN, USER, GAME, ERROR } = ways;
+const { HOME, ADMIN, USER, GAME, ERROR, RESULT } = ways;
 
 const Routers: React.FC = (): JSX.Element => {
 	const { login } = useTypedSelector<User>(getMembers);
@@ -33,6 +34,7 @@ const Routers: React.FC = (): JSX.Element => {
 						<Route exact path={USER} component={TeamMembers} />
 					)}
 					{login && <Route exact path={GAME} component={GamePage} />}
+					<Route path={RESULT} component={ResultPage} />
 					<Route path={ERROR} component={Error404} />
 				</Switch>
 			</Main>
