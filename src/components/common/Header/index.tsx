@@ -27,7 +27,11 @@ const Header: React.FC = (): JSX.Element => {
 	}
 
 	const Chatroom = () => {
-		if (pathName.includes(ways.ADMIN) || pathName.includes(ways.USER)) {
+		if (
+			pathName.includes(ways.ADMIN) ||
+			pathName.includes(ways.USER) ||
+			pathName.includes(ways.GAME)
+		) {
 			return (
 				<button className={styles.chat} type="button" onClick={onVisibleChat}>
 					<img src={chat} alt="chat" />

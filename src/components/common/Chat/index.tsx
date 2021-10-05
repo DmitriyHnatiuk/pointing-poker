@@ -1,11 +1,14 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEvent, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import ChatMessage from 'components/common/ChatMessage';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { getChat, getMembers } from 'redux/reducer/selectors';
-import socketCreator, { CHAT, SEND_MESSAGE } from 'redux/thunk';
+import { onOpenChat } from 'redux/reducer/chatReducer';
+import socketCreator, { SEND_MESSAGE } from 'redux/thunk';
+
+import close from 'assets/images/Chat/chat-close.png';
 
 import styles from './index.module.scss';
 
@@ -15,10 +18,7 @@ const Chat: React.FC = (): JSX.Element => {
 	const { firstName, lastName, avatar } = useTypedSelector(getMembers);
 	const [textValue, setTextValue] = useState('');
 	const time = new Date();
-
-	useEffect(() => {
-		dispatch(socketCreator({ type: CHAT }));
-	}, []);
+	const onVisibleChat = () => dispatch(onOpenChat(false));
 
 	const minutes =
 		String(time.getUTCMinutes()).length < 2
@@ -71,6 +71,9 @@ const Chat: React.FC = (): JSX.Element => {
 
 	return (
 		<div className={styles.chat}>
+			<div className={styles.header}>
+				<img src={close} alt="" onClick={onVisibleChat} aria-hidden="true" />
+			</div>
 			<div className={styles.messageList}>{MessageList}</div>
 			<div className={styles.box}>
 				<textarea

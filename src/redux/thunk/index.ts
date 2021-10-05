@@ -139,6 +139,16 @@ const socketCreator =
 				socket.emit('event://time', timer, userId);
 			});
 
+			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+
+			socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+
 			socket.on('event://send_result', (resultData) => {
 				dispatch(setResultDataActionCreation({ result: resultData }));
 			});
@@ -255,5 +265,4 @@ const socketCreator =
 			setExit();
 		}
 	};
-
 export default socketCreator;
