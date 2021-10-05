@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import socketCreator, { UNSUBSCRIBE } from 'redux/thunk';
+import socketCreator, { GET_RESULT, UNSUBSCRIBE } from 'redux/thunk';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
@@ -35,6 +35,9 @@ const GamePage: React.FC = (): JSX.Element => {
 	const result = cards.filter((card) => card.count > 0).length;
 
 	const setExit = () => dispatch(socketCreator({ type: UNSUBSCRIBE }));
+	const finishGame = () => {
+		dispatch(socketCreator({ type: GET_RESULT }));
+	};
 
 	return (
 		<div className={styles.container}>
@@ -42,7 +45,13 @@ const GamePage: React.FC = (): JSX.Element => {
 				<h1>{planningTitle}</h1>
 				<div className={styles.menu}>
 					<MasterCard admin={admin} style={styles.masterCard} />
-					{isAdmin && <MyButton style={styles.btnMaster} value={STOP_GAME} />}
+					{isAdmin && (
+						<MyButton
+							style={styles.btnMaster}
+							value={STOP_GAME}
+							onclick={finishGame}
+						/>
+					)}
 					{!isAdmin && (
 						<>
 							<ActiveTimer />

@@ -12,6 +12,10 @@ import {
 	modalActionType,
 	setModalDataActionCreation
 } from 'redux/reducer/modalReducer';
+import {
+	ResultActionType,
+	setResultDataActionCreation
+} from 'redux/reducer/ResultReducer';
 import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
 import {
 	deleteIssue,
@@ -34,6 +38,7 @@ export const MESSAGE = 'MESSAGE';
 export const ADD_ISSUE = 'ADD_ISSUE';
 export const SUBSCRIBE = 'SUBSCRIBE';
 export const SET_START = 'SET_START';
+export const GET_RESULT = 'GET_RESULT';
 export const RESET_GAME = 'RESET_GAME';
 export const UNSUBSCRIBE = 'UNSUBSCRIBE';
 export const ADMIN_AGREE = 'ADMIN_AGREE';
@@ -56,7 +61,7 @@ const toLobby = (isAdmin: boolean | undefined) => {
 type dispatchTypes = ThunkDispatch<
 	RootState,
 	never,
-	ActionType | modalActionType | chatActionType | GameAction
+	ActionType | modalActionType | chatActionType | GameAction | ResultActionType
 >;
 
 const socketCreator =
@@ -132,6 +137,10 @@ const socketCreator =
 				const state = getState();
 				const { timer } = state.gameSettings;
 				socket.emit('event://time', timer, userId);
+			});
+
+			socket.on('event://send_result', (resultData) => {
+				dispatch(setResultDataActionCreation({ result: resultData }));
 			});
 
 			socket.on(
@@ -221,6 +230,10 @@ const socketCreator =
 		}
 		if (type === SELECT_CARD) {
 			socket.emit('event://select_card', id);
+		}
+
+		if (type === GET_RESULT) {
+			socket.emit('event://get_result');
 		}
 
 		if (type === CHAT) {

@@ -1,5 +1,7 @@
 import { Users } from 'redux/reducer/userReducer/types';
-import { TimerSettings } from '../redux/reducer/gameSettingReducer/types';
+
+import { TimerSettings } from 'redux/reducer/gameSettingReducer/types';
+import { issue } from 'redux/reducer/ResultReducer/types';
 
 export interface IGitHubItems {
 	id: number;
@@ -37,4 +39,8 @@ export interface intervalTimer {
 	onStopTimer?: boolean;
 	onRestartTimer?: boolean;
 	onStartTimer?: boolean;
+}
+
+export interface ResultInterface {
+	result: issue[];
 }
