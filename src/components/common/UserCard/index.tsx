@@ -23,7 +23,9 @@ const PlayerCard: React.FC<{ user: Users | Admin; style?: string }> = ({
 	const { firstName, lastName, position, isAdmin, id, avatar } = user;
 	const member = useTypedSelector(getMembers);
 	const self = member.id === id;
+	const { observer } = member;
 	const buttonDelete = !isAdmin && !self;
+	const playerObserver = observer && !member.isAdmin;
 
 	const onDeleteUser = (event: React.MouseEvent<HTMLElement>) => {
 		const button = event.target as HTMLElement;
@@ -61,7 +63,7 @@ const PlayerCard: React.FC<{ user: Users | Admin; style?: string }> = ({
 					</div>
 				</div>
 				<div className={styles.delete}>
-					{buttonDelete && (
+					{buttonDelete && !playerObserver && (
 						<div>
 							<img
 								id={id}

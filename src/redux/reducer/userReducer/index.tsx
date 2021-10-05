@@ -16,6 +16,7 @@ const initialStore: User = {
 	karma: 0,
 	id: '',
 	login: false,
+	loading: false,
 	admin: {
 		firstName: '',
 		lastName: '',

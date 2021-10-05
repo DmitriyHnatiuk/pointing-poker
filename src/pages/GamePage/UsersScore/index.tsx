@@ -13,6 +13,8 @@ import styles from './index.module.scss';
 const UsersScore: React.FC = (): JSX.Element => {
 	const { users } = useTypedSelector<User>(getMembers);
 	const players = users.filter((user) => !user.observer);
+	const observer = users.filter((user) => user.observer);
+	const renderObserver = observer.length > 0;
 
 	return (
 		<div className={styles.users}>
@@ -28,6 +30,16 @@ const UsersScore: React.FC = (): JSX.Element => {
 					</li>
 				))}
 			</ul>
+			{renderObserver && (
+				<ul className={styles.observer}>
+					<h2>Observers:</h2>
+					{observer.map((member) => (
+						<li className={styles.memberScore} key={member.id}>
+							<PlayerCard user={member} style={styles.userCard} />
+						</li>
+					))}
+				</ul>
+			)}
 		</div>
 	);
 };

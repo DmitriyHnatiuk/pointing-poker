@@ -18,6 +18,7 @@ export interface User {
 	login: boolean;
 	users: Users[];
 	admin: Admin;
+	loading: boolean;
 }
 
 export interface Users {
@@ -33,6 +34,7 @@ export interface Users {
 	id: string;
 	login: boolean;
 	admin?: Admin;
+	loading?: boolean;
 }
 
 export interface Admin {

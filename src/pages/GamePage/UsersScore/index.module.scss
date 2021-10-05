@@ -1,4 +1,4 @@
-@import 'assets/styles/variables';
+@import "assets/styles/variables";
 
 .users {
 	border-left: 2px solid $BackgroundGray;
@@ -66,4 +66,11 @@
 	@media only screen and (max-width: 900px) {
 		min-width: 100%;
 	}
+}
+
+.observer {
+	padding-top: 100px;
+	width: 100%;
+	font-size: 20px;
+	text-align: center;
 }
