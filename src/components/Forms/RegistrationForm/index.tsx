@@ -10,6 +10,8 @@ import MyButton from 'components/common/MyButton';
 import FormikControl from 'components/common/Form/FormikControl';
 import Avatar from 'components/Avatar';
 
+import { validateSchemaRegistration } from 'constants/validateForms';
+
 import { InterfaceModals } from 'interfaces/modals';
 import { TypeInputFormikControl } from 'interfaces/commonForm';
 
@@ -19,7 +21,10 @@ const FormRegistration: React.FC<InterfaceModals> = ({ close }) => {
 	const submit = useSubmitFormRegistration();
 
 	return (
-		<Formik initialValues={initialValuesRegistration} onSubmit={submit}>
+		<Formik
+			initialValues={initialValuesRegistration}
+			validationSchema={validateSchemaRegistration}
+			onSubmit={submit}>
 			{({ values }) => (
 				<Form className={styles.form}>
 					<div className={styles.formHeader}>
