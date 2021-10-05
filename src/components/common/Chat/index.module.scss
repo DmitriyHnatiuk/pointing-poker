@@ -13,6 +13,32 @@
 	justify-self: end;
 	box-sizing: border-box;
 	grid-area: chat;
+
+	@media only screen and (max-width: 1000px) {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100vw;
+		height: 100vh;
+		min-width: 50%;
+		box-sizing: content-box;
+		padding: 0;
+		background-color: $white-color;
+		z-index: 5;
+	}
+}
+
+.header {
+	display: none;
+
+	@media only screen and (max-width: 1000px) {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		padding: 10px 20px;
+		background-color: $Deep-Koamaru;
+	}
 }
 
 .messageList {
@@ -22,7 +48,7 @@
 	justify-content: flex-start;
 	align-items: flex-start;
 	flex-direction: column-reverse;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .box {

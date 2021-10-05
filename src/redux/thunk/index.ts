@@ -12,6 +12,10 @@ import {
 	modalActionType,
 	setModalDataActionCreation
 } from 'redux/reducer/modalReducer';
+import {
+	ResultActionType,
+	setResultDataActionCreation
+} from 'redux/reducer/ResultReducer';
 import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
 import {
 	deleteIssue,
@@ -34,6 +38,7 @@ export const MESSAGE = 'MESSAGE';
 export const ADD_ISSUE = 'ADD_ISSUE';
 export const SUBSCRIBE = 'SUBSCRIBE';
 export const SET_START = 'SET_START';
+export const GET_RESULT = 'GET_RESULT';
 export const RESET_GAME = 'RESET_GAME';
 export const UNSUBSCRIBE = 'UNSUBSCRIBE';
 export const ADMIN_AGREE = 'ADMIN_AGREE';
@@ -46,7 +51,7 @@ export const DELETE_ISSUE = 'DELETE_ISSUE';
 export const ADMIN_DISAGREE = 'ADMIN_DISAGREE';
 
 const socket = io(ENDPOINT, { autoConnect: false });
-const { HOME, ADMIN, USER, GAME } = ways;
+const { HOME, ADMIN, USER, GAME, RESULT } = ways;
 
 const toLobby = (isAdmin: boolean | undefined) => {
 	const path = isAdmin ? ADMIN : USER;
@@ -56,7 +61,7 @@ const toLobby = (isAdmin: boolean | undefined) => {
 type dispatchTypes = ThunkDispatch<
 	RootState,
 	never,
-	ActionType | modalActionType | chatActionType | GameAction
+	ActionType | modalActionType | chatActionType | GameAction | ResultActionType
 >;
 
 const socketCreator =
@@ -90,7 +95,9 @@ const socketCreator =
 			socket.on('event://your_data', (userData) => {
 				const admin = usersData?.isAdmin;
 				dispatch(setUserDataActionCreation(userData));
-				toLobby(admin);
+				if (userData.firstName) {
+					toLobby(admin);
+				}
 			});
 
 			socket.on('event://your_room_data', (users) => {
@@ -130,6 +137,21 @@ const socketCreator =
 				const state = getState();
 				const { timer } = state.gameSettings;
 				socket.emit('event://time', timer, userId);
+			});
+
+			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+
+			socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+
+			socket.on('event://send_result', (resultData) => {
+				dispatch(setResultDataActionCreation({ result: resultData }));
+				history.push(RESULT);
 			});
 
 			socket.on(
@@ -221,6 +243,10 @@ const socketCreator =
 			socket.emit('event://select_card', id);
 		}
 
+		if (type === GET_RESULT) {
+			socket.emit('event://get_result');
+		}
+
 		if (type === CHAT) {
 			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
 				if (!ms) return;
@@ -240,5 +266,4 @@ const socketCreator =
 			setExit();
 		}
 	};
-
 export default socketCreator;

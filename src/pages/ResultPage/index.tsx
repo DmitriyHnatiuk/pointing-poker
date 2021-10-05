@@ -1,47 +1,24 @@
 import React from 'react';
 
-import { PlayingCard } from 'redux/reducer/gameSettingReducer/types';
+import { getGame, getResult } from 'redux/reducer/selectors';
 
-// import PlayingCardComponent from 'components/common/PlayingCard';
-// import { useTypedSelector } from 'hooks/useTypedSelector';
-// import { getGame } from 'redux/reducer/selectors';
+import { useTypedSelector } from 'hooks/useTypedSelector';
+
 import cup from 'assets/images/PlayingCard/cup.svg';
 
 import styles from './import.module.scss';
 
-// card: PlayingCard;
-// scoreType: string;
+const ResultPage: React.FC = (): JSX.Element => {
+	const { result } = useTypedSelector(getResult);
+	const { scoreType } = useTypedSelector(getGame);
 
-// export interface PlayingCard {
-// 	id: number;
-// 	score: string;
-// 	isFirstCard?: boolean;
-// 	active?: boolean;
-// 	count: number;
-// }
-
-// const aa: PlayingCard = { id: 1, score: '2', count: 0 };
-
-const resultData = [
-	{
-		id: 'f0ou9g7ckuehoc2j',
-		title: 'Issue_1',
-		priority: 'low priority',
-		link: '',
-		active: true,
-		cards: [
-			{ card: { id: 1, score: '2', count: 0 }, scoreType: 'ST' },
-			{ card: { id: 1, score: '2', count: 0 }, scoreType: 'ST' }
-		]
-	}
-];
-
-const ResultPage: React.FC = () => {
 	return (
 		<div className={styles.result_page}>
 			<h1 className={styles.heading}>TITLE</h1>
-			{resultData.map((elem) => {
-				const { id, title, priority, active, cards } = elem;
+			{result.map((elem) => {
+				const { id, title, priority, cards } = elem;
+
+				const newCards = cards.filter((card) => card.count > 0);
 
 				return (
 					<section className={styles.result} key={id}>
@@ -54,27 +31,25 @@ const ResultPage: React.FC = () => {
 							</div>
 						</div>
 						<div className={styles.cards}>
-							{cards.map((card) => {
+							{newCards.map((card) => {
 								return (
 									<div className={styles.card_content}>
 										<div className={styles.card}>
 											<div className={styles.content}>
 												<div className={styles.top}>
-													<span className={styles.input}>
-														{card.card.score}
-													</span>
+													<span className={styles.input}>{card.score}</span>
 												</div>
 												<div className={styles.type}>
-													{active ? (
+													{card.isFirstCard ? (
 														<img src={cup} alt="Cup" />
 													) : (
-														card.scoreType
+														scoreType
 													)}
 												</div>
-												<span className={styles.bottom}>{card.card.score}</span>
+												<span className={styles.bottom}>{card.score}</span>
 											</div>
 										</div>
-										<div className={styles.count}>{card.card.count} %</div>
+										<div className={styles.count}>{card.count} %</div>
 									</div>
 								);
 							})}

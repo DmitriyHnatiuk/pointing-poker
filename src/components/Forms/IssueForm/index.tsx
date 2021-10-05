@@ -14,6 +14,7 @@ import { InterfaceModals } from 'interfaces/modals';
 
 import { initialIssues } from 'utils/initialValuesForms';
 import { btnValue } from 'constants/commonComponents';
+import { validateSchemaIssues } from 'constants/validateForms';
 
 import styles from './index.module.scss';
 
@@ -27,8 +28,11 @@ const IssueForm: React.FC<InterfaceModals> = ({ close }) => {
 	const submit = useSubmitFormIssues();
 
 	return (
-		<Formik initialValues={initialIssues} onSubmit={submit}>
-			{() => (
+		<Formik
+			initialValues={initialIssues}
+			onSubmit={submit}
+			validationSchema={validateSchemaIssues}>
+			{({ isValid, dirty }) => (
 				<Form className={styles.form}>
 					<h1 className={styles.title}>Create Issue</h1>
 					<FormikControl

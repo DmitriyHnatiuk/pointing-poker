@@ -40,7 +40,11 @@ const GameStatus: React.FC = (): JSX.Element => {
 		<>
 			<div className={styles.planningTitle}>
 				<h1 className={styles.heading}>Poker Planning</h1>
-				<input type="text" value={planningTitle} onChange={onChangeTitle} />
+				<input
+					type="text"
+					placeholder={planningTitle}
+					onChange={onChangeTitle}
+				/>
 			</div>
 			<MasterCard admin={user} />
 			<div className={styles.gameStatus}>
@@ -51,6 +55,7 @@ const GameStatus: React.FC = (): JSX.Element => {
 							className={styles.inputLink}
 							type="text"
 							name="link"
+							readOnly
 							value={roomNumber}
 						/>
 						<MyButton
