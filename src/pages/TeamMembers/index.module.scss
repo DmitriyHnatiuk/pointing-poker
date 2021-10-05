@@ -1,27 +1,52 @@
 .section {
 	width: 80%;
 	margin: 0 auto;
+
+	@media only screen and (max-width: 800px) {
+		width: 100%;
+		margin: 20px;
+		align-self: flex-start;
+	}
 }
 
-.section h3 {
-	padding: 20px;
-	font-size: 32px;
+.title {
+	font-family: Ruda, sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 24px;
+	line-height: 30px;
 	text-align: center;
 }
 
 .scram {
 	padding: 10px;
+
+	@media only screen and (max-width: 800px) {
+		padding: 20px 0;
+		width: 100%;
+	}
+}
+
+.scramTitle {
+	@media only screen and (max-width: 800px) {
+		margin-bottom: 10px;
+	}
 }
 
 .scram span {
 	display: block;
 	font-size: 24px;
-	margin-bottom: 10px;
 }
 
 .exit {
 	display: flex;
 	justify-content: flex-end;
+}
+
+.btnExit {
+	@media only screen and (max-width: 800px) {
+		width: 100%;
+	}
 }
 
 .team {
@@ -32,8 +57,15 @@
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
+	gap: 10px;
+
+	@media only screen and (max-width: 800px) {
+		justify-content: center;
+	}
 }
 
-.members > div {
-	margin: 10px;
+.cardList {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
 }

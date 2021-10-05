@@ -12,12 +12,12 @@ const Members: React.FC = (): JSX.Element => {
 	const { users } = useTypedSelector<User>(getMembers);
 
 	const isUsers = useMemo(() => {
-		return users.filter((user) => user.isAdmin === false);
+		return users.filter((user) => !user.isAdmin);
 	}, [users]);
 
 	return (
 		<div className={styles.membersWrapper}>
-			<h2>Members</h2>
+			<h2 className={styles.title}>Members</h2>
 			<div id="members" className={styles.membersContent}>
 				{isUsers.length > 0 ? (
 					isUsers.map((user) => <PlayerCard user={user} key={user.id} />)

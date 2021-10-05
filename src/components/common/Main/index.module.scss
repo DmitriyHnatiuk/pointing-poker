@@ -1,23 +1,28 @@
 .chatOff {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  margin: 50px auto;
-  min-height: calc(100vh - 120px - 100px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 80%;
+	margin: 50px auto;
+	min-height: calc(100vh - 120px - 100px);
+
+	@media only screen and (max-width: 800px) {
+		width: 100%;
+	}
 }
 
 .chatOn {
-  min-height: calc(100vh - 70px - 150px);
-  margin: 50px 20px;
-  display: grid;
-  grid-template-columns: 2fr 0.7fr;
-  grid-template-rows: 1fr;
-  gap: 0 5px;
-  grid-template-areas: "pages chat";
+	width: auto;
+	min-height: calc(100vh - 70px - 150px);
+	margin: 50px 20px;
+	display: grid;
+	grid-template-columns: 2fr 0.7fr;
+	grid-template-rows: 1fr;
+	gap: 0 5px;
+	grid-template-areas: 'pages chat';
 }
 
 .page {
-  grid-area: pages;
-  grid-template-rows: 1fr;
+	grid-area: pages;
+	grid-template-rows: 1fr;
 }

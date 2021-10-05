@@ -77,11 +77,21 @@ const ActiveTimer: React.FC = () => {
 			)}
 			{isAdmin && (
 				<div className={styles.buttons}>
-					{!isActive && <MyButton value={RUN_ROUND} onclick={onTimer} />}
+					{!isActive && (
+						<MyButton style={styles.btn} value={RUN_ROUND} onclick={onTimer} />
+					)}
 					{isActive && (
 						<>
-							<MyButton value={RESTART_ROUND} onclick={onRestartTimer} />
-							<MyButton value={NEXT_ISSUE} onclick={onNextIssue} />
+							<MyButton
+								style={styles.btn}
+								value={RESTART_ROUND}
+								onclick={onRestartTimer}
+							/>
+							<MyButton
+								style={styles.btn}
+								value={NEXT_ISSUE}
+								onclick={onNextIssue}
+							/>
 						</>
 					)}
 				</div>

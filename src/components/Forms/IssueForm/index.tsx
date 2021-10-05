@@ -51,11 +51,15 @@ const IssueForm: React.FC<InterfaceModals> = ({ close }) => {
 						data={optionsPriority}
 					/>
 					<div className={styles.buttons}>
-						<MyButton value={btnValue.YES} type="submit" />
+						<MyButton
+							style={styles.button}
+							value={btnValue.YES}
+							type="submit"
+						/>
 						<MyButton
 							value={btnValue.NO}
 							onclick={close}
-							style={styles.cancel}
+							style={`${styles.button} ${styles.cancel}`}
 						/>
 					</div>
 				</Form>

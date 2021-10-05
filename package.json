@@ -7,7 +7,7 @@
 		"build": "react-scripts build",
 		"stylelint": "npx stylelint '**/*.scss' --syntax scss --fix",
 		"prettier": "prettier --write .",
-		"lint": "eslint .",
+		"lint": "eslint ./src",
 		"format": "prettier --write . && eslint .",
 		"lint:fix": "eslint --fix ."
 	},

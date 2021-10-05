@@ -1,7 +1,7 @@
-@import "/src/assets/styles/_variables.scss";
+@import '/src/assets/styles/_variables.scss';
 
 .switch {
-	content: "";
+	content: '';
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -30,7 +30,7 @@
 }
 
 .slider:before {
-	content: "";
+	content: '';
 	position: absolute;
 	height: 12px;
 	width: 12px;
