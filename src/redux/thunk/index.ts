@@ -134,6 +134,16 @@ const socketCreator =
 				socket.emit('event://time', timer, userId);
 			});
 
+			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+
+			socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
+				if (!ms) return;
+				dispatch(pushMessage(ms));
+			});
+
 			socket.on(
 				'event://server_message',
 				({ event, user, userToDelete, messages }) => {
@@ -223,17 +233,6 @@ const socketCreator =
 			socket.emit('event://select_card', id);
 		}
 
-		if (type === CHAT) {
-			socket.on('event://message_from_user', (ms: interfaceChatMessage) => {
-				if (!ms) return;
-				dispatch(pushMessage(ms));
-			});
-			socket.on('event://message_from_admin', (ms: interfaceChatMessage) => {
-				if (!ms) return;
-				dispatch(pushMessage(ms));
-			});
-		}
-
 		if (type === SEND_MESSAGE) {
 			socket.emit('event://message', message);
 		}
@@ -242,5 +241,4 @@ const socketCreator =
 			setExit();
 		}
 	};
-
 export default socketCreator;

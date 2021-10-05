@@ -20,7 +20,11 @@ const Main: React.FC = ({ children }): JSX.Element => {
 	const pathName = useLocation().pathname;
 
 	useEffect(() => {
-		if (!pathName.includes(ways.ADMIN) || !pathName.includes(ways.USER)) {
+		if (
+			!pathName.includes(ways.ADMIN) ||
+			!pathName.includes(ways.USER) ||
+			!pathName.includes(ways.GAME)
+		) {
 			dispatch(onOpenChat(false));
 		}
 	}, [pathName]);
@@ -30,7 +34,7 @@ const Main: React.FC = ({ children }): JSX.Element => {
 
 	return (
 		<>
-			<main className={style}>
+			<main className={defaultStyle}>
 				{children}
 				{visibleChat && <Chat />}
 			</main>
