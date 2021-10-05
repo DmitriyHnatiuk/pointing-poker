@@ -1,13 +1,13 @@
-@import '/src/assets/styles/variables';
+@import "/src/assets/styles/variables";
 
 .cards {
 	display: flex;
 	flex-wrap: wrap;
 	align-content: flex-end;
 	justify-content: center;
-
 	margin-top: 50px;
 }
+
 .card {
 	text-align: center;
 }

@@ -15,10 +15,11 @@ import Issues from 'pages/AdminLobby/Issues';
 
 import Modals from 'components/common/Modals';
 
+import { Game } from 'redux/reducer/gameSettingReducer/types';
 import { Modal } from 'redux/reducer/modalReducer/types';
 import { btnValue } from 'constants/commonComponents';
 
-import { getMembers, getModal } from 'redux/reducer/selectors';
+import { getMembers, getModal, getGame } from 'redux/reducer/selectors';
 import { User } from 'redux/reducer/userReducer/types';
 
 import styles from './index.module.scss';
@@ -30,13 +31,15 @@ const GamePage: React.FC = (): JSX.Element => {
 
 	const { openModal } = useTypedSelector<Modal>(getModal);
 	const { isAdmin, admin } = useTypedSelector<User>(getMembers);
+	const { planningTitle, cards } = useTypedSelector<Game>(getGame);
+	const result = cards.filter((card) => card.count > 0).length;
 
 	const setExit = () => dispatch(socketCreator({ type: UNSUBSCRIBE }));
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.menuField}>
-				<h1>Issues string</h1>
+				<h1>{planningTitle}</h1>
 				<div className={styles.menu}>
 					<MasterCard admin={admin} style={styles.masterCard} />
 					{isAdmin && <MyButton style={styles.btnMaster} value={STOP_GAME} />}
@@ -55,16 +58,19 @@ const GamePage: React.FC = (): JSX.Element => {
 					<div className={styles.issues}>
 						<Issues />
 					</div>
-					{isAdmin && (
-						<div className={styles.settingsControl}>
-							<ActiveTimer />
-						</div>
-					)}
+					<div>
+						{isAdmin && (
+							<div className={styles.settingsControl}>
+								<ActiveTimer />
+							</div>
+						)}
+						{!!result && <Statistics />}
+					</div>
 				</div>
+
 				<div className={styles.cardContainer}>
 					<RenderCards />
 				</div>
-				{isAdmin && <Statistics />}
 			</div>
 			<UsersScore />
 			{openModal && <Modals />}

@@ -13,7 +13,11 @@ import {
 	setModalDataActionCreation
 } from 'redux/reducer/modalReducer';
 import { chatActionType, pushMessage } from 'redux/reducer/chatReducer';
-import { resetGameData, setGameData } from 'redux/reducer/gameSettingReducer';
+import {
+	deleteIssue,
+	resetGameData,
+	setGameData
+} from 'redux/reducer/gameSettingReducer';
 import { GameAction } from 'redux/reducer/gameSettingReducer/types';
 
 import { ENDPOINT } from 'constants/API';
@@ -27,13 +31,18 @@ export const AGREE = 'AGREE';
 export const ADMINS = 'ADMIN';
 export const DELETE = 'DELETE';
 export const MESSAGE = 'MESSAGE';
+export const ADD_ISSUE = 'ADD_ISSUE';
 export const SUBSCRIBE = 'SUBSCRIBE';
 export const SET_START = 'SET_START';
 export const RESET_GAME = 'RESET_GAME';
 export const UNSUBSCRIBE = 'UNSUBSCRIBE';
 export const ADMIN_AGREE = 'ADMIN_AGREE';
+export const SELECT_CARD = 'SELECT_CARD';
 export const USER_CONNECT = 'USER_CONNECT';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const ADMIN_RUN_ROUND = 'RUN_ROUND';
+export const SELECT_ISSUE = 'SELECT_ISSUE';
+export const DELETE_ISSUE = 'DELETE_ISSUE';
 export const ADMIN_DISAGREE = 'ADMIN_DISAGREE';
 
 const socket = io(ENDPOINT, { autoConnect: false });
@@ -52,8 +61,8 @@ type dispatchTypes = ThunkDispatch<
 
 const socketCreator =
 	(data: dataTypes) =>
-	(dispatch: dispatchTypes): void => {
-		const { usersData, type, message, id, gameSettings } = data;
+	(dispatch: dispatchTypes, getState: () => RootState): void => {
+		const { usersData, type, message, id, gameSettings, issue } = data;
 
 		const setExit = () => {
 			dispatch(resetUserDataActionCreation());
@@ -66,11 +75,14 @@ const socketCreator =
 		socket.connect();
 
 		if (type === SUBSCRIBE) {
+			dispatch(setUserDataActionCreation({ loading: true }));
 			socket.emit(
 				'event://connect_to_room',
 				usersData,
 				(res: { status: string }) =>
-					res.status === 'ok' ? console.log('done') : setExit()
+					res.status === 'ok'
+						? dispatch(setUserDataActionCreation({ loading: false }))
+						: setExit()
 			);
 
 			socket.onAny((event, ...args) => console.log(event, args));
@@ -92,7 +104,7 @@ const socketCreator =
 				if (!gameData) {
 					return setExit();
 				}
-				dispatch(setGameData({ ...gameData }));
+				dispatch(setGameData(gameData));
 				dispatch(setUserDataActionCreation({ login: true }));
 				return history.push(GAME);
 			});
@@ -114,6 +126,11 @@ const socketCreator =
 					socket.emit('event://connect_user')
 				);
 			}
+			socket.on('event://time_now', (userId) => {
+				const state = getState();
+				const { timer } = state.gameSettings;
+				socket.emit('event://time', timer, userId);
+			});
 
 			socket.on(
 				'event://server_message',
@@ -121,13 +138,6 @@ const socketCreator =
 					if (event === DELETE) {
 						const player = `${user.firstName}  ${user.lastName}`;
 						const playerKick = `${userToDelete.firstName} ${userToDelete.lastName}`;
-						console.log(
-							user.firstName,
-							user.lastName,
-							'wont delete',
-							userToDelete.firstName,
-							userToDelete.lastName
-						);
 						return dispatch(
 							setModalDataActionCreation({
 								openModal: true,
@@ -139,10 +149,13 @@ const socketCreator =
 						);
 					}
 					if (event === ADMINS) {
-						return console.log(
-							messages,
-							userToDelete.firstName,
-							userToDelete.lastName
+						return dispatch(
+							setModalDataActionCreation({
+								openModal: true,
+								type: MESSAGE,
+								message: messages,
+								error: false
+							})
 						);
 					}
 					return null;
@@ -177,13 +190,35 @@ const socketCreator =
 		if (type === AGREE) {
 			socket.emit('event://agree_delete', id);
 		}
-
+		if (type === ADD_ISSUE) {
+			socket.emit('event://admin_add_issue', issue);
+		}
+		if (type === SELECT_ISSUE) {
+			socket.emit('event://admin_select_issue', gameSettings?.issues);
+		}
+		if (type === DELETE_ISSUE) {
+			if (history.location.pathname === GAME) {
+				socket.emit('event://admin_delete_issue', issue?.id);
+			}
+			if (history.location.pathname === ADMIN) {
+				if (issue) {
+					dispatch(deleteIssue({ id: issue.id }));
+				}
+			}
+		}
 		if (type === SET_START) {
 			socket.emit('event://admin_start_game', gameSettings);
 		}
 
+		if (type === ADMIN_RUN_ROUND) {
+			socket.emit('event://admin_run_round', gameSettings);
+		}
+
 		if (type === RESET_GAME) {
 			socket.emit('event://admin_reset_round', gameSettings);
+		}
+		if (type === SELECT_CARD) {
+			socket.emit('event://select_card', id);
 		}
 
 		if (type === CHAT) {
