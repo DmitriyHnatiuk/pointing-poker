@@ -20,10 +20,12 @@ const InputFormik: React.FC<InterfaceFormikInput> = ({
 			<label className={styles.label} htmlFor="name">
 				{label}
 			</label>
-			<Field className={styles.field} id={field.name} {...field} {...props} />
-			{isError && (
-				<ErrorMessage name={field.name} component={TextError} {...meta} />
-			)}
+			<div className={styles.fieldBlock}>
+				<Field className={styles.field} id={field.name} {...field} {...props} />
+				{isError && (
+					<ErrorMessage name={field.name} component={TextError} {...meta} />
+				)}
+			</div>
 		</div>
 	);
 };

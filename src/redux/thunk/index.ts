@@ -90,7 +90,9 @@ const socketCreator =
 			socket.on('event://your_data', (userData) => {
 				const admin = usersData?.isAdmin;
 				dispatch(setUserDataActionCreation(userData));
-				toLobby(admin);
+				if (userData.firstName) {
+					toLobby(admin);
+				}
 			});
 
 			socket.on('event://your_room_data', (users) => {
