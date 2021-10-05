@@ -10,6 +10,7 @@ import MasterCard from 'components/common/MasterCard';
 import MyButton from 'components/common/MyButton';
 import UsersScore from 'pages/GamePage/UsersScore';
 import Statistics from 'pages/GamePage/Statistics';
+import RenderCards from 'pages/GamePage/RenderCards';
 import Issues from 'pages/AdminLobby/Issues';
 
 import Modals from 'components/common/Modals';
@@ -21,7 +22,6 @@ import { getMembers, getModal } from 'redux/reducer/selectors';
 import { User } from 'redux/reducer/userReducer/types';
 
 import styles from './index.module.scss';
-import RenderCards from './RenderCards';
 
 const { STOP_GAME, EXIT } = btnValue;
 
@@ -39,11 +39,15 @@ const GamePage: React.FC = (): JSX.Element => {
 				<h1>Issues string</h1>
 				<div className={styles.menu}>
 					<MasterCard admin={admin} style={styles.masterCard} />
-					{isAdmin && <MyButton value={STOP_GAME} />}
+					{isAdmin && <MyButton style={styles.btnMaster} value={STOP_GAME} />}
 					{!isAdmin && (
 						<>
 							<ActiveTimer />
-							<MyButton value={EXIT} onclick={setExit} />
+							<MyButton
+								style={styles.btnMaster}
+								value={EXIT}
+								onclick={setExit}
+							/>
 						</>
 					)}
 				</div>

@@ -49,15 +49,19 @@ const MainPage: React.FC = (): JSX.Element => {
 						<img src={pokerPlanningImage} alt="Poker-planning" />
 					</div>
 					<div className={styles.start}>
-						<h3>Start your planning:</h3>
-						<span>Create session:</span>
+						<h3 className={styles.title}>Start your planning:</h3>
+						<span className={styles.text}>Create session:</span>
 						<MyButton onclick={setAdmin} value={btnValue.START} />
 					</div>
 					<div className={styles.or}>
-						<h3>OR:</h3>
-						<span>Connect to lobby:</span>
-						<form>
-							<MyInput value={roomNumber} onchange={connectToRoom} />
+						<h3 className={styles.title}>OR:</h3>
+						<span className={styles.text}>Connect to lobby:</span>
+						<form className={styles.formLink}>
+							<MyInput
+								style={styles.linkInput}
+								value={roomNumber}
+								onchange={connectToRoom}
+							/>
 							<MyButton value={btnValue.CONNECT} onclick={setUser} />
 						</form>
 					</div>

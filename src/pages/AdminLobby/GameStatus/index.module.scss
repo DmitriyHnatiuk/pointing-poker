@@ -45,40 +45,86 @@
 	align-items: flex-start;
 }
 
-.titleLink {
+.linkBlock {
 	font-family: Roboto, sans-serif;
 	font-style: italic;
 	font-weight: normal;
 	font-size: 24px;
 	color: $TextDark;
 	text-align: left;
+
+	@media only screen and (max-width: 800px) {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+}
+
+.linkTitle {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.linkInputBlock {
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-wrap: nowrap;
 }
 
 .inputLink {
-	width: 20vw;
-	margin-top: 10px;
+	max-width: 400px;
+	margin-top: 0px;
 	padding-left: 10px;
 	border: 1px solid $TextDark;
 	border-bottom-left-radius: 10px;
-	font-family: Roboto;
+	font-family: Roboto, sans-serif;
 	font-style: normal;
 	font-weight: 300;
 	font-size: 24px;
 	line-height: 28px;
+	min-height: 30px;
+
+	@media only screen and (max-width: 800px) {
+		min-width: 70%;
+	}
 }
 
 .buttonCopy {
 	width: 100px;
 	height: 34px;
-	border-radius: 0px 3px 3px 0px;
+	border-radius: 0 3px 3px 0;
+
+	@media (max-width: 800px) {
+		width: 100%;
+		max-height: 100%;
+		box-sizing: border-box;
+	}
 }
 
-.buttons {
+.buttonsBlock {
 	padding-top: 20px;
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+
+	@media only screen and (max-width: 800px) {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+.btn {
+	@media only screen and (max-width: 800px) {
+		width: 100%;
+		margin-bottom: 10px;
+	}
 }
 
 .cancel {

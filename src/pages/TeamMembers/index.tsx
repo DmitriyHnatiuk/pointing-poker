@@ -25,26 +25,30 @@ const TeamMembers: React.FC = () => {
 	const setExit = () => dispatch(socketCreator({ type: UNSUBSCRIBE }));
 
 	const admin = useMemo(() => {
-		return users.find((user) => user.isAdmin === true);
+		return users.find((user) => user.isAdmin);
 	}, [users]);
 
 	const isUsers = useMemo(() => {
-		return users.filter((user) => user.isAdmin === false);
+		return users.filter((user) => !user.isAdmin);
 	}, [users]);
 
 	return (
 		<>
 			<section className={styles.section}>
-				<h3>Spring planning:</h3>
+				<h3 className={styles.title}>Spring planning:</h3>
 				<div className={styles.scram}>
-					<span>Scram master:</span>
-					{admin && <PlayerCard user={admin} />}
+					<span className={styles.scramTitle}>Scram master:</span>
+					{admin && <PlayerCard style={styles.cardList} user={admin} />}
 				</div>
 				<div className={styles.exit}>
-					<MyButton value={btnValue.EXIT} onclick={setExit} />
+					<MyButton
+						style={styles.btnExit}
+						value={btnValue.EXIT}
+						onclick={setExit}
+					/>
 				</div>
 				<div className={styles.team}>
-					<h3>Members:</h3>
+					<h3 className={styles.title}>Members:</h3>
 					<div className={styles.members}>
 						{isUsers.length !== 0 ? (
 							isUsers.map((user) => <PlayerCard user={user} key={user.id} />)
