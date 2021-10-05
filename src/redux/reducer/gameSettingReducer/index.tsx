@@ -49,6 +49,13 @@ const reducer = (
 			};
 		}
 
+		case SettingsActionEnum.RESET_GAME_DATA: {
+			return {
+				...state,
+				...action.payload
+			};
+		}
+
 		case SettingsActionEnum.EDIT_PLAYING_CARD: {
 			return {
 				...state,
@@ -203,6 +210,11 @@ const reducer = (
 			return state;
 	}
 };
+
+export const resetGameData = (): GameAction => ({
+	type: SettingsActionEnum.RESET_GAME_DATA,
+	payload: initialStore
+});
 
 export const setGameData = (state: GameData): GameAction => ({
 	type: SettingsActionEnum.SET_GAME_DATA,

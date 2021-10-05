@@ -66,6 +66,7 @@ export enum SettingsActionEnum {
 	ACTIVE_ISSUE = 'ACTIVE_ISSUE',
 	ACTIVE_PLAYING_CARD = 'ACTIVE_PLAYING_CARD',
 	SET_GAME_DATA = 'SET_GAME_DATA',
+	RESET_GAME_DATA = 'RESET_GAME_DATA',
 	CHANGE_TITLE = 'CHANGE_TITLE',
 	SELECT_CARD_BACK = 'SELECT_CARD_BACK'
 }
@@ -143,6 +144,11 @@ interface SetGameData {
 	payload: GameData;
 }
 
+interface ResetGameData {
+	type: SettingsActionEnum.RESET_GAME_DATA;
+	payload: GameData;
+}
+
 interface IsTimerAction {
 	type: SettingsActionEnum.IS_TIMER_ACTIVE;
 	payload: boolean;
@@ -175,4 +181,5 @@ export type GameAction =
 	| SetIsAdminAsPlayer
 	| SetGameData
 	| ChangeTitle
-	| SelectCardBackAction;
+	| SelectCardBackAction
+	| ResetGameData;
