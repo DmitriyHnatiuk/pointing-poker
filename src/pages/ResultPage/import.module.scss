@@ -2,7 +2,11 @@
 
 .result_page {
 	width: 100%;
-	height: calc(100vh - 230px);
+}
+
+.result_container {
+	width: 100%;
+	height: calc(100vh - 285px);
 	border: 1px solid $TextDark;
 	border-radius: 5px;
 }
@@ -137,4 +141,8 @@
 	text-align: center;
 	margin: 5px;
 	font-size: 24px;
+}
+
+.result_save {
+	padding-top: 10px;
 }
