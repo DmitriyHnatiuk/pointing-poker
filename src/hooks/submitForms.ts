@@ -25,7 +25,7 @@ export const useSubmitFormRegistration = (): ((
 	const { isAdmin } = useTypedSelector<User>(getMembers);
 	const { roomNumber } = useTypedSelector<User>(getMembers);
 
-	const submitForm = (values: FieldRegistry) => {
+	const submitFormRegistration = (values: FieldRegistry) => {
 		dispatch(
 			socketCreator({
 				usersData: { ...values, isAdmin, roomNumber },
@@ -35,7 +35,7 @@ export const useSubmitFormRegistration = (): ((
 		dispatch(deleteModalActionCreation());
 	};
 
-	return submitForm;
+	return submitFormRegistration;
 };
 
 export const useSubmitFormIssues = (): ((
@@ -44,7 +44,7 @@ export const useSubmitFormIssues = (): ((
 ) => void) => {
 	const dispatch = useDispatch();
 
-	const submitForm = (values: Issue) => {
+	const submitFormIssue = (values: Issue) => {
 		const issue = {
 			...values,
 			title: values.title.trimStart().slice(0, 12),
@@ -58,5 +58,5 @@ export const useSubmitFormIssues = (): ((
 		dispatch(deleteModalActionCreation());
 	};
 
-	return submitForm;
+	return submitFormIssue;
 };

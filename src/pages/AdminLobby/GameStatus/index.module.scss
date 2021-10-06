@@ -11,7 +11,6 @@
 	text-align: center;
 	color: $TextDark;
 	border: none;
-	text-align: center;
 }
 
 .status {
@@ -78,7 +77,7 @@
 
 .inputLink {
 	max-width: 400px;
-	margin-top: 0px;
+	margin-top: 0;
 	padding-left: 10px;
 	border: 1px solid $TextDark;
 	border-bottom-left-radius: 10px;
