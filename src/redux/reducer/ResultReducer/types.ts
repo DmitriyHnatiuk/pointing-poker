@@ -6,7 +6,7 @@ export interface issue {
 	priority: string;
 	link: string;
 	active: boolean;
-	card: PlayingCard[];
+	cards: PlayingCard[];
 }
 
 export interface Result {

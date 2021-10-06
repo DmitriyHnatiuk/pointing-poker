@@ -11,7 +11,7 @@ const initialStore: Result = {
 			priority: '',
 			link: '',
 			active: false,
-			card: []
+			cards: []
 		}
 	]
 };

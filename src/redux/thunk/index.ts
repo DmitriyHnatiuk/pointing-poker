@@ -51,7 +51,7 @@ export const DELETE_ISSUE = 'DELETE_ISSUE';
 export const ADMIN_DISAGREE = 'ADMIN_DISAGREE';
 
 const socket = io(ENDPOINT, { autoConnect: false });
-const { HOME, ADMIN, USER, GAME } = ways;
+const { HOME, ADMIN, USER, GAME, RESULT } = ways;
 
 const toLobby = (isAdmin: boolean | undefined) => {
 	const path = isAdmin ? ADMIN : USER;
@@ -151,6 +151,7 @@ const socketCreator =
 
 			socket.on('event://send_result', (resultData) => {
 				dispatch(setResultDataActionCreation({ result: resultData }));
+				history.push(RESULT);
 			});
 
 			socket.on(

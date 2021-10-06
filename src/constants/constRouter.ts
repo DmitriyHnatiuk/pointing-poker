@@ -3,5 +3,6 @@ export enum ways {
 	ADMIN = '/admin',
 	USER = '/user',
 	GAME = '/game',
-	ERROR = '*'
+	ERROR = '*',
+	RESULT = '/result'
 }
