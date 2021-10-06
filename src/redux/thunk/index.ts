@@ -48,7 +48,9 @@ export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const ADMIN_RUN_ROUND = 'RUN_ROUND';
 export const SELECT_ISSUE = 'SELECT_ISSUE';
 export const DELETE_ISSUE = 'DELETE_ISSUE';
+export const GAME_TIME_OFF = 'GAME_TIME_OFF';
 export const ADMIN_DISAGREE = 'ADMIN_DISAGREE';
+export const SET_NEXT_ISSUE = 'SET_NEXT_ISSUE';
 
 const socket = io(ENDPOINT, { autoConnect: false });
 const { HOME, ADMIN, USER, GAME } = ways;
@@ -90,12 +92,10 @@ const socketCreator =
 						: setExit()
 			);
 
-			socket.onAny((event, ...args) => console.log(event, args));
-
 			socket.on('event://your_data', (userData) => {
 				const admin = usersData?.isAdmin;
 				dispatch(setUserDataActionCreation(userData));
-				if (userData.firstName) {
+				if (history.location.pathname === HOME) {
 					toLobby(admin);
 				}
 			});
@@ -112,8 +112,10 @@ const socketCreator =
 					return setExit();
 				}
 				dispatch(setGameData(gameData));
-				dispatch(setUserDataActionCreation({ login: true }));
-				return history.push(GAME);
+				if (history.location.pathname !== GAME) {
+					history.push(GAME);
+				}
+				return dispatch(setUserDataActionCreation({ login: true }));
 			});
 
 			if (usersData?.isAdmin) {
@@ -195,10 +197,12 @@ const socketCreator =
 				);
 			});
 		}
+
 		// admin agree connect user
 		if (type === ADMIN_AGREE) {
 			socket.emit('event://confirm_connect', id);
 		}
+
 		if (type === ADMIN_DISAGREE) {
 			socket.emit('event://cancel_connect', id);
 		}
@@ -207,16 +211,19 @@ const socketCreator =
 		if (type === DELETE) {
 			socket.emit('event://delete', id);
 		}
-		// agree
+
 		if (type === AGREE) {
 			socket.emit('event://agree_delete', id);
 		}
+
 		if (type === ADD_ISSUE) {
 			socket.emit('event://admin_add_issue', issue);
 		}
+
 		if (type === SELECT_ISSUE) {
 			socket.emit('event://admin_select_issue', gameSettings?.issues);
 		}
+
 		if (type === DELETE_ISSUE) {
 			if (history.location.pathname === GAME) {
 				socket.emit('event://admin_delete_issue', issue?.id);
@@ -227,8 +234,13 @@ const socketCreator =
 				}
 			}
 		}
+
 		if (type === SET_START) {
 			socket.emit('event://admin_start_game', gameSettings);
+		}
+
+		if (type === GAME_TIME_OFF) {
+			socket.emit('event://game_time_off');
 		}
 
 		if (type === ADMIN_RUN_ROUND) {
@@ -238,6 +250,11 @@ const socketCreator =
 		if (type === RESET_GAME) {
 			socket.emit('event://admin_reset_round', gameSettings);
 		}
+
+		if (type === SET_NEXT_ISSUE) {
+			socket.emit('event://set_next_issue');
+		}
+
 		if (type === SELECT_CARD) {
 			socket.emit('event://select_card', id);
 		}

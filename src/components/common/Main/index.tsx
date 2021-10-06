@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Chat from 'components/common/Chat';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { getChat, getMembers } from 'redux/reducer/selectors';
+import { getChat } from 'redux/reducer/selectors';
 import { onOpenChat } from 'redux/reducer/chatReducer';
 
 import { ways } from 'constants/constRouter';
@@ -15,7 +15,6 @@ import styles from './index.module.scss';
 const Main: React.FC = ({ children }): JSX.Element => {
 	const dispatch = useDispatch();
 
-	const { login } = useTypedSelector(getMembers);
 	const visibleChat = useTypedSelector(getChat).open;
 	const pathName = useLocation().pathname;
 
@@ -30,7 +29,6 @@ const Main: React.FC = ({ children }): JSX.Element => {
 	}, [pathName]);
 
 	const defaultStyle = visibleChat ? styles.chatOn : styles.chatOff;
-	const style = !login ? defaultStyle : '';
 
 	return (
 		<>

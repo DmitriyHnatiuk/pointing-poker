@@ -4,10 +4,15 @@ import { useDispatch } from 'react-redux';
 import { useInterval } from 'hooks/useInterval';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
-import socketCreator, { ADMIN_RUN_ROUND, RESET_GAME } from 'redux/thunk';
+import socketCreator, {
+	ADMIN_RUN_ROUND,
+	GAME_TIME_OFF,
+	RESET_GAME,
+	SET_NEXT_ISSUE
+} from 'redux/thunk';
 
 import { TimerSettings } from 'redux/reducer/gameSettingReducer/types';
-import { SetActiveTimer, SetTimer } from 'redux/reducer/gameSettingReducer';
+import { SetTimer } from 'redux/reducer/gameSettingReducer';
 import { getGame, getMembers } from 'redux/reducer/selectors';
 
 import { btnValue } from 'constants/commonComponents';
@@ -42,7 +47,7 @@ const ActiveTimer: React.FC = () => {
 					} else if (secNum > 0 && minNum >= 0) {
 						secNum -= 1;
 					} else {
-						dispatch(SetActiveTimer(false));
+						dispatch(socketCreator({ type: GAME_TIME_OFF }));
 					}
 				}
 
@@ -61,7 +66,7 @@ const ActiveTimer: React.FC = () => {
 
 	const onRestartTimer = () => dispatch(socketCreator({ type: RESET_GAME }));
 
-	const onNextIssue = () => dispatch(SetActiveTimer(false));
+	const onNextIssue = () => dispatch(socketCreator({ type: SET_NEXT_ISSUE }));
 
 	return (
 		<>
