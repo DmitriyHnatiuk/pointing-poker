@@ -23,7 +23,8 @@ const PlayingCardComponent: React.FC<{
 	scoreType: string;
 	activeCard?: boolean;
 	inStatistics?: boolean;
-}> = ({ card, scoreType, activeCard, inStatistics }) => {
+	style?: string;
+}> = ({ card, scoreType, activeCard, inStatistics, style }) => {
 	const dispatch = useDispatch();
 
 	const { login } = useTypedSelector(getMembers);
@@ -48,10 +49,13 @@ const PlayingCardComponent: React.FC<{
 		}
 		return null;
 	};
+
 	return (
 		<>
 			<section
-				className={`${styles.card} ${inStatistics && styles.statisticsCard}`}
+				className={`${styles.card} ${style} ${
+					inStatistics && styles.statisticsCard
+				}`}
 				aria-hidden="true"
 				id={cardId}
 				onClick={onActiveCard}>
