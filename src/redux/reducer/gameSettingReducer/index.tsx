@@ -13,15 +13,7 @@ import {
 const initialStore: Game = {
 	isAdminAsPlayer: false,
 	runRound: false,
-	issues: [
-		{
-			id: 1,
-			title: 'Issue_1',
-			priority: 'low priority',
-			link: '',
-			active: false
-		}
-	],
+	issues: [],
 	scoreType: 'ST',
 	timer: {
 		min: '00',
