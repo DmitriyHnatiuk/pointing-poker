@@ -1,8 +1,11 @@
 import React from 'react';
+import JS_PDF from 'jspdf';
 
 import { getGame, getResult } from 'redux/reducer/selectors';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
+
+import MyButton from 'components/common/MyButton';
 
 import cup from 'assets/images/PlayingCard/cup.svg';
 
@@ -12,10 +15,22 @@ const ResultPage: React.FC = (): JSX.Element => {
 	const { result } = useTypedSelector(getResult);
 	const { scoreType } = useTypedSelector(getGame);
 
+	const generatePD = () => {
+		const doc = new JS_PDF('l', 'pt', 'a4');
+		const toPDF = document.getElementById('toPDF');
+		if (toPDF) {
+			doc.html(toPDF, {
+				callback(pdf) {
+					pdf.save('statistic.pdf');
+				}
+			});
+		}
+	};
+
 	return (
 		<div className={styles.result_page}>
-			<h1 className={styles.heading}>TITLE</h1>
-			<div className={styles.resultBlock}>
+			<div id="toPDF" className={styles.result_container}>
+				<h1 className={styles.heading}>TITLE</h1>
 				{result.map((elem) => {
 					const { id, title, priority, cards } = elem;
 
@@ -58,6 +73,9 @@ const ResultPage: React.FC = (): JSX.Element => {
 						</section>
 					);
 				})}
+			</div>
+			<div className={styles.result_save}>
+				<MyButton onclick={generatePD} type="primary" value="Save statistic" />
 			</div>
 		</div>
 	);
