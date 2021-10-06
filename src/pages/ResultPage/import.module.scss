@@ -2,10 +2,19 @@
 
 .result_page {
 	width: 100%;
-	height: calc(100vh - 230px);
+	min-height: calc(100vh - 230px);
 	border: 1px solid $TextDark;
 	border-radius: 5px;
 }
+
+.resultBlock {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 30px;
+}
+
 .heading {
 	font-size: 24px;
 	text-align: center;
@@ -43,14 +52,14 @@
 	}
 }
 
-.isuue_content {
+.issue_content {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
 }
 
-.isuue {
+.issue {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
