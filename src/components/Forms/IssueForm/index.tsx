@@ -32,7 +32,7 @@ const IssueForm: React.FC<InterfaceModals> = ({ close }) => {
 			initialValues={initialIssues}
 			onSubmit={submit}
 			validationSchema={validateSchemaIssues}>
-			{({ isValid, dirty }) => (
+			{() => (
 				<Form className={styles.form}>
 					<h1 className={styles.title}>Create Issue</h1>
 					<FormikControl
