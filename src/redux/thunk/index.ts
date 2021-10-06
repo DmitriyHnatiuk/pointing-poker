@@ -199,7 +199,7 @@ const socketCreator =
 			});
 		}
 
-		// admin agree connect user
+
 		if (type === ADMIN_AGREE) {
 			socket.emit('event://confirm_connect', id);
 		}
@@ -208,7 +208,7 @@ const socketCreator =
 			socket.emit('event://cancel_connect', id);
 		}
 
-		// delete users
+	
 		if (type === DELETE) {
 			socket.emit('event://delete', id);
 		}
