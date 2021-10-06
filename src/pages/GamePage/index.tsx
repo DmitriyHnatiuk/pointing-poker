@@ -76,7 +76,6 @@ const GamePage: React.FC = (): JSX.Element => {
 						{!!result && <Statistics />}
 					</div>
 				</div>
-
 				<div className={styles.cardContainer}>
 					<RenderCards />
 				</div>
