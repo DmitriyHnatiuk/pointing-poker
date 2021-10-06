@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Chat from 'components/common/Chat';
 
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { getChat, getMembers } from 'redux/reducer/selectors';
+import { getChat } from 'redux/reducer/selectors';
 import { onOpenChat } from 'redux/reducer/chatReducer';
 
 import { ways } from 'constants/constRouter';
