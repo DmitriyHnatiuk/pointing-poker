@@ -1,0 +1,47 @@
+version: '4'
+services:
+  server:
+    build: ../server
+    restart: unless-stopped
+    container_name: server
+    ports:
+      - ${PORT}:${PORT}
+    env_file: ../app/.env
+    volumes:
+      - ../server:/server
+      - node_server:/server/node_modules
+    networks:
+      bridge-network:
+        ipv4_address: ${HOST}
+    command: npm run start:dev
+  app:
+    build: .
+    container_name: app
+    env_file: ./.env
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    depends_on:
+      - server
+    links:
+      - server
+    volumes:
+      - '.:/app'
+      - node_app:/app/node_modules
+    networks:
+      bridge-network:
+        ipv4_address: ${APP_HOST}
+    command: npm run start:container
+    # command: npm run build:container
+volumes:
+  node_app:
+    driver: local
+  node_server:
+    driver: local
+
+networks:
+  bridge-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${SUBNET}

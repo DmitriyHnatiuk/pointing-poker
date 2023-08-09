@@ -1,0 +1,99 @@
+@import '/src/assets/styles/_variables';
+
+.message {
+	max-width: 75%;
+	width: fit-content;
+	position: relative;
+	margin: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	display: grid;
+	grid-template-rows: min-content;
+	gap: 5px 5px;
+}
+
+.message_user {
+	align-self: end;
+	grid-template-columns: 1fr 60px;
+	grid-template-areas:
+		'author avatar'
+		'text avatar'
+		'date avatar';
+	background-color: rgb(102 219 89 / 70%);
+}
+
+.message_other {
+	align-self: start;
+	grid-template-columns: 60px 1fr;
+	grid-template-areas:
+		'avatar author'
+		'avatar text'
+		'avatar date';
+	background-color: rgb(208 231 106 / 70%);
+}
+
+.author {
+	display: flex;
+	flex-wrap: wrap;
+	grid-area: author;
+}
+
+.user_name {
+	max-width: 13ch;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: $MainFont;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 24px;
+	color: $DistantBlue;
+	text-transform: capitalize;
+	&:hover {
+		max-width: inherit;
+		word-break: break-all;
+	}
+}
+
+.message_user .user_name {
+	justify-content: flex-end;
+	color: $White-color;
+}
+
+.avatar_style {
+	grid-area: avatar;
+	width: 40px;
+	height: 40px;
+	align-self: flex-start;
+	justify-self: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	font-size: 20px;
+	line-height: 18px;
+}
+
+.text {
+	font-family: $MainFont;
+	font-style: normal;
+	font-weight: 300;
+	font-size: 20px;
+	word-break: break-word;
+	line-height: 24px;
+	color: $Deep-Koamaru;
+}
+
+.date {
+	text-align: end;
+	font-family: $MainFont;
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 1.5;
+	color: $DistantBlue;
+}
+
+.message_user .date {
+	text-align: start;
+	color: $White-color;
+}

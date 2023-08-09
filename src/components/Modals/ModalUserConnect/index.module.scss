@@ -1,0 +1,75 @@
+@import '/src/assets/styles/_variables';
+
+.modal {
+	position: relative;
+	margin: auto;
+	display: flex;
+	text-align: center;
+	flex-direction: column;
+	align-items: center;
+	background-color: $White-color;
+	max-height: 100vh;
+	max-width: 100vw;
+	padding: 2rem;
+	border-radius: 5px;
+}
+
+.content {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+	flex-direction: column;
+	padding: 20px 0;
+}
+
+.text,
+.title {
+	font-family: $MainFont;
+	font-weight: bold;
+	font-size: 1.2rem;
+	line-height: 2;
+	word-wrap: break-word;
+}
+
+.text > span,
+.title {
+	color: $DistantBlue;
+	word-break: break-all;
+}
+
+.title {
+	font-size: 1.5rem;
+	line-height: 1;
+	font-weight: 700;
+	& > span {
+		word-break: keep-all;
+		color: $TextDark;
+	}
+}
+
+.buttons {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	gap: 20px;
+
+	& > button {
+		width: fit-content;
+	}
+
+	@media (max-width: 540px) {
+		& > button {
+			width: 100%;
+		}
+	}
+}
+
+.cancel {
+	background: $White-color;
+	color: $Deep-Koamaru;
+}
+
+.cancel:hover {
+	background-color: $Deep-Koamaru;
+	color: $White-color;
+}

@@ -1,0 +1,65 @@
+@import '/src/assets/styles/_variables';
+
+.card {
+	max-width: 100%;
+	width: 220px;
+	border: 1px solid $Deep-Koamaru;
+	border-radius: 5px;
+	box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+	transition: all 0.5s;
+	word-break: break-all;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.card:hover {
+	box-shadow: 4px 4px 4px rgb(0 0 0 / 50%);
+}
+
+.member {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.avatar_block {
+	width: 40px;
+	height: 40px;
+	font-size: 20px;
+	line-height: 18px;
+}
+
+.admin {
+	font-size: 12px;
+	font-weight: 300;
+	color: $Razzmatazz;
+}
+
+.name {
+	font-size: 24px;
+	color: $Deep-Koamaru;
+}
+
+.position {
+	font-size: 10px;
+	color: $Dark-Electric-Blue;
+}
+
+.delete img {
+	width: 25px;
+	height: 25px;
+	transition: all 0.5s;
+}
+
+.delete img:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+}
+
+.delete img:active {
+	transform: scale(1.2);
+}

@@ -1,0 +1,61 @@
+@import '/src/assets/styles/_variables';
+
+.form {
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+
+	@media (max-width: 600px) {
+		padding: 10px;
+	}
+}
+
+.field {
+	align-items: center;
+	margin-bottom: 20px;
+	justify-content: space-between;
+
+	& > label {
+		padding: 0;
+	}
+
+	& > input {
+		border: 1px solid $Dark-Electric-Blue;
+	}
+	& > input,
+	select {
+		width: 80%;
+	}
+}
+
+.cancel {
+	background: $White-color;
+	color: $Deep-Koamaru;
+}
+
+.cancel:hover {
+	background-color: $Deep-Koamaru;
+	color: $White-color;
+}
+
+.buttons {
+	padding-top: 20px;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: space-between;
+
+	@media (max-width: 600px) {
+		padding-top: 10px;
+		gap: 10px;
+		flex-direction: column;
+	}
+}
+
+.button {
+	@media (max-width: 600px) {
+		width: 100%;
+		margin: 0;
+	}
+}

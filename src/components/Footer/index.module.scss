@@ -1,0 +1,64 @@
+@import '/src/assets/styles/_variables';
+
+.footer {
+	margin-top: auto;
+	min-height: 50px;
+	background-color: $Deep-Koamaru;
+}
+
+.container {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin: 5px auto;
+	flex-wrap: wrap;
+	gap: 10px 20%;
+}
+
+.github {
+	display: flex;
+	align-items: center;
+	height: 50px;
+	transition: 0.5s;
+	gap: 10px;
+}
+
+.item {
+	list-style-type: none;
+	font-size: 12px;
+	transition: all 0.5s;
+
+	& .link {
+		cursor: pointer;
+		color: $White-color;
+		text-decoration: none;
+
+		&:hover,
+		&:focus {
+			opacity: 0.7;
+		}
+	}
+}
+
+.rss a {
+	display: flex;
+	align-items: end;
+	height: 32px;
+	cursor: pointer;
+	text-decoration: none;
+
+	&:hover .year,
+	&:focus .year {
+		transform: translateX(5px);
+		letter-spacing: 0;
+	}
+}
+
+.year {
+	font-size: 21px;
+	font-weight: bold;
+	line-height: 14px;
+	letter-spacing: 0;
+	color: $White-color;
+	transition: 0.5s;
+}

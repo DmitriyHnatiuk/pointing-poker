@@ -1,0 +1,12 @@
+@import '/src/assets/styles/_variables';
+
+.master_container {
+	text-align: start;
+	max-width: 50%;
+	width: fit-content;
+}
+
+.title_status {
+	font-size: 12px;
+	color: $Dark-Electric-Blue;
+}

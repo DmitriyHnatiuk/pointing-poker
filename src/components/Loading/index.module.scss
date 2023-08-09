@@ -1,0 +1,29 @@
+@import '/src/assets/styles/_variables';
+
+.loading {
+	margin: auto;
+	width: 80px;
+
+	&::before {
+		content: ' ';
+		display: block;
+		width: 60px;
+		height: 60px;
+		margin: auto;
+		box-sizing: border-box;
+		border-radius: 50%;
+		border: 6px solid $Deep-Koamaru;
+		animation: lds-dual-ring 1.2s linear infinite;
+		border-color: $Deep-Koamaru transparent $Middle-Green-Yellow transparent;
+	}
+}
+
+@keyframes lds-dual-ring {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}

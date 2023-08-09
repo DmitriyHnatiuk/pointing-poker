@@ -1,0 +1,72 @@
+@import '/src/assets/styles/_variables';
+
+.input_style {
+	& > label {
+		padding: 0;
+	}
+	& > input,
+	& > select {
+		width: 70%;
+		max-width: 350px;
+		padding: 4px 0;
+		padding-left: 10px;
+		border: 1px solid $TextDark;
+		border-bottom-left-radius: 10px;
+		font-family: $MainFont;
+		font-style: normal;
+		font-weight: 300;
+		font-size: 18px;
+		line-height: 0;
+		height: auto;
+
+		@media (max-width: 800px) {
+			font-size: 18px;
+			line-height: 1.5;
+		}
+	}
+}
+
+.settings {
+	width: 70%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+
+	@media (max-width: 800px) {
+		width: 100%;
+	}
+}
+
+.params {
+	text-align: start;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.params > label,
+.params > span,
+.title {
+	font-family: $SecondFont;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 30px;
+	color: $TextDark;
+
+	@media (max-width: 800px) {
+		font-size: 18px;
+		line-height: 1.5;
+	}
+}
+
+.timer_content {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 150px;
+}

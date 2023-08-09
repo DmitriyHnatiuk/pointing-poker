@@ -1,0 +1,42 @@
+@import '/src/assets/styles/_variables';
+
+.container {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.label {
+	font-family: $MainFont;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 1.5;
+
+	@media (max-width: 600px) {
+		line-height: 1.5;
+	}
+}
+
+.field {
+	width: 100%;
+	padding-left: 10px;
+	border-radius: 5px;
+	font-family: $MainFont;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 24px;
+	line-height: 2rem;
+	border: 1px solid $TextDark;
+	background-color: $White-color;
+
+	& > option:checked {
+		background-color: $BackgroundGray;
+	}
+
+	@media (max-width: 800px) {
+		height: 30px;
+		font-size: 18px;
+		line-height: 1.5;
+	}
+}

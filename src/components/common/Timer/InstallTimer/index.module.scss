@@ -1,0 +1,73 @@
+@import '/src/assets/styles/_variables';
+
+.timer {
+	width: 180px;
+	padding: 5px;
+	margin: 10px auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: nowrap;
+	background-color: $White-color;
+	border-radius: 4px;
+	box-shadow: 5px 5px 5px -5px rgb(34 60 80 / 60%);
+	transition: all 0.5s;
+}
+
+.timer:hover {
+	box-shadow: 4px 4px 4px rgb(0 0 0 / 50%);
+}
+
+.clock_container {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+
+	& > input[type='number'] {
+		-moz-appearance: textfield;
+		appearance: textfield;
+		margin: 0;
+	}
+	& > input[type='number']::-webkit-inner-spin-button,
+	& > input[type='number']::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	& > label,
+	& > input {
+		font-family: $SecondFont;
+		font-style: normal;
+		font-weight: bold;
+		text-align: center;
+		padding-left: 0;
+	}
+
+	& > label {
+		width: 100%;
+		font-size: 12px;
+		line-height: 15px;
+		color: $ColorTimer;
+	}
+
+	& > input {
+		width: 80px;
+		font-size: 54px;
+		border: none;
+		border-radius: 5px;
+
+		&:focus {
+			box-shadow: 0 5px 10px 2px rgb(34 60 80 / 20%) inset;
+		}
+	}
+}
+
+.separator {
+	font-family: $SecondFont;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 24px;
+	padding: 5px;
+	padding-top: 10px;
+}

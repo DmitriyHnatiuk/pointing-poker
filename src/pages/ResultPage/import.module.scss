@@ -1,0 +1,33 @@
+@import '/src/assets/styles/_variables';
+
+.result_container {
+	min-height: 60vh;
+	border: 1px solid $TextDark;
+	border-radius: 5px;
+	max-width: 100%;
+	@media print {
+		display: flex;
+		width: 80%;
+		margin: auto;
+	}
+}
+
+.result {
+	display: flex;
+	flex-direction: column;
+	margin: 0 10px;
+	padding-top: 5px;
+	border-top: 1px solid $TextDark;
+}
+
+.cards {
+	display: flex;
+	flex-direction: row;
+}
+
+.result_save {
+	margin-top: 10px;
+	@media (max-width: 800px) {
+		width: 100%;
+	}
+}

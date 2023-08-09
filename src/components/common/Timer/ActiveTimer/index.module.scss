@@ -1,0 +1,83 @@
+@import 'src/assets/styles/_variables';
+
+.timer {
+	width: 180px;
+	padding: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: nowrap;
+	background-color: $White-color;
+	border-radius: 4px;
+	box-shadow: 5px 5px 5px -5px rgb(34 60 80 / 60%);
+	margin-bottom: 20px;
+
+	@media (max-width: 900px) {
+		margin: 10px auto;
+		padding: 0;
+	}
+}
+
+.buttons {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 10px;
+
+	@media (max-width: 900px) {
+		width: 100%;
+	}
+}
+
+.hide_button {
+	visibility: hidden;
+	animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+	to {
+		visibility: hidden;
+	}
+}
+
+.main_button,
+.primary_button {
+	@media (max-width: 900px) {
+		min-width: 100%;
+	}
+}
+
+.separator {
+	font-family: $SecondFont;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 24px;
+	padding: 5px;
+}
+
+.clockName {
+	width: 100%;
+	text-align: left;
+	font-family: $SecondFont;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 18px;
+	padding-left: 5px;
+	color: $ColorTimer;
+}
+
+.clockView {
+	width: 80px;
+	font-family: $SecondFont;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 54px;
+	text-align: center;
+	border: none;
+	border-radius: 5px;
+
+	&:focus {
+		box-shadow: 0 5px 10px 2px rgb(34 60 80 / 20%) inset;
+	}
+}
