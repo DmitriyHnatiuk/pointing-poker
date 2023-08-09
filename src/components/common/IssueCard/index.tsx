@@ -1,67 +1,74 @@
-import React, { MouseEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { MouseEvent, memo, useCallback } from 'react';
 
-import { useTypedSelector } from 'hooks/useTypedSelector';
-import socketCreator, { DELETE_ISSUE, SELECT_ISSUE } from 'redux/thunk';
+import { EVENTS } from 'src/constants/constRouter';
+import { useAppDispatch, useTypedSelector } from 'src/hooks/useTypedSelector';
 
-import { getGame, getMembers } from 'redux/reducer/selectors';
-import { Issue } from 'redux/reducer/gameSettingReducer/types';
-import { activeIssue } from 'redux/reducer/gameSettingReducer';
+import DeleteImage from '_assets/images/CardPlayer/player-delete.svg?url';
 
-import deleteImage from 'assets/images/CardPlayer/player-delete.svg';
+import { IssueType } from '_redux/reducer/planningReducer/types';
+import { selectUserData } from '_redux/reducer/userReducer/selectors';
+import socketCreator from '_redux/thunk';
 
+import Button from '../Button';
+
+import { Link } from 'react-router-dom';
 import styles from './index.module.scss';
 
-const IssueCard: React.FC<{ issue: Issue; isActive?: boolean }> = ({
-	issue,
-	isActive
-}) => {
-	const { title, priority, active } = issue;
+type propsType = IssueType & { isPlanning?: boolean; isActive: boolean };
 
-	const dispatch = useDispatch();
-	const { isAdmin } = useTypedSelector(getMembers);
-	const gameData = useTypedSelector(getGame);
-	const onDeleteIssue = (event: MouseEvent) => {
+const IssueCard = ({ isPlanning, isActive, ...issue }: propsType) => {
+	const dispatch = useAppDispatch();
+
+	const { isAdmin } = useTypedSelector(selectUserData);
+
+	const onDeleteIssue = useCallback((event: MouseEvent) => {
 		event.stopPropagation();
-		dispatch(socketCreator({ type: DELETE_ISSUE, issue: { ...issue } }));
-	};
+		dispatch(socketCreator({ type: EVENTS.DELETE_ISSUE, id: issue.id }));
+	}, []);
 
-	const onActiveIssue = () => {
-		if (isAdmin) {
-			if (isActive) {
-				dispatch(activeIssue(issue));
-				dispatch(
-					socketCreator({
-						type: SELECT_ISSUE,
-						gameSettings: gameData
-					})
-				);
-			}
+	const onActiveIssue = useCallback(() => {
+		if (isAdmin && isPlanning) {
+			dispatch(
+				socketCreator({
+					type: EVENTS.SELECT_ISSUE,
+					id: issue.id
+				})
+			);
 		}
-	};
+	}, []);
 
 	return (
-		<section aria-hidden="true" className={styles.card} onClick={onActiveIssue}>
-			{isActive && active && <div className={styles.active} />}
+		<div
+			className={`${styles.card} ${
+				isPlanning && isActive ? styles.active : ''
+			} `}
+			onClick={onActiveIssue}>
 			<div className={styles.content}>
-				<div className={styles.title}>
-					<span className={styles.issue}>{title}</span>
-					<span className={styles.priority}>{priority}</span>
+				<div>
+					<span className={styles.issue} title={issue.title}>
+						{issue.title}
+					</span>
+
+					<p className={styles.card_footer}>
+						<span className={styles.priority}>{issue.priority} priority</span>
+						<Link
+							to={`//${issue.link}`}
+							target="_blank"
+							rel="noopener noreferrer">
+							Link
+						</Link>
+					</p>
 				</div>
 				<div className={styles.delete}>
-					{!active && isAdmin && (
-						<img
-							src={deleteImage}
-							alt="delete"
-							title="Delete issue"
-							onClick={onDeleteIssue}
-							aria-hidden="true"
-						/>
+					{!isActive && isAdmin && (
+						<Button variant="icon" onClick={onDeleteIssue}>
+							<img src={DeleteImage} alt="delete" onClick={onDeleteIssue} />
+						</Button>
 					)}
 				</div>
 			</div>
-		</section>
+		</div>
 	);
 };
 
-export default IssueCard;
+export default memo(IssueCard);

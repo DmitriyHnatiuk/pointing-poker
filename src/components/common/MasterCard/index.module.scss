@@ -1,12 +1,12 @@
-@import '/src/assets/styles/variables';
+@import '/src/assets/styles/_variables';
 
-.status {
-	padding-top: 10px;
-	text-align: left;
-	position: relative;
+.master_container {
+	text-align: start;
+	max-width: 50%;
+	width: fit-content;
 }
 
-.titleStatus {
+.title_status {
 	font-size: 12px;
 	color: $Dark-Electric-Blue;
 }

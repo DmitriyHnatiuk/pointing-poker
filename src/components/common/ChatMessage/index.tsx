@@ -1,42 +1,45 @@
-import React from 'react';
+import { memo, useMemo } from 'react';
 
-import Avatar from 'components/Avatar';
+import { useTypedSelector } from 'src/hooks/useTypedSelector';
 
-import { interfaceChatMessage } from 'interfaces/commonChat';
-import { useTypedSelector } from 'hooks/useTypedSelector';
-import { getMembers } from 'redux/reducer/selectors';
+import { selectUserData } from '_redux/reducer/userReducer/selectors';
+
+import Avatar from 'src/components/Avatar';
+
+import { IChatMessage } from 'src/interfaces/thunkTypes';
+import { getInitialsName } from 'src/utils/initialValuesForms';
 
 import styles from './index.module.scss';
 
-const ChatMessage: React.FC<interfaceChatMessage> = (props) => {
-	const { author, textMessage, date } = props;
-	const { icon, firstName, lastName } = author;
-	const nameUser = useTypedSelector(getMembers).firstName;
-	const isUser = nameUser === firstName;
+const ChatMessage = ({ author, message, date }: IChatMessage) => {
+	const { icon, firstName, lastName, authorId } = author;
+	const { id: userId } = useTypedSelector(selectUserData);
+
+	const nameInitials = useMemo(
+		() => getInitialsName({ firstName, lastName }),
+		[firstName, lastName]
+	);
 
 	return (
-		<>
-			<div
-				className={`${styles.message} ${
-					isUser ? styles.messageUser : styles.messageOther
-				}`}>
-				<Avatar
-					firstName={firstName}
-					lastName={lastName}
-					avatar={icon}
-					blockStyle={styles.avatarBlock}
-					textStyle={styles.avatarText}
-				/>
-				<div className={styles.author}>
-					<span className={styles.userName}>
-						{firstName} {lastName}
-					</span>
-				</div>
-				<p className={styles.text}>{textMessage}</p>
-				<span className={styles.date}>{date}</span>
+		<div
+			className={`${styles.message} ${
+				userId === authorId ? styles.message_user : styles.message_other
+			}`}>
+			<Avatar
+				title={`${firstName} ${lastName}`}
+				nameInitials={nameInitials}
+				avatar={icon}
+				style={styles.avatar_style}
+			/>
+			<div className={styles.author}>
+				<span className={styles.user_name}>
+					{firstName} {lastName}
+				</span>
 			</div>
-		</>
+			<p className={styles.text}>{message}</p>
+			<span className={styles.date}>{date}</span>
+		</div>
 	);
 };
 
-export default ChatMessage;
+export default memo(ChatMessage);

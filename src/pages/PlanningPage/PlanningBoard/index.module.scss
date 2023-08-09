@@ -1,0 +1,74 @@
+@import '/src/assets/styles/_variables';
+
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	& > ul {
+		margin-top: auto;
+	}
+}
+
+.menu {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 20px;
+
+	@media (max-width: 900px) {
+		flex-wrap: wrap;
+		margin-bottom: 20px;
+	}
+}
+
+.master_card {
+	min-width: 200px;
+
+	@media (max-width: 900px) {
+		min-width: auto;
+		justify-items: flex-start;
+	}
+}
+
+.master_button {
+	@media (max-width: 900px) {
+		width: 100%;
+	}
+}
+
+.settings {
+	box-sizing: border-box;
+	display: flex;
+	margin: 2vh 0;
+	text-align: start;
+	gap: 20px;
+
+	& > .button_container {
+		flex: 1;
+	}
+
+	& > .issues_container {
+		direction: rtl;
+		overflow: auto;
+		max-height: 50vh;
+
+		& > * {
+			direction: ltr;
+		}
+		& > h3 {
+			display: block;
+			padding: 0 20px;
+			position: sticky;
+			top: 0;
+			background-color: $White-color;
+			z-index: 3;
+		}
+	}
+
+	@media (max-width: 900px) {
+		width: 100%;
+		flex-direction: column-reverse;
+		justify-content: flex-end;
+	}
+}

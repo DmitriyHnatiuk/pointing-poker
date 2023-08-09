@@ -1,25 +1,9 @@
-import { Dispatch, SetStateAction } from 'react';
+import { ReactNode } from 'react';
 
-export interface Modal {
-	type: TypeModalsOpen;
-	open: Dispatch<SetStateAction<boolean>>;
-	vote?: boolean;
-	player?: string;
-	playerKick?: string;
-}
-
-export interface InterfaceModals {
-	close: () => void;
-}
-
-export interface InterfaceModalsKick {
-	close: () => void;
-}
-
-export enum TypeModalsOpen {
-	registration = 'REGISTRATION',
-	issue = 'ISSUES',
-	kick = 'KICK',
-	message = 'MESSAGE',
-	connect = 'USER_CONNECT'
-}
+export type ModalsType = {
+	isOpen: boolean;
+	onClose?: () => void;
+	children: ReactNode;
+	style?: Record<string, string>;
+	className?: string;
+};

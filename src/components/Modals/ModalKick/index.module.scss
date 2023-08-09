@@ -1,0 +1,43 @@
+@import 'src/assets/styles/_variables';
+
+.content {
+	flex: 1;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+.text {
+	font-family: $SecondFont;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 30px;
+	text-align: center;
+	margin: auto;
+	width: 56%;
+}
+
+.player {
+	word-break: break-all;
+	color: $DistantBlue;
+}
+
+.buttons {
+	margin-top: auto;
+	padding-top: 20px;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.cancel {
+	background: $White-color;
+	color: $Deep-Koamaru;
+}
+
+.cancel:hover {
+	background-color: $Deep-Koamaru;
+	color: $White-color;
+}

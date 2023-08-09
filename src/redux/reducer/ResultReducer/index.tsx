@@ -1,46 +1,23 @@
-import { ResultInterface } from 'interfaces/commonComponents';
-import { Result } from './types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { logoutAction } from '../loading/logoutAction';
+import { ResultType } from './types';
 
-export const SET_RESULT_DATA = 'SET_RESULT_DATA';
+const initialState: ResultType = {};
 
-const initialStore: Result = {
-	result: [
-		{
-			id: '',
-			title: '',
-			priority: '',
-			link: '',
-			active: false,
-			cards: []
-		}
-	]
-};
+type ResultStateType = typeof initialState;
 
-export type StateType = typeof initialStore;
-
-export type ResultActionType = AC1Type | AC2Type;
-
-const resultReducer = (
-	state: StateType = initialStore,
-	{ type, payload }: ResultActionType
-): StateType => {
-	switch (type) {
-		case SET_RESULT_DATA: {
-			return { ...state, ...payload };
-		}
-
-		default:
-			return state;
+const resultSlice = createSlice({
+	name: 'result',
+	initialState,
+	reducers: {
+		setResult: (state: ResultStateType, action: PayloadAction<ResultType>) =>
+			action.payload
+	},
+	extraReducers: (builder) => {
+		builder.addCase(logoutAction, () => initialState);
 	}
-};
+});
 
-export const setResultDataActionCreation = (payload: ResultInterface) =>
-	({ type: SET_RESULT_DATA, payload } as const);
+export const { setResult } = resultSlice.actions;
 
-export const resetResultDataActionCreation = () =>
-	({ type: SET_RESULT_DATA, payload: initialStore } as const);
-
-type AC1Type = ReturnType<typeof setResultDataActionCreation>;
-type AC2Type = ReturnType<typeof resetResultDataActionCreation>;
-
-export default resultReducer;
+export default resultSlice.reducer;

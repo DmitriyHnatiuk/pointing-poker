@@ -1,104 +1,134 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import socketCreator from '_redux/thunk';
+import { MouseEvent, memo, useCallback } from 'react';
 
-import { useTypedSelector } from 'hooks/useTypedSelector';
-import socketCreator, { SELECT_CARD } from 'redux/thunk';
+import { useAppDispatch, useTypedSelector } from 'src/hooks/useTypedSelector';
 
-import { getMembers, getGame } from 'redux/reducer/selectors';
-import { PlayingCard } from 'redux/reducer/gameSettingReducer/types';
 import {
-	activePlayingCardAction,
 	deletePlayingCard,
 	editPlayingCard
-} from 'redux/reducer/gameSettingReducer';
+} from '_redux/reducer/planningReducer';
+import {
+	selectLoginStatus,
+	selectPlanningSettingsScore
+} from '_redux/reducer/planningReducer/selectors';
+import { selectUserData } from '_redux/reducer/userReducer/selectors';
 
-import deleteCard from 'assets/images/CardPlayer/player-delete.svg';
-import cup from 'assets/images/PlayingCard/cup.svg';
-import iconActiveCard from 'assets/images/PlayingCard/active_card.svg';
+import DeleteCardImg from '_assets/images/CardPlayer/player-delete.svg?url';
+import IconActiveCardImg from '_assets/images/PlayingCard/active_card.svg?url';
+import CupImg from '_assets/images/PlayingCard/cup.svg?url';
+
+import { EVENTS } from 'src/constants/constRouter';
+import { useDebounce } from 'src/hooks/useDebounce';
+
+import Button from '../Button';
+import Input from '../Form/Input';
 
 import styles from './index.module.scss';
 
-const PlayingCardComponent: React.FC<{
-	card: PlayingCard;
-	scoreType: string;
+type PropsType = {
+	cardId: string;
 	activeCard?: boolean;
 	inStatistics?: boolean;
 	style?: string;
-}> = ({ card, scoreType, activeCard, inStatistics, style }) => {
-	const dispatch = useDispatch();
+	score: string;
+	isFirstCard?: boolean;
+	isActiveCard?: boolean;
+};
 
-	const { login } = useTypedSelector(getMembers);
-	const { runRound } = useTypedSelector(getGame);
-	const { score, isFirstCard, active, id } = card;
-	const cardId = id.toString();
-	const isActive = activeCard && active;
+const PlayingCard = ({
+	cardId,
+	activeCard,
+	inStatistics,
+	style = '',
+	score,
+	isFirstCard,
+	isActiveCard
+}: PropsType) => {
+	const dispatch = useAppDispatch();
 
-	const onEditScore = (e: React.ChangeEvent<HTMLInputElement>): void => {
-		dispatch(editPlayingCard(card, e.target.value));
-	};
+	const isLoginOpen = useTypedSelector(selectLoginStatus);
+	const scoreType = useTypedSelector(selectPlanningSettingsScore);
+	const { isAdmin, isObserver } = useTypedSelector(selectUserData);
 
-	const onDeleteCard = () => {
-		dispatch(deletePlayingCard(card));
-	};
+	const debouncedCallback = useDebounce((value: string) => {
+		dispatch(
+			editPlayingCard({ card: { cardId, score, isFirstCard }, score: value })
+		);
+	});
 
-	const onActiveCard = (event: React.MouseEvent<HTMLElement>) => {
-		if (activeCard && runRound) {
-			const selectCardId = (event.currentTarget as HTMLElement).id;
-			dispatch(socketCreator({ type: SELECT_CARD, id: selectCardId }));
-			return dispatch(activePlayingCardAction(card));
+	const onEditScore = useCallback(
+		(value: string) => {
+			debouncedCallback(value);
+		},
+		[debouncedCallback]
+	);
+
+	const onDeleteCard = useCallback((event: MouseEvent) => {
+		event.stopPropagation();
+		dispatch(deletePlayingCard({ id: cardId }));
+	}, []);
+
+	const onActiveCard = useCallback(() => {
+		if (activeCard && !isObserver) {
+			dispatch(
+				socketCreator({
+					type: EVENTS.SELECT_CARD,
+					id: cardId
+				})
+			);
 		}
-		return null;
-	};
+	}, [activeCard]);
 
 	return (
 		<>
-			<section
+			<div
 				className={`${styles.card} ${style} ${
-					inStatistics && styles.statisticsCard
+					inStatistics ? styles.statistics_card : ''
 				}`}
-				aria-hidden="true"
-				id={cardId}
 				onClick={onActiveCard}>
-				{isActive && (
-					<div className={styles.activeCard}>
+				{isActiveCard && (
+					<div className={styles.active_card}>
 						<img
 							width="40"
 							height="40"
-							src={iconActiveCard}
+							src={IconActiveCardImg}
 							alt="Active card"
 						/>
 					</div>
 				)}
 				<div className={styles.content}>
 					<div className={styles.top}>
-						{inStatistics ? (
-							<span className={styles.input}>{score}</span>
-						) : (
-							<input
-								className={styles.input}
-								type="text"
-								value={score}
+						{isAdmin && !activeCard && !inStatistics ? (
+							<Input
+								name={`score card ${cardId}`}
+								style={styles.input}
+								defaultValue={score}
 								onChange={onEditScore}
 							/>
+						) : (
+							<span className="text">{score}</span>
 						)}
-						{!login && (
-							<img
-								src={deleteCard}
-								alt="Delete card"
-								aria-hidden="true"
-								onClick={onDeleteCard}
-							/>
+						{!isLoginOpen && !activeCard && !inStatistics && (
+							<Button
+								style={styles.del_button}
+								variant="icon"
+								onClick={onDeleteCard}>
+								<img src={DeleteCardImg} alt="Delete card" />
+							</Button>
 						)}
 					</div>
 					<div className={styles.type}>
-						{isFirstCard ? <img src={cup} alt="Cup" /> : scoreType}
+						{isFirstCard ? (
+							<img src={CupImg} alt="Cup" loading="lazy" />
+						) : (
+							scoreType
+						)}
 					</div>
-					<span className={styles.bottom}>{score}</span>
+					<span className={`${styles.bottom} text`}>{score}</span>
 				</div>
-			</section>
-			{!activeCard && login && <span>{card.count} %</span>}
+			</div>
 		</>
 	);
 };
 
-export default PlayingCardComponent;
+export default memo(PlayingCard);

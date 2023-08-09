@@ -1,29 +1,42 @@
-$white-color: #fff;
-$light-salmon-pink: #f99;
-$Pastel-Red: #f66;
-$Deep-Carmine-Pink: #ff3333;
+// Variables
+$Deep-Carmine-Pink: #f33;
+$Light-salmon-pink: #f99;
+$Dark-Crimson: #ac3131;
 $Ferrari-Red: #ff1e00;
+$White-color: #fff;
+$Pastel-Red: #f66;
+
 // Main color
-$Medium-Aquamarine: #60dabf;
-$Light-Brown: #b7631a;
-$Maximum-Purple: #7d3488;
-$Razzmatazz: #e32b77;
-$Mulberry-Crayola: #c34bad;
-$Byzantine: #a527b1;
-$Light-Sea-Green: #24a6ac;
 $Middle-Green-Yellow: #a1b261;
+$Medium-Aquamarine: #60dabf;
+$Mulberry-Crayola: #c34bad;
+$Light-Sea-Green: #24a6ac;
+$Maximum-Purple: #7d3488;
 $Android-Green: #a1bb41;
+$Light-Brown: #b7631a;
+$Razzmatazz: #e32b77;
+$Byzantine: #a527b1;
 
 // Pallet color
-$Deep-Koamaru: #2b3a67;
 $Dark-Electric-Blue: #496a81;
 $Desaturated-Cyan: #65999b;
-$Sage: #b4af8f;
-$Topaz: #ffc482;
-
-$TextDark: #000;
 $BackgroundGray: #c4c4c4;
-$BackgroundGrayModal: rgba(196, 196, 196, 0.6);
+$Deep-Koamaru: #2b3a67;
 $DistantBlue: #496a81;
-$ColorTimer: rgba(0, 0, 0, 0.5);
-$BackgroundMediumAquamarine: rgba(96, 218, 191, 0.46);
+$Light-Cyan: #e0ffff;
+$Light-Gray: #d3d3d3;
+$Turquoise: #40e0d0;
+$ErrorBackground: #ffe0e0;
+$ErrorBorder: #e04047;
+$TextDark: #000;
+$Topaz: #ffc482;
+$Sage: #b4af8f;
+
+$BackgroundMediumAquamarine: rgb(96 218 191 / 46%);
+$BackgroundGrayModal: rgb(196 196 196 / 60%);
+$ShadowDarkBox: rgb(0 0 0 / 25%);
+$ColorTimer: rgb(0 0 0 / 50%);
+
+// Font
+$MainFont: 'Roboto', serif;
+$SecondFont: 'Ruda', sans-serif;

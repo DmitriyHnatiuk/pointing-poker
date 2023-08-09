@@ -1,83 +1,82 @@
-import React from 'react';
-import JS_PDF from 'jspdf';
+import { selectResult } from '_redux/reducer/ResultReducer/selectors';
+import {
+	selectIssues,
+	selectPlanningSettings
+} from '_redux/reducer/planningReducer/selectors';
+import { selectSortedUsers } from '_redux/reducer/userReducer/selectors';
+import { selectResultCards } from '_redux/reducer/usersVote/selectors';
 
-import { getGame, getResult } from 'redux/reducer/selectors';
+import { downloadPdf } from 'src/components/Pdf';
 
-import { useTypedSelector } from 'hooks/useTypedSelector';
+import Button from 'src/components/common/Button';
+import { Divider } from 'src/components/common/Divider';
+import IssueCard from 'src/components/common/IssueCard';
+import PlayingCard from 'src/components/common/PlayingCard';
 
-import MyButton from 'components/common/MyButton';
-
-import cup from 'assets/images/PlayingCard/cup.svg';
+import { useTypedSelector } from 'src/hooks/useTypedSelector';
+import { getInterest } from 'src/utils/getPlayingCards';
 
 import styles from './import.module.scss';
 
-const ResultPage: React.FC = (): JSX.Element => {
-	const { result } = useTypedSelector(getResult);
-	const { scoreType } = useTypedSelector(getGame);
+const ResultPage = () => {
+	const result = useTypedSelector(selectResult);
+	const issues = useTypedSelector(selectIssues);
+	const { planningTitle, scoreType } = useTypedSelector(selectPlanningSettings);
+	const resultCards = useTypedSelector(selectResultCards);
+	const { admin } = useTypedSelector(selectSortedUsers);
 
-	const generatePD = () => {
-		const doc = new JS_PDF('l', 'pt', 'a4');
-		const toPDF = document.getElementById('toPDF');
-		if (toPDF) {
-			doc.html(toPDF, {
-				callback(pdf) {
-					pdf.save('statistic.pdf');
-				}
-			});
-		}
+	const generatePDF = () => {
+		downloadPdf({
+			author: `${admin?.firstName || ''} ${admin?.lastName || ''}`,
+			issues,
+			result,
+			resultCards,
+			planningTitle,
+			scoreType
+		});
 	};
 
 	return (
-		<div className={styles.result_page}>
-			<div id="toPDF" className={styles.result_container}>
-				<h1 className={styles.heading}>TITLE</h1>
-				{result.map((elem) => {
-					const { id, title, priority, cards } = elem;
+		<>
+			<div className={styles.result_container}>
+				<h1 className="title-2 m-0-5">{planningTitle}</h1>
 
-					const newCards = cards.filter((card) => card.count > 0);
+				{Object.keys(result).map((issueId) => (
+					<div className={styles.result} key={issueId}>
+						<IssueCard {...issues[issueId]} isActive />
+						<ul className={styles.cards}>
+							{Object.keys(result[issueId]).map((voterId) => (
+								<li key={voterId}>
+									<PlayingCard
+										{...resultCards[issueId].data[
+											result[issueId][voterId].cardId
+										]}
+										inStatistics
+									/>
+									<span>
+										{getInterest({
+											count:
+												resultCards[issueId].data[
+													result[issueId][voterId].cardId
+												].count,
+											length: resultCards[issueId].list.length
+										})}
+										%
+									</span>
+								</li>
+							))}
+						</ul>
+						<Divider height="20px" />
+					</div>
+				))}
+			</div>
 
-					return (
-						<section className={styles.result} key={id}>
-							<div className={styles.issue_card}>
-								<div className={styles.issue_content}>
-									<div className={styles.issue}>
-										<span className={styles.issue_title}>{title}</span>
-										<span className={styles.priority}>{priority}</span>
-									</div>
-								</div>
-							</div>
-							<div className={styles.cards}>
-								{newCards.map((card) => {
-									return (
-										<div className={styles.card_content}>
-											<div className={styles.card}>
-												<div className={styles.content}>
-													<div className={styles.top}>
-														<span className={styles.input}>{card.score}</span>
-													</div>
-													<div className={styles.type}>
-														{card.isFirstCard ? (
-															<img src={cup} alt="Cup" />
-														) : (
-															scoreType
-														)}
-													</div>
-													<span className={styles.bottom}>{card.score}</span>
-												</div>
-											</div>
-											<div className={styles.count}>{card.count} %</div>
-										</div>
-									);
-								})}
-							</div>
-						</section>
-					);
-				})}
-			</div>
-			<div className={styles.result_save}>
-				<MyButton onclick={generatePD} type="primary" value="Save statistic" />
-			</div>
-		</div>
+			<Button
+				style={styles.result_save}
+				onClick={generatePDF}
+				children="Save statistic"
+			/>
+		</>
 	);
 };
 

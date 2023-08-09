@@ -1,74 +1,52 @@
-import { ActionCreationArguments } from 'interfaces/commonComponents';
-import { User } from './types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { logoutAction } from '../loading/logoutAction';
+import { IUser, IUsers } from './types';
 
-export const SET_DATA = 'SET_DATA';
-export const DELETE_USER = 'DELETE_USER';
-
-const initialStore: User = {
-	selectedCard: '',
-	roomNumber: '',
-	firstName: '',
-	lastName: '',
-	position: '',
-	avatar: '',
-	observer: false,
-	isAdmin: false,
-	karma: 0,
-	id: '',
-	login: false,
-	loading: false,
-	admin: {
+const initialState: IUser = {
+	data: {
+		roomId: '',
 		firstName: '',
 		lastName: '',
 		position: '',
-		observer: false,
 		avatar: '',
-		isAdmin: true,
-		roomNumber: '',
+		isObserver: false,
+		isAdmin: false,
+		karma: 0,
 		id: '',
-		karma: 0
+		adminId: ''
 	},
-	users: []
+	users: {}
 };
 
-type StateType = typeof initialStore;
+const userReducer = createSlice({
+	name: 'user',
+	initialState,
+	reducers: {
+		setUserData: (state: IUser, action: PayloadAction<IUser>) => {
+			state.data = action.payload.data;
+			state.users = action.payload.users;
+		},
+		setUsers: (
+			state: IUser,
+			action: PayloadAction<{ users: { [key: string]: IUsers } }>
+		) => {
+			state.users = action.payload.users;
+		},
 
-export type ActionType = AC1Type | AC2Type | AC3Type;
+		removeUser: (state: IUser, action: PayloadAction<{ userId: string }>) => {
+			delete state.users[action.payload.userId];
+		},
 
-const userReducer = (
-	state: StateType = initialStore,
-	{ type, payload }: ActionType
-): StateType => {
-	switch (type) {
-		case SET_DATA: {
-			return {
-				...state,
-				...payload
-			};
+		setObserver: (state: IUser, action: PayloadAction<boolean>) => {
+			state.data.isObserver = action.payload;
 		}
-		case DELETE_USER: {
-			return {
-				...state,
-				users: state.users.filter((user) => user.id !== payload.id)
-			};
-		}
+	},
 
-		default:
-			return state;
+	extraReducers: (builder) => {
+		builder.addCase(logoutAction, () => initialState);
 	}
-};
+});
 
-export const deleteUserActionCreation = (payload: ActionCreationArguments) =>
-	({ type: DELETE_USER, payload } as const);
-
-export const setUserDataActionCreation = (payload: ActionCreationArguments) =>
-	({ type: SET_DATA, payload } as const);
-
-export const resetUserDataActionCreation = () =>
-	({ type: SET_DATA, payload: initialStore } as const);
-
-type AC1Type = ReturnType<typeof deleteUserActionCreation>;
-type AC2Type = ReturnType<typeof setUserDataActionCreation>;
-type AC3Type = ReturnType<typeof resetUserDataActionCreation>;
-
-export default userReducer;
+export const { setUserData, setUsers, removeUser, setObserver } =
+	userReducer.actions;
+export default userReducer.reducer;

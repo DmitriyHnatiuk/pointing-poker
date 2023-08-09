@@ -1,26 +1,7 @@
-import { TimerSettings } from 'redux/reducer/gameSettingReducer/types';
+export const generateTime = () => {
+  const minutes = String(new Date().getMinutes()).padStart(2, '0');
 
-export const interval = (
-	timer: TimerSettings,
-	updateTimer: ({ min, sec }: TimerSettings) => void
-): NodeJS.Timeout => {
-	let minNum = Number(timer.min);
-	let secNum = Number(timer.sec);
-	const onTimer = setInterval(() => {
-		if (minNum >= 0) {
-			if (secNum === 0 && minNum > 0) {
-				minNum -= 1;
-				secNum = 59;
-			} else if (secNum > 0 && minNum >= 0) {
-				secNum -= 1;
-			} else {
-				clearInterval(onTimer);
-			}
-		}
-		const minString: string = minNum < 10 ? `0${minNum}` : `${minNum}`;
-		const secString: string = secNum < 10 ? `0${secNum}` : `${secNum}`;
+  const hours = String(new Date().getHours()).padStart(2, '0');
 
-		return updateTimer({ min: minString, sec: secString });
-	}, 1000);
-	return onTimer;
+  return `${hours}:${minutes}`;
 };

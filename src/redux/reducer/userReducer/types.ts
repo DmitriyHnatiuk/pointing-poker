@@ -1,50 +1,33 @@
-export interface Profile {
-	room: string;
-	admin: Users[];
-	users: Users[];
-	observer: Users[];
-}
-export interface User {
-	selectedCard: string;
-	roomNumber: string;
+export interface IData {
+	roomId: string;
 	firstName: string;
 	lastName: string;
 	position: string;
 	avatar: string | File;
-	observer: boolean;
+	isObserver: boolean;
 	isAdmin: boolean;
 	karma: number;
 	id: string;
-	login: boolean;
-	users: Users[];
-	admin: Admin;
-	loading: boolean;
+	adminId: string;
+}
+export interface IUser {
+	data: IData;
+	users: { [key: string]: IUsers };
 }
 
-export interface Users {
-	selectedCard: string;
-	roomNumber: string;
+export interface IUsers {
+	roomId: string;
 	firstName: string;
 	lastName: string;
 	position: string;
-	avatar: string | File;
-	observer: boolean;
+	avatar: string;
+	isObserver: boolean;
 	isAdmin: boolean;
 	karma: number;
 	id: string;
-	login: boolean;
-	admin?: Admin;
-	loading?: boolean;
+	adminId: string;
 }
 
-export interface Admin {
-	roomNumber: string;
-	firstName: string;
-	lastName: string;
-	position: string;
-	avatar: string | File;
-	observer: boolean;
-	isAdmin: boolean;
-	karma: number;
-	id: string;
-}
+export type UsersDataType = { players: IUsers[]; observers: IUsers[] };
+
+export type GetUsersType = { users: IUsers[]; admin: IUsers | null };

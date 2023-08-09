@@ -1,7 +1,8 @@
-@import 'assets/styles/_variables.scss';
+@import '/src/assets/styles/_variables';
 
 .message {
 	max-width: 75%;
+	width: fit-content;
 	position: relative;
 	margin: 10px;
 	padding: 10px;
@@ -11,56 +12,55 @@
 	gap: 5px 5px;
 }
 
-.messageUser {
+.message_user {
 	align-self: end;
 	grid-template-columns: 1fr 60px;
 	grid-template-areas:
 		'author avatar'
 		'text avatar'
 		'date avatar';
-
-	background-color: rgba(102, 219, 89, 0.7);
+	background-color: rgb(102 219 89 / 70%);
 }
 
-.messageOther {
+.message_other {
 	align-self: start;
 	grid-template-columns: 60px 1fr;
 	grid-template-areas:
 		'avatar author'
 		'avatar text'
 		'avatar date';
-
-	background-color: rgba(208, 231, 106, 0.7);
+	background-color: rgb(208 231 106 / 70%);
 }
 
 .author {
 	display: flex;
-	flex-direction: row;
 	flex-wrap: wrap;
 	grid-area: author;
 }
 
-.userName {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	width: 100%;
-	margin-bottom: 5px;
-	font-family: Roboto, sans-serif;
+.user_name {
+	max-width: 13ch;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: $MainFont;
 	font-style: normal;
 	font-weight: 600;
 	font-size: 20px;
 	line-height: 24px;
 	color: $DistantBlue;
 	text-transform: capitalize;
+	&:hover {
+		max-width: inherit;
+		word-break: break-all;
+	}
 }
 
-.messageUser .userName {
+.message_user .user_name {
 	justify-content: flex-end;
-	color: $white-color;
+	color: $White-color;
 }
 
-.avatarBlock {
+.avatar_style {
 	grid-area: avatar;
 	width: 40px;
 	height: 40px;
@@ -69,38 +69,31 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
 
-.avatarText {
 	font-size: 20px;
 	line-height: 18px;
 }
 
 .text {
-	font-family: Roboto, sans-serif;
+	font-family: $MainFont;
 	font-style: normal;
 	font-weight: 300;
 	font-size: 20px;
-	word-wrap: break-word;
+	word-break: break-word;
 	line-height: 24px;
 	color: $Deep-Koamaru;
 }
 
 .date {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	margin-top: 10px;
-
-	font-family: Roboto, sans-serif;
-	font-style: normal;
+	text-align: end;
+	font-family: $MainFont;
 	font-weight: 300;
 	font-size: 16px;
-	line-height: 20px;
+	line-height: 1.5;
 	color: $DistantBlue;
 }
 
-.messageUser .date {
-	justify-content: flex-end;
-	color: $white-color;
+.message_user .date {
+	text-align: start;
+	color: $White-color;
 }

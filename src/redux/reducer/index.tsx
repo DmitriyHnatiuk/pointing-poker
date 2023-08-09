@@ -1,17 +1,7 @@
-import { combineReducers } from 'redux';
-
-import gameSettings from './gameSettingReducer';
-import resultReducer from './ResultReducer';
-import modalReducer from './modalReducer';
-import userReducer from './userReducer';
-import chatReducer from './chatReducer';
-
-const reducer = combineReducers({
-	gameSettings,
-	userReducer,
-	modalReducer,
-	chatReducer,
-	resultReducer
-});
-
-export default reducer;
+export { default as resultReducer } from './ResultReducer';
+export { default as chatReducer } from './chatReducer';
+export { loadingReducer } from './loading';
+export { default as modalReducer } from './modalReducer';
+export { default as planningReducer } from './planningReducer';
+export { default as userReducer } from './userReducer';
+export { default as usersVoteReducer } from './usersVote';

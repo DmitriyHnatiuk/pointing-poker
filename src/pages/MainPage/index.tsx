@@ -1,73 +1,85 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback, useRef, useState } from 'react';
 
-import { useTypedSelector } from 'hooks/useTypedSelector';
+import { useParams } from 'react-router-dom';
 
-import { setModalDataActionCreation } from 'redux/reducer/modalReducer';
-import { setUserDataActionCreation } from 'redux/reducer/userReducer';
-import { getMembers, getModal } from 'redux/reducer/selectors';
-import { User } from 'redux/reducer/userReducer/types';
-
-import { btnValue } from 'constants/commonComponents';
-
-import Modals from 'components/common/Modals';
-import MyButton from 'components/common/MyButton';
-import MyInput from 'components/common/MyInput';
-
-import pokerPlanningImage from 'assets/images/MainPage/poker-planning.jpg';
-
+import Modals from 'src/components/Modals';
+import RegistrationModal from 'src/components/Modals/RegistrationModal';
+import Button from 'src/components/common/Button';
+import Input from 'src/components/common/Form/Input';
+import { BUTTON_VALUES } from 'src/constants/commonComponents';
 import styles from './index.module.scss';
 
-const MainPage: React.FC = (): JSX.Element => {
-	const dispatch = useDispatch();
+import pokerPlanningImage from '_assets/images/MainPage/poker-planning.jpg';
 
-	const { openModal } = useTypedSelector(getModal);
-	const { roomNumber } = useTypedSelector<User>(getMembers);
+export const MainPage = () => {
+	const { roomId } = useParams();
+	const [isAdmin, setAsAdmin] = useState(false);
+	const [isModalOpen, setModal] = useState(false);
 
-	const connectToRoom = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		dispatch(setUserDataActionCreation({ roomNumber: event.target.value }));
-	};
+	const ref = useRef<HTMLInputElement>(null);
 
-	const setAdmin = () => {
-		dispatch(setModalDataActionCreation({ openModal: true }));
-		dispatch(setUserDataActionCreation({ isAdmin: true }));
-	};
+	const connectToRoom = useCallback(
+		() =>
+			ref.current && (ref.current.value || ref.current.defaultValue)
+				? setModal(true)
+				: null,
+		[]
+	);
 
-	const setUser = () => {
-		if (roomNumber) {
-			dispatch(setModalDataActionCreation({ openModal: true }));
-			dispatch(setUserDataActionCreation({ isAdmin: false }));
-		}
-		return null;
-	};
+	const connectAsAdmin = useCallback(
+		() => (setAsAdmin(true), setModal(true)),
+		[]
+	);
+
+	const closeModal = useCallback(
+		() => (setModal((prev) => !prev), setAsAdmin(false)),
+		[]
+	);
 
 	return (
-		<div className={styles.main_page}>
-			<div className={styles.container}>
-				<section className={styles.section}>
-					<div className={styles.logo}>
-						<img src={pokerPlanningImage} alt="Poker-planning" />
-					</div>
-					<div className={styles.start}>
-						<h3 className={styles.title}>Start your planning:</h3>
-						<span className={styles.text}>Create session:</span>
-						<MyButton onclick={setAdmin} value={btnValue.START} />
-					</div>
-					<div className={styles.or}>
-						<h3 className={styles.title}>OR:</h3>
-						<span className={styles.text}>Connect to lobby:</span>
-						<form className={styles.formLink}>
-							<MyInput
-								style={styles.linkInput}
-								value={roomNumber}
-								onchange={connectToRoom}
-							/>
-							<MyButton value={btnValue.CONNECT} onclick={setUser} />
-						</form>
-					</div>
-				</section>
-				{openModal && <Modals />}
+		<div className={styles.container}>
+			<div className={styles.logo}>
+				<img src={pokerPlanningImage} alt="Poker-planning" loading="lazy" />
 			</div>
+
+			<h3 className={styles.title}>Start your planning:</h3>
+
+			<div className={styles.start_wrapper}>
+				<p className={styles.header}>Create session:</p>
+				<Button
+					onClick={connectAsAdmin}
+					children={BUTTON_VALUES.START}
+					style="fit-content"
+				/>
+			</div>
+
+			<h3 className={styles.title}>OR:</h3>
+
+			<div className={styles.connect_wrapper}>
+				<Input
+					label="Connect to lobby:"
+					name="room_number"
+					style={styles.input_room_number}
+					ref={ref}
+					isDefaultLabel
+					defaultValue={roomId}
+				/>
+				<Button
+					style={styles.btn_connect}
+					onClick={connectToRoom}
+					children={BUTTON_VALUES.CONNECT}
+				/>
+			</div>
+
+			{isModalOpen && (
+				<Modals isOpen={isModalOpen} onClose={closeModal}>
+					<RegistrationModal
+						onClose={closeModal}
+						isAdminForm={isAdmin}
+						roomId={ref.current?.value || ref.current?.defaultValue}
+					/>
+				</Modals>
+			)}
 		</div>
 	);
 };

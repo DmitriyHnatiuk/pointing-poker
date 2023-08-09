@@ -1,41 +1,41 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback } from 'react';
 
-import { useInterval } from 'hooks/useInterval';
-import { useTypedSelector } from 'hooks/useTypedSelector';
+import socketCreator from '_redux/thunk';
 
-import socketCreator, {
-	ADMIN_RUN_ROUND,
-	GAME_TIME_OFF,
-	RESET_GAME,
-	SET_NEXT_ISSUE
-} from 'redux/thunk';
+import { useInterval } from 'src/hooks/useInterval';
+import { useAppDispatch, useTypedSelector } from 'src/hooks/useTypedSelector';
 
-import { TimerSettings } from 'redux/reducer/gameSettingReducer/types';
-import { SetTimer } from 'redux/reducer/gameSettingReducer';
-import { getGame, getMembers } from 'redux/reducer/selectors';
+import { setTimer } from '_redux/reducer/planningReducer';
+import {
+	selectPlanningSettings,
+	selectPlanningTimer,
+	selectRoundStatus
+} from '_redux/reducer/planningReducer/selectors';
+import { TimerSettingsType } from '_redux/reducer/planningReducer/types';
+import { selectUserData } from '_redux/reducer/userReducer/selectors';
 
-import { btnValue } from 'constants/commonComponents';
-import MyButton from 'components/common/MyButton';
+import Button from 'src/components/common/Button';
+
+import { BUTTON_VALUES } from 'src/constants/commonComponents';
+import { EVENTS } from 'src/constants/constRouter';
 
 import styles from './index.module.scss';
 
-const { RUN_ROUND, RESTART_ROUND, NEXT_ISSUE } = btnValue;
+const { RUN_ROUND, RESTART_ROUND, NEXT_ISSUE } = BUTTON_VALUES;
 
-const ActiveTimer: React.FC = () => {
-	const dispatch = useDispatch();
+const ActiveTimer = () => {
+	const dispatch = useAppDispatch();
 
-	const { isAdmin } = useTypedSelector(getMembers);
-	const gameData = useTypedSelector(getGame);
+	const { isAdmin } = useTypedSelector(selectUserData);
+	const { isTimerNeeded } = useTypedSelector(selectPlanningSettings);
+	const timer = useTypedSelector(selectPlanningTimer);
+	const isRunRound = useTypedSelector(selectRoundStatus);
 
-	const { isTimer, timer } = gameData;
-	const { isActive } = timer;
+	const updateTimer = useCallback((timer: TimerSettingsType) => {
+		dispatch(setTimer({ timer }));
+	}, []);
 
-	const updateTimer = (newTime: TimerSettings) => {
-		dispatch(SetTimer(newTime));
-	};
-
-	if (isTimer) {
+	if (isTimerNeeded) {
 		useInterval({
 			callback: () => {
 				let minNum = Number(timer.min);
@@ -47,7 +47,7 @@ const ActiveTimer: React.FC = () => {
 					} else if (secNum > 0 && minNum >= 0) {
 						secNum -= 1;
 					} else {
-						dispatch(socketCreator({ type: GAME_TIME_OFF }));
+						dispatch(socketCreator({ type: EVENTS.PLANNING_TIME_OFF }));
 					}
 				}
 
@@ -56,21 +56,27 @@ const ActiveTimer: React.FC = () => {
 
 				return updateTimer({ min: minString, sec: secString });
 			},
-			delay: isActive ? 1000 : null
+			delay: isRunRound ? 1000 : null
 		});
 	}
 
-	const onTimer = () => {
-		dispatch(socketCreator({ type: ADMIN_RUN_ROUND, gameSettings: gameData }));
-	};
+	const onTimer = useCallback(() => {
+		dispatch(socketCreator({ type: EVENTS.ADMIN_RUN_ROUND }));
+	}, []);
 
-	const onRestartTimer = () => dispatch(socketCreator({ type: RESET_GAME }));
+	const onRestartTimer = useCallback(
+		() => dispatch(socketCreator({ type: EVENTS.RESET_PLANNING })),
+		[]
+	);
 
-	const onNextIssue = () => dispatch(socketCreator({ type: SET_NEXT_ISSUE }));
+	const onNextIssue = useCallback(
+		() => dispatch(socketCreator({ type: EVENTS.SET_NEXT_ISSUE })),
+		[]
+	);
 
 	return (
 		<>
-			{isTimer && (
+			{isTimerNeeded && (
 				<div className={styles.timer}>
 					<div className={styles.clockBlock}>
 						<span className={styles.clockName}>Minutes</span>
@@ -84,23 +90,26 @@ const ActiveTimer: React.FC = () => {
 			)}
 			{isAdmin && (
 				<div className={styles.buttons}>
-					{!isActive && (
-						<MyButton style={styles.btn} value={RUN_ROUND} onclick={onTimer} />
+					{isRunRound ? (
+						<Button
+							style={styles.primary_button}
+							children={RESTART_ROUND}
+							onClick={onRestartTimer}
+						/>
+					) : (
+						<Button
+							style={styles.main_button}
+							children={RUN_ROUND}
+							onClick={onTimer}
+						/>
 					)}
-					{isActive && (
-						<>
-							<MyButton
-								style={styles.btn}
-								value={RESTART_ROUND}
-								onclick={onRestartTimer}
-							/>
-							<MyButton
-								style={styles.btn}
-								value={NEXT_ISSUE}
-								onclick={onNextIssue}
-							/>
-						</>
-					)}
+					<Button
+						style={`${styles.primary_button} ${
+							!isRunRound ? styles.hide_button : ''
+						}`}
+						children={NEXT_ISSUE}
+						onClick={onNextIssue}
+					/>
 				</div>
 			)}
 		</>

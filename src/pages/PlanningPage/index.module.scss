@@ -1,0 +1,16 @@
+@import '/src/assets/styles/_variables';
+
+.container {
+	display: flex;
+	overflow: hidden;
+	min-height: 70vh;
+}
+
+.border {
+	margin: 0 2%;
+	border-left: 2px solid $BackgroundGray;
+
+	@media (max-width: 546px) {
+		display: none;
+	}
+}

@@ -1,0 +1,43 @@
+@import '/src/assets/styles/_variables';
+
+.overlay {
+	position: fixed;
+	inset: 0;
+	min-width: 100vw;
+	min-height: 100vh;
+	z-index: 999;
+	background-color: $BackgroundGrayModal;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal {
+	position: relative;
+	max-width: 800px;
+	max-height: 90vh;
+
+	min-width: 100px;
+	min-height: 50px;
+
+	overflow-y: auto;
+	padding: 20px;
+	box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
+	background-color: $White-color;
+	border-radius: 4px;
+	@media (max-width: 600px) {
+		max-height: 100vh;
+		max-width: 100vw;
+		box-sizing: border-box;
+	}
+}
+
+.close_button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: auto;
+	height: auto;
+	min-width: fit-content;
+	z-index: 99;
+}

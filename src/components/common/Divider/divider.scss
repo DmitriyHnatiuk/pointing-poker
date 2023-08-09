@@ -1,0 +1,11 @@
+@import '/src/assets/styles/_variables';
+
+.divider {
+	border-bottom: 1px solid $Light-Gray;
+}
+
+.height {
+	height: 10px;
+	background-color: $White-color;
+	border-bottom: none;
+}

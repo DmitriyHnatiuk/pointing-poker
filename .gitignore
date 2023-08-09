@@ -30,6 +30,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+server/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -370,9 +371,12 @@ MigrationBackup/
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 # Create react app react-app-env.d.ts
 /src/react-app-env.d.ts
+# Local Netlify folder
+.netlify

@@ -1,20 +1,135 @@
 // Global scss
 @import '/src/assets/styles/_variables';
+@import '/src/assets/styles/_fonts';
+@import '/src/assets/styles/global/reset';
+
+@mixin font-style {
+	font-family: $MainFont;
+	font-weight: 500;
+	text-align: center;
+}
 
 body {
-	font-family: 'Roboto', sans-serif;
+	@include font-style;
 	font-size: 14px;
 }
 
+.content {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.text {
+	@include font-style;
+}
+
+.title-2,
+.title-3,
+.title-4 {
+	font-family: $SecondFont;
+	font-style: normal;
+	font-weight: bold;
+	line-height: 1;
+	padding: 10px 0;
+
+	@media (max-width: 900px) {
+		line-height: 1.5;
+	}
+}
+
+.title-2 {
+	font-size: 28px;
+
+	@media (max-width: 900px) {
+		font-size: 24px;
+	}
+}
+
+.title-3 {
+	font-size: 24px;
+
+	@media (max-width: 900px) {
+		font-size: 18px;
+	}
+}
+
+.title-4 {
+	font-size: 16px;
+}
+
 *::-webkit-scrollbar {
-	width: 12px; /* ширина для вертикального скролла */
-	height: 8px; /* высота для горизонтального скролла */
+	width: 4px;
+	height: 4px;
 	background-color: $Deep-Koamaru;
 }
 
 *::-webkit-scrollbar-thumb {
-	width: 20px;
+	width: 4px;
 	background-color: $Topaz;
-	border-radius: 10px;
-	top: 10px;
+	border-radius: 2px;
+}
+
+.m-top-20 {
+	margin-top: 20px;
+}
+
+.m-auto {
+	margin: auto;
+}
+
+.m-l-auto {
+	margin-left: auto;
+}
+
+.m-0-5 {
+	margin: 0 5px;
+}
+
+.p-0 {
+	padding: 0;
+}
+
+.p-10-0 {
+	padding: 10px 0;
+}
+
+.p-20 {
+	padding: 20px;
+}
+
+.p-b-20 {
+	padding-bottom: 20px;
+}
+
+.fit-content {
+	width: fit-content;
+}
+
+.flex-1 {
+	flex: 1;
+}
+
+.overflow {
+	overflow: auto;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.text-align-start {
+	text-align: start;
+}
+
+.text-align-end {
+	text-align: end;
+}
+
+.width-80 {
+	width: 80%;
+}
+
+.absolute {
+	position: absolute;
 }
