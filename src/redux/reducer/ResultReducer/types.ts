@@ -1,14 +1,3 @@
-import { PlayingCard } from 'redux/reducer/gameSettingReducer/types';
+import { RatingType } from '../usersVote/type';
 
-export interface issue {
-	id: string;
-	title: string;
-	priority: string;
-	link: string;
-	active: boolean;
-	cards: PlayingCard[];
-}
-
-export interface Result {
-	result: issue[];
-}
+export type ResultType = Record<string, Record<string, RatingType>>;

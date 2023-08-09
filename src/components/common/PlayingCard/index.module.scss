@@ -1,4 +1,4 @@
-@import 'assets/styles/variables';
+@import '/src/assets/styles/_variables';
 
 .card {
 	position: relative;
@@ -8,22 +8,22 @@
 	padding: 5px;
 	border: 1px solid $Deep-Koamaru;
 	border-radius: 5px;
-	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
 	transition: all 0.5s;
 	box-sizing: border-box;
+
+	&:hover {
+		cursor: pointer;
+		box-shadow: 4px 4px 4px rgb(0 0 0 / 50%);
+	}
 }
 
-.card:hover {
-	cursor: pointer;
-	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-}
-
-.statisticsCard {
+.statistics_card {
 	width: 80px;
 	height: 120px;
 }
 
-.activeCard {
+.active_card {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -43,30 +43,33 @@
 	height: 100%;
 }
 
-.top,
-.bottom {
-	font-size: 16px;
-}
-
 .top {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	font-size: 16px;
+}
+
+.bottom {
+	transform: rotate(180deg);
+	display: flex;
+	justify-content: flex-start;
+	font-size: 16px;
 }
 
 .top img {
 	width: 16px;
 	height: 16px;
 	transition: all 0.5s;
-}
 
-.top img:hover {
-	cursor: pointer;
-	transform: scale(1.1);
-}
+	&:hover {
+		cursor: pointer;
+		transform: scale(1.1);
+	}
 
-.top img:active {
-	transform: scale(1.2);
+	&:active {
+		transform: scale(1.2);
+	}
 }
 
 .top input {
@@ -74,36 +77,38 @@
 	padding: 0;
 	font-size: 16px;
 	border: none;
-}
+	font-weight: normal;
+	line-height: normal;
 
-.top input:focus {
-	color: $Sage;
-	background-color: $white-color;
-}
+	&:focus {
+		color: $Sage;
+		background-color: $White-color;
+	}
 
-.top input:disabled {
-	color: $TextDark;
-	background-color: $white-color;
+	&:disabled {
+		color: $TextDark;
+		background-color: $White-color;
+	}
 }
 
 .type {
 	font-size: 48px;
 	text-align: center;
 	text-transform: uppercase;
+
+	& img {
+		width: 75px;
+		height: 75px;
+	}
 }
 
-.statisticsCard .type img {
+.statistics_card .type img {
 	width: 50px;
 	height: 50px;
 }
 
-.type img {
-	width: 75px;
-	height: 75px;
-}
-
-.bottom {
-	display: flex;
-	justify-content: flex-start;
-	transform: rotate(180deg);
+.del_button {
+	font-size: inherit;
+	line-height: inherit;
+	padding: 0;
 }

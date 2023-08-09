@@ -1,52 +1,49 @@
-import React, { ChangeEvent } from 'react';
+import { ReactNode } from 'react';
+type InputType =
+	| 'text'
+	| 'file'
+	| 'number'
+	| 'url'
+	| 'tel'
+	| 'email'
+	| 'range'
+	| 'color'
+	| 'password';
 
-export interface InterfaceFormikControl {
-	control: string;
+export interface IInput {
 	name: string;
-	label: string;
+	label?: string | ReactNode;
+	placeholder?: string;
+	maxLength?: number;
+	minLength?: number;
+	size?: number;
+	value?: string;
+	type?: InputType;
+	title?: string;
+	pattern?: string;
 	style?: string;
-	data?: TypeData;
-	onChange?: (e: ChangeEvent) => void;
-	children?: (errorMessage: string) => React.ReactNode;
+	isChecked?: boolean;
+	isRequired?: boolean;
+	isError?: boolean;
+	errorMessage?: string;
+	defaultValue?: string;
+	onChange?: (value: string, name: string) => void;
+	onBlur?: (value: string, name: string) => void;
+	readOnly?: boolean;
+	isLeftLabel?: boolean;
+	isDefaultLabel?: boolean;
+	min?: string;
+	max?: string;
 }
 
-type TypeData = InterfaceOptions[];
-
-export interface InterfaceFormikInput {
-	name: string;
-	label: string;
-	style?: string;
-}
-
-export interface InterfaceImagesFormik {
-	name: string;
-	label: string;
-	style?: string;
-}
-
-export interface InterfaceFormikSelect {
-	name: string;
-	label: string;
-	style?: string;
-	options: InterfaceOptions[];
-}
-
-export interface InterfaceOptions {
+export interface IOptions {
 	key: string;
 	value: string;
 }
 
-export interface FieldRegistry {
+export type RegistryType = {
 	firstName: string;
 	lastName: string;
 	position: string;
-	observer: boolean;
-	avatar: File | string;
-}
-
-export enum TypeInputFormikControl {
-	input = 'input',
-	select = 'select',
-	image = 'image',
-	switch = 'switch'
-}
+	isObserver: boolean;
+};

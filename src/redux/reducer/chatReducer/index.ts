@@ -1,45 +1,36 @@
-import { interfaceChatMessage } from 'interfaces/commonChat';
-import { ChatAction, ChatActionEnum, ChatReducer } from './types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const initialState: ChatReducer = {
-	open: false,
-	messages: []
+import { IChatMessage } from 'src/interfaces/thunkTypes';
+
+import { logoutAction } from '../loading/logoutAction';
+import { ChatType } from './types';
+
+const initialState: ChatType = {
+	isOpenChat: false,
+	messages: {}
 };
 
-const reducer = (
-	state: ChatReducer = initialState,
-	actions: ChatAction
-): ChatReducer => {
-	switch (actions.type) {
-		case ChatActionEnum.openChat: {
-			return {
-				...state,
-				open: actions.payload
-			};
+const ChatReducer = createSlice({
+	name: 'chat',
+	initialState,
+	reducers: {
+		setSwitchChat: (state: ChatType) => {
+			state.isOpenChat = !state.isOpenChat;
+		},
+
+		setCloseChat: (state: ChatType) => {
+			state.isOpenChat = false;
+		},
+
+		addMessage: (state: ChatType, action: PayloadAction<IChatMessage>) => {
+			state.messages[action.payload.id] = action.payload;
 		}
-		case ChatActionEnum.pushMessages: {
-			return {
-				...state,
-				messages: [actions.payload, ...state.messages]
-			};
-		}
-		default:
-			return state;
+	},
+	extraReducers: (builder) => {
+		builder.addCase(logoutAction, () => initialState);
 	}
-};
-
-export const onOpenChat = (open: boolean): ChatAction => ({
-	type: ChatActionEnum.openChat,
-	payload: open
 });
 
-export const pushMessage = (message: interfaceChatMessage): ChatAction => ({
-	type: ChatActionEnum.pushMessages,
-	payload: message
-});
+export const { setSwitchChat, setCloseChat, addMessage } = ChatReducer.actions;
 
-type AC1Type = ReturnType<typeof pushMessage>;
-
-export type chatActionType = AC1Type;
-
-export default reducer;
+export default ChatReducer.reducer;

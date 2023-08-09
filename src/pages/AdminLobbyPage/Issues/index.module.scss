@@ -1,0 +1,40 @@
+@import '/src/assets/styles/_variables';
+
+.issues {
+	display: flex;
+	flex-flow: row wrap;
+	gap: 10px;
+
+	@media (max-width: 800px) {
+		justify-content: center;
+	}
+}
+
+.new_content {
+	justify-content: space-between;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-width: 150px;
+	max-width: 200px;
+	min-height: 50px;
+	height: 100%;
+	padding: 5px;
+	box-sizing: border-box;
+	border: 1px solid $Deep-Koamaru;
+	border-radius: 5px;
+	box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+	transition: all 0.5s;
+
+	&:hover {
+		box-shadow: 4px 4px 4px rgb(0 0 0 / 50%);
+	}
+
+	& > img:hover {
+		cursor: pointer;
+		transform: scale(1.1);
+	}
+	& > img:active {
+		transform: scale(1.2);
+	}
+}

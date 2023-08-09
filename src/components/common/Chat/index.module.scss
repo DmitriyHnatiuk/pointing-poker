@@ -1,60 +1,52 @@
-@import 'assets/styles/_variables.scss';
+@import '/src/assets/styles/_variables';
 
 .chat {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	max-height: 1200px;
+	position: sticky;
+	top: 30px;
+	display: flex;
+	flex-direction: column;
+	align-self: normal;
 	box-shadow: 4px 4px 4px 4px rgb(0 0 0 / 25%);
 	border-radius: 5px;
-	display: flex;
-	justify-content: space-between;
-	flex-direction: column;
-	justify-self: end;
-	box-sizing: border-box;
-	grid-area: chat;
+	overflow: hidden;
+	height: 78vh;
 
-	@media only screen and (max-width: 1000px) {
+	@media (max-width: 1000px) {
 		position: fixed;
 		top: 0;
 		left: 0;
 		right: 0;
 		width: 100vw;
 		height: 100vh;
-		min-width: 50%;
-		box-sizing: content-box;
-		padding: 0;
-		background-color: $white-color;
-		z-index: 5;
+		background-color: $White-color;
+		z-index: 10;
 	}
 }
 
-.header {
-	display: none;
+.close_button {
+	position: absolute;
+	right: 0;
+	transition: transform 80ms;
 
-	@media only screen and (max-width: 1000px) {
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		padding: 10px 20px;
-		background-color: $Deep-Koamaru;
+	&:active {
+		& > img {
+			transform: rotate(45deg);
+		}
 	}
 }
 
-.messageList {
-	padding: 20px 10px;
+.message_list {
 	display: flex;
-	height: 100%;
-	justify-content: flex-start;
-	align-items: flex-start;
-	flex-direction: column-reverse;
-	overflow-y: auto;
+	flex-direction: column;
+	justify-content: flex-end;
+	box-sizing: border-box;
+	padding: 20px 10px;
+	min-height: 100%;
 }
 
-.box {
+.send_form {
 	display: flex;
 	align-items: center;
-	max-width: 100%;
 	background: $Deep-Koamaru;
 	padding: 10px;
 	position: relative;
@@ -63,27 +55,28 @@
 }
 
 .input {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	margin: 0 20px 0 10px;
-	width: 80%;
-	font-family: Roboto, sans-serif;
-	font-style: normal;
-	font-weight: 300;
-	font-size: 16px;
-	line-height: 20px;
-	color: $white-color;
-	background: none;
-	border: none;
-	outline: none;
-	resize: none;
-	justify-self: start;
-	overflow-y: hidden;
+	flex: 3;
+	background-color: inherit;
+
+	input {
+		width: 100%;
+		font-weight: 300;
+		font-size: 16px;
+		line-height: 1.5;
+		color: $White-color;
+		background: none;
+		border: none;
+		outline: none;
+		resize: none;
+		overflow-y: hidden;
+	}
 }
 
 .submit {
-	color: $white-color;
+	flex: 1;
+	min-width: auto;
+	width: 120px;
+	color: $White-color;
 	border: none;
 	background: $Desaturated-Cyan;
 	font-size: 10px;
@@ -92,10 +85,10 @@
 	padding: 6px 10px;
 	border-radius: 10px;
 	outline: none;
-	transition: background 0.2s ease;
-	justify-self: end;
+	transition: transform, 1s ease-in-out;
 
 	&:hover {
+		transform: scale(1, -1);
 		background: $Light-Sea-Green;
 	}
 }

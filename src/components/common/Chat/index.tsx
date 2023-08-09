@@ -1,93 +1,63 @@
-import React, { ChangeEvent, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { FormEvent, useCallback } from 'react';
 
-import ChatMessage from 'components/common/ChatMessage';
+import { useAppDispatch, useTypedSelector } from 'src/hooks/useTypedSelector';
 
-import { useTypedSelector } from 'hooks/useTypedSelector';
-import { getChat, getMembers } from 'redux/reducer/selectors';
-import { onOpenChat } from 'redux/reducer/chatReducer';
-import socketCreator, { SEND_MESSAGE } from 'redux/thunk';
+import { setCloseChat } from '_redux/reducer/chatReducer';
+import { selectChatStatus } from '_redux/reducer/chatReducer/selectors';
+import socketCreator from '_redux/thunk';
 
-import close from 'assets/images/Chat/chat-close.png';
+import { BUTTON_VALUES } from 'src/constants/commonComponents';
+import { EVENTS } from 'src/constants/constRouter';
+
+import Button from '../Button';
+import { CloseIcon } from '../CloseIcon';
+import Input from '../Form/Input';
+import { MessageList } from './messageList';
 
 import styles from './index.module.scss';
 
-const Chat: React.FC = (): JSX.Element => {
-	const dispatch = useDispatch();
-	const messageList = useTypedSelector(getChat).messages;
-	const { firstName, lastName, avatar } = useTypedSelector(getMembers);
-	const [textValue, setTextValue] = useState('');
-	const time = new Date();
-	const onVisibleChat = () => dispatch(onOpenChat(false));
+const Chat = () => {
+	const dispatch = useAppDispatch();
+	const isOpenChat = useTypedSelector(selectChatStatus);
 
-	const minutes =
-		String(time.getUTCMinutes()).length < 2
-			? `0${String(time.getUTCMinutes())}`
-			: String(time.getUTCMinutes());
+	const closeChat = useCallback(() => dispatch(setCloseChat()), []);
+	const sendMessage = useCallback((event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 
-	const hours =
-		String(time.getUTCHours()).length < 2
-			? `0${String(time.getUTCHours())}`
-			: String(time.getUTCHours());
+		const textMessage = event.currentTarget['add_message'].value;
 
-	const getMessage = () => {
-		if (!textValue) return;
-		setTextValue('');
+		if (!textMessage) return;
+
 		dispatch(
 			socketCreator({
-				type: SEND_MESSAGE,
-				message: {
-					author: {
-						firstName: `${firstName}`,
-						lastName: `${lastName}`,
-						icon: avatar
-					},
-					textMessage: textValue,
-					date: `${hours}:${minutes}`
-				}
+				type: EVENTS.SEND_MESSAGE,
+				message: textMessage
 			})
 		);
-	};
 
-	const textareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-		setTextValue(e.target.value);
-	};
+		event.currentTarget['add_message'].value = '';
+	}, []);
 
-	const MessageList = useMemo(
-		() =>
-			messageList.map((item) => {
-				const { author, textMessage, date, id } = item;
-				return (
-					<ChatMessage
-						author={author}
-						textMessage={textMessage}
-						date={date}
-						key={`${id}`}
-					/>
-				);
-			}),
-		[messageList]
-	);
-
-	return (
+	return isOpenChat ? (
 		<div className={styles.chat}>
-			<div className={styles.header}>
-				<img src={close} alt="" onClick={onVisibleChat} aria-hidden="true" />
-			</div>
-			<div className={styles.messageList}>{MessageList}</div>
-			<div className={styles.box}>
-				<textarea
-					className={styles.input}
-					value={textValue}
+			<Button variant="icon" onClick={closeChat} style={styles.close_button}>
+				<CloseIcon />
+			</Button>
+			<MessageList />
+			<form className={styles.send_form} onSubmit={sendMessage}>
+				<Input
+					name="add_message"
+					style={styles.input}
 					placeholder="Add message..."
-					onChange={textareaChange}
 				/>
-				<button type="submit" className={styles.submit} onClick={getMessage}>
-					Send
-				</button>
-			</div>
+				<Button
+					type="submit"
+					style={styles.submit}
+					children={BUTTON_VALUES.SEND}
+				/>
+			</form>
 		</div>
-	);
+	) : null;
 };
 
 export default Chat;

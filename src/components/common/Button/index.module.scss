@@ -1,0 +1,105 @@
+@import '/src/assets/styles/_variables';
+
+@mixin outlined {
+	width: fit-content;
+	height: fit-content;
+	border: none;
+	background: none;
+
+	&:hover,
+	&:focus {
+		border: none;
+		background: none;
+	}
+}
+
+@mixin rotate {
+	animation: rotate 3s infinite linear;
+
+	@keyframes rotate {
+		0% {
+			transform: rotate(0);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+}
+
+@mixin button {
+	font-weight: bold;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: pre;
+
+	&:hover,
+	&:focus {
+		opacity: 1;
+	}
+}
+
+.btn {
+	width: 189px;
+	height: 40px;
+	font-size: 24px;
+	line-height: 30px;
+	transition: all 1s;
+	text-align: center;
+	border-radius: 4px;
+}
+
+.btn:hover,
+.btn:focus:not(.icon):not(.text) {
+	background-color: $White-color;
+	border: 1px solid $Deep-Koamaru;
+	color: $Deep-Koamaru;
+}
+
+.btn:active {
+	transform: scale(1.1);
+}
+
+.btn:disabled {
+	background-color: $BackgroundGrayModal;
+	pointer-events: none;
+}
+
+.contained {
+	@include button;
+
+	color: $White-color;
+	text-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+	background-color: $Deep-Koamaru;
+	border: 1px solid $Deep-Koamaru;
+	min-width: 144px;
+}
+
+.outlined {
+	@include button;
+
+	background: transparent;
+	border: none;
+	color: $BackgroundGray;
+
+	&:hover,
+	&:focus {
+		border: none !important;
+		background-color: initial !important;
+	}
+}
+
+.text {
+	@include outlined;
+
+	color: $Deep-Koamaru;
+	line-height: 1.5;
+	font-weight: bold;
+	&:hover {
+		@include rotate;
+	}
+}
+
+.icon {
+	padding: 0;
+	@include outlined;
+}

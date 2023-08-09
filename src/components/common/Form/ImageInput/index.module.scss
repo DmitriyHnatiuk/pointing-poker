@@ -1,0 +1,16 @@
+@import '/src/assets/styles/_variables';
+
+.container {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+.label {
+	font-family: $MainFont;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 1.5;
+}

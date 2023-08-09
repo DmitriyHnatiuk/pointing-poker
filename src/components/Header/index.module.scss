@@ -1,0 +1,42 @@
+@import '/src/assets/styles/_variables';
+
+.header {
+	position: relative;
+	height: 70px;
+}
+
+.bg_Koamaru {
+	background-color: $Deep-Koamaru;
+}
+
+.bg_Cyan {
+	background-color: $Desaturated-Cyan;
+}
+
+.logo {
+	position: absolute;
+	top: 14px;
+	left: 10%;
+	bottom: 55px;
+	transition: all 0.5s;
+}
+
+.chat_button {
+	position: absolute;
+	font-size: inherit;
+	line-height: 0;
+	top: 24px;
+	left: 86%;
+	transition: all 0.5s;
+	background: none;
+	border: none;
+	padding: 0;
+}
+
+.logo:hover,
+.logo:focus,
+.chat_button:hover .chat_button:focus {
+	cursor: pointer;
+	transform: scale(1.1);
+	background: none;
+}

@@ -1,17 +1,26 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import {
+	chatReducer,
+	loadingReducer,
+	modalReducer,
+	planningReducer,
+	resultReducer,
+	userReducer,
+	usersVoteReducer
+} from './reducer';
 
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-
-import reducer from 'redux/reducer';
-
-const composeDev = composeWithDevTools || compose;
-const devTools = composeDev(applyMiddleware(thunkMiddleware));
-
-const store = createStore(reducer, devTools);
-
-export default store;
+export const store = configureStore({
+	reducer: {
+		modal: modalReducer,
+		user: userReducer,
+		chat: chatReducer,
+		planning: planningReducer,
+		result: resultReducer,
+		usersVote: usersVoteReducer,
+		loading: loadingReducer
+	}
+});
 
 export type RootState = ReturnType<typeof store.getState>;
+
 export type AppDispatch = typeof store.dispatch;

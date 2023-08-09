@@ -1,46 +1,78 @@
-import { Modal } from './types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-export const SET_MODAL = 'SET_MODAL';
+import { logoutAction } from '../loading/logoutAction';
+import { ModalType, NotificationType } from './types';
 
-const initialStore: Modal = {
-	openModal: false,
-	type: 'REGISTRATION',
-	message: '',
-	player: '',
-	playerKick: '',
-	id: '',
-	error: false,
-	vote: true
+const initialState: ModalType = {
+	kickModalData: [],
+	connectModalData: [],
+	notifications: []
 };
 
-type StateType = typeof initialStore;
+type StateType = typeof initialState;
 
-export type modalActionType = AC1Type | AC2Type;
+const modalSlice = createSlice({
+	name: 'modal',
+	initialState,
+	reducers: {
+		addToKickModal: (
+			state: StateType,
+			action: PayloadAction<{ id: string; playerKick: string; player: string }>
+		) => {
+			state.kickModalData.push(action.payload);
+		},
+		resetKickModal: (state: StateType) => {
+			state.kickModalData = [];
+		},
 
-const modalReducer = (
-	state: StateType = initialStore,
-	{ type, payload }: modalActionType
-): StateType => {
-	switch (type) {
-		case SET_MODAL: {
-			return {
-				...state,
-				...payload
-			};
+		setUserConnectModal: (
+			state: StateType,
+			action: PayloadAction<{ id: string; player: string }>
+		) => {
+			state.connectModalData.push({
+				id: action.payload.id,
+				player: action.payload.player
+			});
+		},
+
+		removeUserConnectModal: (
+			state: StateType,
+			action: PayloadAction<string>
+		) => {
+			state.connectModalData = state.connectModalData.filter(
+				(connection) => connection.id !== action.payload
+			);
+		},
+
+		addNotifications: (
+			state: StateType,
+			action: PayloadAction<NotificationType>
+		) => {
+			state.notifications.push(action.payload);
+		},
+
+		removeNotification: (state: StateType, action: PayloadAction<string>) => {
+			state.notifications = state.notifications.filter(
+				(notifications) => notifications.id !== action.payload
+			);
+		},
+		removeAllNotifications: (state: StateType) => {
+			state.notifications = [];
 		}
-
-		default:
-			return state;
+	},
+	extraReducers: (builder) => {
+		builder.addCase(logoutAction, () => initialState);
 	}
-};
+});
 
-export const deleteModalActionCreation = () =>
-	({ type: SET_MODAL, payload: initialStore } as const);
+export const {
+	addToKickModal,
+	resetKickModal,
+	setUserConnectModal,
+	removeUserConnectModal,
+	addNotifications,
+	removeNotification,
+	removeAllNotifications
+} = modalSlice.actions;
 
-export const setModalDataActionCreation = (payload: Modal) =>
-	({ type: SET_MODAL, payload } as const);
-
-type AC1Type = ReturnType<typeof deleteModalActionCreation>;
-type AC2Type = ReturnType<typeof setModalDataActionCreation>;
-
-export default modalReducer;
+export default modalSlice.reducer;

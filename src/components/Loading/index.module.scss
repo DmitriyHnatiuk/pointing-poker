@@ -1,18 +1,18 @@
-@import 'assets/styles/_variables.scss';
+@import '/src/assets/styles/_variables';
 
 .loading {
-	display: inline-block;
+	margin: auto;
 	width: 80px;
-	height: 80px;
 
-	&:after {
+	&::before {
 		content: ' ';
 		display: block;
-		width: 64px;
-		height: 64px;
-		margin: 8px;
+		width: 60px;
+		height: 60px;
+		margin: auto;
+		box-sizing: border-box;
 		border-radius: 50%;
-		border: 6px solid #a31a1a;
+		border: 6px solid $Deep-Koamaru;
 		animation: lds-dual-ring 1.2s linear infinite;
 		border-color: $Deep-Koamaru transparent $Middle-Green-Yellow transparent;
 	}
@@ -22,6 +22,7 @@
 	0% {
 		transform: rotate(0deg);
 	}
+
 	100% {
 		transform: rotate(360deg);
 	}

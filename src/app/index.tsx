@@ -1,7 +1,11 @@
-import React from 'react';
+import { RouterProvider } from 'react-router-dom';
+import Loading from '../components/Loading';
+import { routers } from './routers';
 
-import Routers from 'app/routers';
+import '_assets/styles/global/global.scss';
 
-const App: React.FC = (): JSX.Element => <Routers />;
+const App = () => (
+	<RouterProvider router={routers} fallbackElement={<Loading />} />
+);
 
 export default App;

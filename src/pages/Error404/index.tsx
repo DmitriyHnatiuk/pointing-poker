@@ -1,8 +1,20 @@
-import React from 'react';
+import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
+
 import style from './index.module.scss';
 
-const Error404: React.FC = (): JSX.Element => {
-	return <div className={style.error}> Error 404 </div>;
-};
+export const Error404 = () => {
+  const error = useRouteError();
 
-export default Error404;
+  if (isRouteErrorResponse(error)) {
+    return (
+      <p className={style.error}>
+        {error.status} {error.statusText}
+      </p>
+    );
+  }
+
+  if (error instanceof Error) {
+    return <p className={style.error}>{error.message || 'Unknown Error'}</p>;
+  }
+  return null;
+};

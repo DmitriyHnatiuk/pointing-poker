@@ -1,28 +1,15 @@
-@import '/src/assets/styles/variables';
-
-.result_page {
-	width: 100%;
-}
+@import '/src/assets/styles/_variables';
 
 .result_container {
-	width: 100%;
-	min-height: calc(100vh - 285px);
+	min-height: 60vh;
 	border: 1px solid $TextDark;
 	border-radius: 5px;
-}
-
-.resultBlock {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-wrap: wrap;
-	gap: 30px;
-}
-
-.heading {
-	font-size: 24px;
-	text-align: center;
-	padding: 10px 0;
+	max-width: 100%;
+	@media print {
+		display: flex;
+		width: 80%;
+		margin: auto;
+	}
 }
 
 .result {
@@ -38,122 +25,9 @@
 	flex-direction: row;
 }
 
-.issue_card {
-	position: relative;
-	display: flex;
-	align-items: center;
-	width: 200px;
-	min-height: 50px;
-	height: 100%;
-	padding: 5px;
-	margin: 5px;
-	box-sizing: border-box;
-	border: 1px solid $Deep-Koamaru;
-	border-radius: 5px;
-	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-	transition: all 0.5s;
-
-	&:hover {
-		box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-	}
-}
-
-.issue_content {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	width: 100%;
-}
-
-.issue {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 100%;
-}
-
-.issue_title {
-	font-size: 24px;
-}
-
-.priority {
-	padding-top: 3px;
-	text-align: start;
-	font-size: 10px;
-}
-
-.card {
-	position: relative;
-	width: 100px;
-	height: 150px;
-	margin: 5px;
-	padding: 5px;
-	border: 1px solid $Deep-Koamaru;
-	border-radius: 5px;
-	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-	transition: all 0.5s;
-	box-sizing: border-box;
-}
-
-.card:hover {
-	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-}
-
-.content {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 100%;
-}
-
-.top,
-.bottom {
-	font-size: 16px;
-}
-
-.top {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-.top img {
-	width: 16px;
-	height: 16px;
-	transition: all 0.5s;
-}
-
-.top img:hover {
-	transform: scale(1.1);
-}
-
-.top img:active {
-	transform: scale(1.2);
-}
-
-.type {
-	font-size: 48px;
-	text-align: center;
-	text-transform: uppercase;
-}
-
-.type img {
-	width: 75px;
-	height: 75px;
-}
-
-.bottom {
-	display: flex;
-	justify-content: flex-start;
-	transform: rotate(180deg);
-}
-
-.count {
-	text-align: center;
-	margin: 5px;
-	font-size: 24px;
-}
-
 .result_save {
-	padding-top: 10px;
+	margin-top: 10px;
+	@media (max-width: 800px) {
+		width: 100%;
+	}
 }

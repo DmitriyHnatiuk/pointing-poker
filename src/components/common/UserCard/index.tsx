@@ -1,83 +1,96 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import { memo, useCallback, useMemo } from 'react';
 
-import Avatar from 'components/Avatar';
+import Avatar from 'src/components/Avatar';
 
-import { setModalDataActionCreation } from 'redux/reducer/modalReducer';
-import { useTypedSelector } from 'hooks/useTypedSelector';
-import { getMembers } from 'redux/reducer/selectors';
+import { useAppDispatch, useTypedSelector } from 'src/hooks/useTypedSelector';
 
-import { Admin, Users } from 'redux/reducer/userReducer/types';
-import socketCreator, { DELETE, KICK } from 'redux/thunk';
+import { IUsers } from '_redux/reducer/userReducer/types';
 
-import userDeleteImage from 'assets/images/CardPlayer/player-delete.svg';
+import UserDeleteImage from 'src/assets/images/CardPlayer/player-delete.svg?url';
 
+import socketCreator from '_redux/thunk';
+import { EVENTS } from 'src/constants/constRouter';
+import { getInitialsName } from 'src/utils/initialValuesForms';
+
+import Button from '../Button';
+
+import { addToKickModal } from '_redux/reducer/modalReducer';
+import { selectUserData } from '_redux/reducer/userReducer/selectors';
 import styles from './index.module.scss';
 
-const PlayerCard: React.FC<{ user: Users | Admin; style?: string }> = ({
-	user,
+type PropsType = IUsers & {
+	style?: string;
+};
+
+const PlayerCard = ({
+	firstName,
+	lastName,
+	position,
+	id,
+	avatar,
+	isAdmin,
 	style = ''
-}) => {
-	const dispatch = useDispatch();
+}: PropsType) => {
+	const dispatch = useAppDispatch();
 
-	const { firstName, lastName, position, isAdmin, id, avatar } = user;
-	const member = useTypedSelector(getMembers);
-	const self = member.id === id;
-	const { observer } = member;
-	const buttonDelete = !isAdmin && !self;
-	const playerObserver = observer && !member.isAdmin;
+	const {
+		id: userId,
+		isObserver,
+		isAdmin: memberIsAdmin
+	} = useTypedSelector(selectUserData);
 
-	const onDeleteUser = (event: React.MouseEvent<HTMLElement>) => {
-		const button = event.target as HTMLElement;
+	const nameInitials = useMemo(
+		() => getInitialsName({ firstName, lastName }),
+		[firstName, lastName]
+	);
 
-		if (member.isAdmin) {
-			const playerKick = `${firstName} ${lastName}`;
+	const isDeleteButtonVisible = (memberIsAdmin || !isObserver) && userId !== id;
+
+	const onDeleteUser = useCallback(() => {
+		if (memberIsAdmin) {
 			return dispatch(
-				setModalDataActionCreation({
-					openModal: true,
-					type: KICK,
-					vote: false,
-					id: button.id,
-					playerKick
+				addToKickModal({
+					id,
+					playerKick: `${firstName} ${lastName}`,
+					player: 'Admin'
 				})
 			);
 		}
-		return dispatch(socketCreator({ type: DELETE, id: button.id }));
-	};
+
+		dispatch(
+			socketCreator({
+				type: EVENTS.DELETE,
+				id
+			})
+		);
+	}, []);
 
 	return (
 		<div className={`${styles.card} ${style}`}>
-			<div className={styles.content}>
-				<div className={styles.member}>
-					<Avatar
-						firstName={firstName}
-						lastName={lastName}
-						avatar={avatar}
-						blockStyle={styles.avatarBlock}
-						textStyle={styles.avatarText}
-					/>
-					<div className={styles.player}>
-						{isAdmin && <div className={styles.admin}>Admin</div>}
-						<div className={styles.name}>{`${firstName} ${lastName}`}</div>
-						<div className={styles.position}>{position}</div>
-					</div>
+			<div className={styles.member}>
+				<Avatar
+					title={`${firstName} ${lastName}`}
+					nameInitials={nameInitials}
+					avatar={avatar}
+					style={styles.avatar_block}
+				/>
+				<div>
+					{isAdmin && <div className={styles.admin}>Admin</div>}
+					<p className={styles.name}>{`${firstName || ''} ${
+						lastName || ''
+					}`}</p>
+					<p className={styles.position}>{position}</p>
 				</div>
-				<div className={styles.delete}>
-					{buttonDelete && !playerObserver && (
-						<div>
-							<img
-								id={id}
-								src={userDeleteImage}
-								alt="del"
-								onClick={onDeleteUser}
-								aria-hidden="true"
-							/>
-						</div>
-					)}
-				</div>
+			</div>
+			<div className={styles.delete}>
+				{isDeleteButtonVisible && (
+					<Button variant="icon" onClick={onDeleteUser}>
+						<img src={UserDeleteImage} alt="del" />
+					</Button>
+				)}
 			</div>
 		</div>
 	);
 };
 
-export default PlayerCard;
+export default memo(PlayerCard);
